@@ -5,7 +5,7 @@ Ledger operacional da **fase corrente**. O backlog de issues e o texto de aceite
 | | |
 | --- | --- |
 | Repositório | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
-| Last updated | 2026-11-15 (America/Sao_Paulo). Estrutura documental do projeto; nenhuma issue iniciada |
+| Last updated | 2026-11-17 (America/Sao_Paulo). D-021 registrada (fotos no repositório privado de assets); nenhuma issue iniciada |
 | Fase corrente | Fase 0 — Fundação |
 | Status da fase | Not started |
 
@@ -92,7 +92,7 @@ Texto de aceite de cada issue: `ROADMAP.md` → Fase 0.
 - O Makefile tem alvos que dependem de `package.json`. Até a I-01, `install`, `dev`, `build` e `check` falham com uma mensagem clara. Os comandos de cada alvo são uma previsão e a I-01 ajusta aos scripts reais.
 - Um link interno escrito sem o helper do caminho base quebra só em produção. A I-02 cobre isso com build nos dois valores de `BASE_PATH`.
 - O repositório é público. Rascunhos ficam visíveis nele, mesmo com `draft: true`.
-- A foto e o CV foram recebidos na thread do T3 e não estão no repositório. A I-11 e a I-16 dependem deles.
+- A foto e o CV foram recebidos na thread do T3 e não estão no repositório. A I-11 e a I-16 dependem deles. A foto nunca entra neste repositório: vai para o repositório privado `filipeoliveira-hub-assets`, que o Filipe cria com a deploy key e o secret antes da I-11 (D-021).
 - O plano final deixava o push e a criação do repositório com o Filipe. A instrução de 2026-11-15 põe o push da `main` com o Reviewer (D-019).
 
 ## Bloqueios
@@ -104,6 +104,10 @@ Nenhum.
 ## Log
 
 Só as entradas recentes. Histórico completo: [`docs/status-log.md`](docs/status-log.md).
+
+### 2026-11-17 — Fotos em repositório privado (D-021)
+
+Decisão registrada em `DECISIONS.md` e aceite da I-03, I-04 e I-11 ajustado em `ROADMAP.md`. Nenhum código escrito. Verificado: nenhuma imagem rastreada nem no histórico.
 
 ### 2026-11-15 — Estrutura inicial do projeto
 

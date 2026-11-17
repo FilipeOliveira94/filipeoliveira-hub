@@ -4,6 +4,14 @@ Histórico cronológico do projeto, com a entrada mais recente no topo. O ledger
 
 ---
 
+### 2026-11-17 — Fotos originais em repositório privado (D-021)
+
+Branch `docs/private-assets`, só documentação. A pedido do Filipe, a foto da home segue o modelo já validado no `dra-victoria-laufer` (ADR-0010): originais no repositório privado `FilipeOliveira94/filipeoliveira-hub-assets`, buscados no build do Actions por deploy key somente leitura (`ASSETS_DEPLOY_KEY`), sem Git LFS, em tamanho web.
+
+`docs/decisions/0001-private-assets-repository.md` (ADR-0001) registra contexto, alternativas e os passos manuais do Filipe; `DECISIONS.md` ganha a linha D-021 apontando para ela. `ROADMAP.md` ajusta o aceite da I-03 (checkout dos assets no workflow, também em PR), da I-04 (`check-no-photos`) e da I-11 (a foto vem de `.assets/`, não é copiada para o repositório). `AGENTS.md` §6 ganha a regra de não commitar fotos.
+
+Verificado neste checkout: `git ls-files` não lista imagem, e `git log --all --diff-filter=A` por jpg, jpeg, png, webp, avif, heic, gif e tif não retorna nada. Não há histórico a reescrever. Nenhum código, workflow ou dependência foi criado; isso fica para a I-03, a I-04 e a I-11.
+
 ### 2026-11-15 — Estrutura inicial do projeto
 
 Um commit na `main` local, `chore: estrutura inicial do projeto`, em cima de `45de9b0` (`docs: add README`). Foi a exceção autorizada pelo Filipe ao fluxo de branch + PR, que vale a partir da fase 0. Não houve push; o push da `main` é do Reviewer.

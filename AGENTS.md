@@ -69,6 +69,7 @@ Um ponto de entrada da issue que não foi executado não está verificado. Diga 
 - Sem telefone no site.
 - Todo item de conteúdo e toda página têm par PT e EN. O inglês derivado do CV é tradução e precisa da revisão do Filipe antes do release (I-18).
 - O número de anos de experiência não é escrito à mão em nenhum arquivo de conteúdo. Ele vem da função `yearsSince` (I-09).
+- Fotos e imagens de origem não entram neste repositório, nem em commit intermediário. Os originais ficam no repositório privado `filipeoliveira-hub-assets` e o build os busca (D-021).
 - Não versione segredos, tokens nem arquivos `.env` com valores reais. O repositório é público, e um rascunho com `draft: true` também fica visível nele.
 
 ## 7. Princípios técnicos
