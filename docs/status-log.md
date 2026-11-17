@@ -4,6 +4,12 @@ Histórico cronológico do projeto, com a entrada mais recente no topo. O ledger
 
 ---
 
+### 2026-11-17 — Tabelas Markdown com cabeçalho nomeado
+
+4 tabelas de chave e valor tinham a linha de cabeçalho vazia (`| | |`), que o GFM mostra como uma linha em branco no topo. O padrão veio dos documentos de planejamento de outro projeto, usados como modelo, e passou adiante por cópia. Cada tabela tem agora um cabeçalho tirado do contexto (`Projeto | Atual`, `Validação | Detalhe`, `Roadmap | Current`, `Registro | Referência`). `scripts/check_markdown_tables.py` falha se algum arquivo Markdown versionado tiver um cabeçalho vazio, fora de blocos de código; roda com `make docs-lint`. A regra está no AGENTS.md §8.
+
+---
+
 ### 2026-11-17 — Fotos originais em repositório privado (D-021)
 
 Branch `docs/private-assets`, só documentação. A pedido do Filipe, a foto da home segue o modelo já validado no `dra-victoria-laufer` (ADR-0010): originais no repositório privado `FilipeOliveira94/filipeoliveira-hub-assets`, buscados no build do Actions por deploy key somente leitura (`ASSETS_DEPLOY_KEY`), sem Git LFS, em tamanho web.

@@ -2,7 +2,7 @@
 
 Índice curto das decisões já fechadas para o filipeoliveira-hub. A fonte é o plano final do PO (`filipeoliveira-hub-final.md`, seções citadas na coluna Fonte) e as instruções do Filipe para a estrutura do repositório, de 2026-11-15.
 
-| | |
+| Registro | Referência |
 | --- | --- |
 | Este arquivo | Índice das decisões e do estado de cada uma |
 | Relacionados | `ROADMAP.md`, `PROJECT_STATUS.md`, `AGENTS.md`, `docs/status-log.md` |
