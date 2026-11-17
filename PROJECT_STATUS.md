@@ -2,7 +2,7 @@
 
 Ledger operacional da **fase corrente**. O backlog de issues e o texto de aceite ficam em [`ROADMAP.md`](ROADMAP.md). Índice das decisões: [`DECISIONS.md`](DECISIONS.md). Histórico: [`docs/status-log.md`](docs/status-log.md).
 
-| | |
+| Projeto | Atual |
 | --- | --- |
 | Repositório | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
 | Last updated | 2026-11-17 (America/Sao_Paulo). D-021 registrada (fotos no repositório privado de assets); nenhuma issue iniciada |
@@ -51,7 +51,7 @@ Texto de aceite de cada issue: `ROADMAP.md` → Fase 0.
 
 ## Última validação
 
-| | |
+| Validação | Detalhe |
 | --- | --- |
 | Data | 2026-11-15 |
 | Ambiente | Checkout local em WSL2 |

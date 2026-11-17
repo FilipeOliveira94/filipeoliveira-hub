@@ -92,6 +92,7 @@ Um ponto de entrada da issue que não foi executado não está verificado. Diga 
 - Trabalhe em uma issue por vez. Não implemente fases futuras na mesma mudança.
 - Não crie diretórios vazios para fases que ainda não começaram.
 - Prefira um TODO explícito ou um bloqueio documentado a uma implementação especulativa.
+- Markdown: toda tabela tem uma linha de cabeçalho que nomeia as colunas, tirada do contexto (`Issue P1-02 | Detalhe`, `Validação | Detalhe`). Nunca um cabeçalho vazio `| | |`, que o GFM mostra como linha em branco no topo. `make docs-lint` verifica.
 
 ## 9. Relatório de conclusão
 

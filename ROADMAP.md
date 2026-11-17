@@ -4,7 +4,7 @@ Plano por issue do filipeoliveira-hub. Este arquivo é a fonte de **escopo, depe
 
 As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-final.md`).
 
-| | |
+| Roadmap | Current |
 | --- | --- |
 | Last updated | 2026-11-17 |
 

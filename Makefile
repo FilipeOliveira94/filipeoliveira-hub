@@ -7,7 +7,7 @@
 NPM ?= npm
 NPX ?= npx
 
-.PHONY: help install dev build check clean
+.PHONY: docs-lint help install dev build check clean
 
 # Para a receita se o projeto Astro ainda não existir.
 define require_package
@@ -35,6 +35,9 @@ build: ## Gera o site estático em dist/
 check: ## Roda o astro check
 	$(require_package)
 	$(NPX) astro check
+
+docs-lint: ## Verifica as tabelas Markdown (nenhum cabeçalho vazio)
+	python3 scripts/check_markdown_tables.py
 
 clean: ## Remove dist/ e .astro/ (não remove node_modules)
 	rm -rf dist .astro
