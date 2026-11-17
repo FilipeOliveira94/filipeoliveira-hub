@@ -6,7 +6,7 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 
 | | |
 | --- | --- |
-| Last updated | 2026-11-15 |
+| Last updated | 2026-11-17 |
 
 **Tamanhos:** P até meio dia · M de um a dois dias · G de três a cinco dias.
 
@@ -74,8 +74,8 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 | --- | --- | --- | --- | --- | --- |
 | I-01 | Criar repositório e estrutura Astro | P | — | Not started | Repo público `FilipeOliveira94/filipeoliveira-hub`, Astro com TypeScript, MDX e lint. `npm run build` gera `dist/` sem erros e `astro check` passa |
 | I-02 | Caminho base configurável | P | I-01 | Not started | `site` e `base` lidos de variáveis e helper único para links e assets. Dado `BASE_PATH=/filipeoliveira-hub` ou `BASE_PATH=/`, quando o build roda, então a verificação de links em `dist/` passa nos dois casos |
-| I-03 | Deploy no GitHub Pages | P | I-02 | Not started | Workflow de publicação em `main` com `configure-pages` e `deploy-pages`. Dado um push em `main`, quando o workflow termina, então a URL do Pages serve a nova versão com CSS e assets carregando |
-| I-04 | Verificações de PR | M | I-01 | Not started | `astro check`, build, verificação de links, axe e Lighthouse CI. Um PR com link interno quebrado, violação axe ou nota abaixo de 95 falha. O CI também falha se faltar o par PT/EN de uma página ou item de conteúdo |
+| I-03 | Deploy no GitHub Pages | P | I-02 | Not started | Workflow de publicação em `main` com `configure-pages` e `deploy-pages`. Dado um push em `main`, quando o workflow termina, então a URL do Pages serve a nova versão com CSS e assets carregando. O workflow roda também em `pull_request` (sem deploy) e, quando o secret `ASSETS_DEPLOY_KEY` existe, faz o checkout de `FilipeOliveira94/filipeoliveira-hub-assets` em `.assets/` com `persist-credentials: false` (D-021); sem o secret, o build passa. O checkout principal usa `fetch-depth: 0` para a verificação de fotos da I-04 |
+| I-04 | Verificações de PR | M | I-01 | Not started | `astro check`, build, verificação de links, axe e Lighthouse CI. Um PR com link interno quebrado, violação axe ou nota abaixo de 95 falha. O CI também falha se faltar o par PT/EN de uma página ou item de conteúdo, e se um arquivo de imagem estiver rastreado ou for adicionado por um commit do PR (`scripts/check-no-photos.mjs`, D-021) |
 
 ---
 
@@ -97,7 +97,7 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 | I-08 | Collections e schemas | M | I-01 | Not started | `cases`, `projects`, `experience` e `skills` (inclui formação, certificações e idiomas) com Zod. Frontmatter inválido, case sem par PT/EN ou métrica sem `source` quebra o build |
 | I-09 | Contador dinâmico de anos em dados | P | I-01 | Not started | Função `yearsSince` a partir de 2019-09-01, usada na home. Testes unitários cobrem 2026-08-31 → 6, 2026-09-01 → 7 e 2026-11-15 → 7; busca no repo não encontra o número escrito à mão em conteúdo |
 | I-10 | Recorte de experiências | M | I-07, I-08 | Not started | `experience.yaml` com as seis experiências do CV, datas em mês e ano, em PT e EN. As seis entradas aparecem com os períodos e cargos do CV; nenhuma frase fora da fonte; o inglês é revisão do Filipe no release |
-| I-11 | Home | M | I-06, I-08, I-09, I-10 | Not started | Título "Engenheiro de Dados Sênior", foto, contador, localização, experiências, skills, destaque do case e contato (e-mail, LinkedIn, GitHub). A issue copia a foto fornecida no T3, recorta e gera AVIF/WebP com texto alternativo. Em viewport mobile, nome, foto, título, contador, cidade e links de contato aparecem sem rolagem; não há telefone |
+| I-11 | Home | M | I-06, I-08, I-09, I-10 | Not started | Título "Engenheiro de Dados Sênior", foto, contador, localização, experiências, skills, destaque do case e contato (e-mail, LinkedIn, GitHub). A foto não entra neste repositório (D-021): `scripts/prepare-assets.mjs` lê `photos/portrait.jpg` de `.assets/` (ou de `ASSETS_DIR`), recorta com `sharp` para `src/assets/generated/` e o Astro gera AVIF/WebP com texto alternativo; sem `.assets/`, o script sai com código 0 e a home mostra um placeholder neutro. Com o secret, o CI confere que a foto real está em `dist/`. Depende dos passos manuais do Filipe na ADR-0001 (D-021). Em viewport mobile, nome, foto, título, contador, cidade e links de contato aparecem sem rolagem; não há telefone |
 
 ---
 
@@ -204,7 +204,8 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 - **Tradução.** O CV está só em português; o inglês precisa da revisão do Filipe na I-18.
 - **Sem currículo para baixar.** Recrutadores que pedem PDF dependem do LinkedIn, então o link para ele precisa estar na primeira tela.
 - **Repo público.** Rascunhos ficam visíveis no repositório, mesmo com `draft: true`.
-- **Foto e CV.** Foram recebidos na thread do T3; a I-11 e a I-16 usam esses insumos. Se o arquivo da foto não estiver acessível no momento do dev, o Filipe precisa reenviar.
+- **Foto e CV.** Foram recebidos na thread do T3; a I-11 e a I-16 usam esses insumos. A foto não entra neste repositório: vai para o repositório privado `filipeoliveira-hub-assets` (D-021).
+- **Assets privados.** A I-11 com a foto real depende de o Filipe criar o repositório de assets, a deploy key somente leitura e o secret `ASSETS_DEPLOY_KEY` (passos na ADR-0001, D-021). PRs de fork constroem com o placeholder.
 
 **Pendências já mapeadas em issues futuras:** certificação Microsoft Fabric quando for emitida; detalhes profissionais (I-19 e I-20); A Conta e PedsLetter (I-21); domínio e analytics (fase 4). Nenhuma bloqueia a fase 0.
 
@@ -214,4 +215,5 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 
 | Data | Mudança |
 | --- | --- |
+| 2026-11-17 | D-021 (fotos no repositório privado de assets): aceite da I-03, I-04 e I-11 ajustado; risco de assets privados adicionado |
 | 2026-11-15 | Roadmap inicial: fases 0 a 5 e issues I-01 a I-28 do plano final, todas `not started` |

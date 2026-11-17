@@ -42,6 +42,7 @@
 | D-018 | Escopo do MVP | Ver a seção "Escopo" abaixo | — | `approved` | Plano §2 |
 | D-019 | Fluxo de trabalho | Branch + PR por issue a partir da fase 0. O dev nunca faz push na `main` nem merge. O Reviewer faz o merge e o push da `main` depois do OK do Filipe. Entrega com aprovação dupla, PO e Reviewer. Conventional Commits | Regras em `AGENTS.md` | `approved` | Instrução do Filipe, 2026-11-15 |
 | D-020 | Licença | MIT, Copyright (c) 2026 Filipe Oliveira, o mesmo tipo do open-data-platform | `LICENSE` | `approved` | Instrução do Filipe, 2026-11-15 |
+| D-021 | Fotos originais | Originais fora deste repositório, no repositório privado `filipeoliveira-hub-assets`, buscado no build do Actions por deploy key somente leitura. Detalhes em [ADR-0001](docs/decisions/0001-private-assets-repository.md) | — | `approved` | Instrução do Filipe, 2026-11-17 |
 
 `—` significa que ainda não foi implementado ou verificado no repositório.
 
@@ -81,3 +82,4 @@
 | Data | Mudança |
 | --- | --- |
 | 2026-11-15 | Registro inicial: D-001 a D-018 a partir do plano final; D-019 e D-020 a partir das instruções do Filipe para a estrutura do repositório |
+| 2026-11-17 | D-021 (ADR-0001): fotos originais no repositório privado `filipeoliveira-hub-assets`, buscado no build por deploy key somente leitura |
