@@ -20,10 +20,10 @@ O site é estático, feito em Astro, publicado no GitHub Pages em `FilipeOliveir
 | --- | --- |
 | Filipe | Dono do projeto. Decide escopo e conteúdo, responde às perguntas das issues e dá o OK final. |
 | PO | Mantém o plano e o roadmap. Aprova a entrega de cada issue contra o aceite. |
-| Dev | Implementa uma issue por vez em branch própria e abre o PR. |
-| Reviewer | Revisa o PR. Depois do OK do Filipe, faz o merge e o push da `main`. |
+| Dev | Implementa uma issue por vez em branch própria, abre o PR, analisa o CI e sinaliza ao PO e ao Reviewer que está pronto. |
+| Reviewer | Revisa o PR. Responsável pelo merge, exclusão de branch e CD, sempre depois do sim do Filipe. |
 
-Uma issue só é entregue com **aprovação dupla: PO e Reviewer**.
+Uma issue só é entregue com **aprovação dupla: PO e Reviewer**, no mesmo head do PR. Exceção: mudança pequena (docs, texto, ajuste de config, bump patch de dependência, ou bugfix contido de até ~50 linhas em até 3 arquivos, sem tocar arquitetura, modelo de dados/schema, auth/segurança, infra/deploy, API pública ou lógica de pipeline; na dúvida, é grande; o dev classifica na entrega) precisa só do PO; o Reviewer faz o merge sem revisar.
 
 ## 4. Fluxo de trabalho obrigatório
 
@@ -37,8 +37,9 @@ Para cada issue:
 6. Rode as verificações da issue (`make check`, `make build` e as que o aceite pedir) e leia o resultado.
 7. Corrija as regressões causadas pela mudança.
 8. Aplique o checklist de fechamento (seção 10) na mesma branch.
-9. Faça o commit local, dê push **somente da branch da issue** e abra o PR.
-10. Entregue o relatório de conclusão (seção 9) e aguarde PO e Reviewer.
+9. Faça o commit, dê push **somente da branch da issue**, abra o PR e analise o CI.
+10. Com o CI analisado, sinalize ao PO e ao Reviewer que está pronto e entregue o relatório de conclusão (seção 9).
+11. Qualquer objeção bloqueia. Cada correção (novos commits, CI analisado, novo sinal) é uma rodada. Após duas rodadas de divergência, o Filipe decide.
 
 Não marque uma issue como concluída sem ter verificado o critério de aceite.
 
@@ -49,9 +50,8 @@ Um ponto de entrada da issue que não foi executado não está verificado. Diga 
 ## 5. Git e entrega
 
 - A partir da fase 0, todo trabalho é feito em **branch + PR por issue**. Uma branch por issue, um PR por issue.
-- O dev **nunca faz push na `main`** e **nunca faz merge**. O Reviewer faz o merge e o push da `main` depois do OK do Filipe.
-- O dev pode dar push **somente da branch da issue**, para abrir o PR.
-- Commit só local até a hora de abrir o PR. Não dê push de nada além da branch da issue.
+- A ordem do Filipe para implementar autoriza o dev a commitar, dar push **somente da branch da issue**, abrir o PR e ler o CI. O dev **nunca faz push na `main`**.
+- Merge, exclusão de branch e pipelines de CD são do Reviewer, sempre após o sim explícito do Filipe. O Filipe pode fazer ele mesmo ou ordenar que um bot específico faça.
 - Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `ci:`, `refactor:`).
 - Não use `--force` em branch compartilhada, não reescreva o histórico da `main` e não pule hooks sem motivo registrado.
 - O commit `chore: estrutura inicial do projeto` foi feito direto na `main` local. Foi uma exceção única, autorizada pelo Filipe. Não repita.
