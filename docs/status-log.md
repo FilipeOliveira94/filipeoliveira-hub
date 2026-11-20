@@ -4,6 +4,12 @@ Histórico cronológico do projeto, com a entrada mais recente no topo. O ledger
 
 ---
 
+### 2026-11-20 — Tarefa pequena ou grande
+
+Branch `chore/fluxo-pequena-grande`, só documentação. Nova regra do Filipe: tarefa pequena (docs, texto, config, bump patch, ou bugfix contido de até ~50 linhas em até 3 arquivos, sem tocar arquitetura, schema, segurança, infra, API pública ou pipeline) o Claude planeja e implementa direto até o PR; tarefa grande, ou na dúvida, o Claude planeja e espera a aprovação do Filipe na thread. O prompt da issue diz o modo; o Claude pode reclassificar para grande. Atualizados `AGENTS.md` (§4 passo 3 e nova §4.1) e `docs/agent-workflow.md`. `make docs-lint` passou.
+
+---
+
 ### 2026-11-20 — Fluxo de desenvolvimento simplificado
 
 Branch `chore/fluxo-dev-simplificado`, só documentação. O Claude no T3 Code planeja, implementa numa branch nova, roda as verificações, dá push da branch e abre o PR com resumo, sem merge. O Filipe revisa, faz o merge e apaga a branch. PO de Projetos e Reviewer de Projetos (bots) só agem quando o Filipe pede e nunca fazem merge. Sai a aprovação dupla PO e Reviewer. Atualizados `AGENTS.md` (§3 a §5), `docs/agent-workflow.md`, D-019 em `DECISIONS.md`, `ROADMAP.md`, `PROJECT_STATUS.md` e `README.md`. As entradas antigas deste log ficam como estavam.

@@ -31,7 +31,7 @@ Para cada issue:
 
 1. Leia `PROJECT_STATUS.md`, o item da issue em `ROADMAP.md` e as decisões relacionadas em `DECISIONS.md`.
 2. Confira dependências, premissas, riscos e o critério de aceite da issue.
-3. Para trabalho não trivial, proponha um plano curto antes de editar arquivos.
+3. Planeje a tarefa e classifique-a como pequena ou grande (seção 4.1). Na tarefa grande, apresente o plano e espere a aprovação do Filipe antes de editar arquivos.
 4. Crie uma branch para a issue a partir da `main` atualizada (seção 5).
 5. Implemente o menor incremento coerente que cumpre o aceite.
 6. Rode as verificações da issue (`make check`, `make build` e as que o aceite pedir) e leia o resultado.
@@ -45,6 +45,17 @@ Não marque uma issue como concluída sem ter verificado o critério de aceite.
 Não mude em silêncio a stack, as dependências, o escopo ou o critério de aceite. Se a issue pedir uma mudança dessas, registre a proposta e espere a decisão do Filipe.
 
 Um ponto de entrada da issue que não foi executado não está verificado. Diga qual é e por quê antes de tratar a issue como pronta.
+
+### 4.1 Tarefa pequena ou grande
+
+| Modo | Quando | O que o Claude faz |
+| --- | --- | --- |
+| Pequena | Docs, texto, ajuste de config, bump patch de dependência, ou bugfix contido de até ~50 linhas em até 3 arquivos, sem tocar arquitetura, modelo de dados ou schema, auth ou segurança, infra ou deploy, API pública ou lógica de pipeline. | Planeja e implementa direto até o PR. |
+| Grande | Todo o resto, ou na dúvida. | Planeja e **para**: apresenta o plano na thread e espera a aprovação do Filipe antes de mexer em código. |
+
+- O prompt da issue diz qual modo seguir.
+- O Claude pode reclassificar a tarefa para grande se, ao planejar, ela se mostrar maior. Nunca reclassifica de grande para pequena.
+- A aprovação chega na mesma thread, direto do Filipe ou repassada pelo PO de Projetos com "Plano aprovado pelo Filipe: implemente.", às vezes com ajustes. Incorpore os ajustes antes de implementar.
 
 ## 5. Git e entrega
 
