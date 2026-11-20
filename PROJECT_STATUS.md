@@ -5,7 +5,7 @@ Ledger operacional da **fase corrente**. O backlog de issues e o texto de aceite
 | Projeto | Atual |
 | --- | --- |
 | Repositório | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
-| Last updated | 2026-11-17 (America/Sao_Paulo). D-021 registrada (fotos no repositório privado de assets); nenhuma issue iniciada |
+| Last updated | 2026-11-20 (America/Sao_Paulo). D-019 revisada (fluxo de desenvolvimento simplificado); nenhuma issue iniciada |
 | Fase corrente | Fase 0 — Fundação |
 | Status da fase | Not started |
 
@@ -70,7 +70,7 @@ Texto de aceite de cada issue: `ROADMAP.md` → Fase 0.
 | D-002 | A I-03 publica no GitHub Pages com Source = GitHub Actions | `approved` |
 | D-008 | A I-02 lê `SITE_URL` e `BASE_PATH` e cria o helper de links e assets | `approved` |
 | D-015 | A I-04 roda `astro check`, build, links, axe e Lighthouse CI no PR | `approved` |
-| D-019 | Branch + PR por issue; o dev não dá push na `main` nem faz merge | `approved` |
+| D-019 | Branch + PR por issue; o Claude no T3 abre o PR e o Filipe faz o merge | `approved` |
 
 ---
 
@@ -93,7 +93,7 @@ Texto de aceite de cada issue: `ROADMAP.md` → Fase 0.
 - Um link interno escrito sem o helper do caminho base quebra só em produção. A I-02 cobre isso com build nos dois valores de `BASE_PATH`.
 - O repositório é público. Rascunhos ficam visíveis nele, mesmo com `draft: true`.
 - A foto e o CV foram recebidos na thread do T3 e não estão no repositório. A I-11 e a I-16 dependem deles. A foto nunca entra neste repositório: vai para o repositório privado `filipeoliveira-hub-assets`, que o Filipe cria com a deploy key e o secret antes da I-11 (D-021).
-- O plano final deixava o push e a criação do repositório com o Filipe. A instrução de 2026-11-15 põe o push da `main` com o Reviewer (D-019).
+- O plano final deixava o push e a criação do repositório com o Filipe. Pelo fluxo vigente, o merge na `main` é do Filipe (D-019).
 
 ## Bloqueios
 

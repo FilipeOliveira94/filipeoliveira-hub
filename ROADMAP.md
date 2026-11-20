@@ -6,7 +6,7 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 
 | Roadmap | Current |
 | --- | --- |
-| Last updated | 2026-11-17 |
+| Last updated | 2026-11-20 |
 
 **Tamanhos:** P até meio dia · M de um a dois dias · G de três a cinco dias.
 
@@ -68,7 +68,7 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 - [ ] A URL do Pages responde com a página inicial.
 - [ ] O CI está verde.
 
-O plano final deixava o push e a criação do repositório no GitHub com o Filipe. Pela instrução de 2026-11-15 (D-019), o push da `main` é feito pelo Reviewer depois do OK do Filipe; o dev só dá push da branch da issue.
+O plano final deixava o push e a criação do repositório no GitHub com o Filipe. Pela instrução de 2026-11-15 (D-019), o Claude no T3 só dá push da branch da issue; o merge na `main` é do Filipe.
 
 | ID | Título | Tam. | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- |
@@ -215,5 +215,6 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 
 | Data | Mudança |
 | --- | --- |
+| 2026-11-20 | Fluxo de desenvolvimento simplificado (D-019): merge na `main` com o Filipe |
 | 2026-11-17 | D-021 (fotos no repositório privado de assets): aceite da I-03, I-04 e I-11 ajustado; risco de assets privados adicionado |
 | 2026-11-15 | Roadmap inicial: fases 0 a 5 e issues I-01 a I-28 do plano final, todas `not started` |

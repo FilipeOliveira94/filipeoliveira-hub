@@ -4,6 +4,12 @@ Histórico cronológico do projeto, com a entrada mais recente no topo. O ledger
 
 ---
 
+### 2026-11-20 — Fluxo de desenvolvimento simplificado
+
+Branch `chore/fluxo-dev-simplificado`, só documentação. O Claude no T3 Code planeja, implementa numa branch nova, roda as verificações, dá push da branch e abre o PR com resumo, sem merge. O Filipe revisa, faz o merge e apaga a branch. PO de Projetos e Reviewer de Projetos (bots) só agem quando o Filipe pede e nunca fazem merge. Sai a aprovação dupla PO e Reviewer. Atualizados `AGENTS.md` (§3 a §5), `docs/agent-workflow.md`, D-019 em `DECISIONS.md`, `ROADMAP.md`, `PROJECT_STATUS.md` e `README.md`. As entradas antigas deste log ficam como estavam.
+
+---
+
 ### 2026-11-17 — Tabelas Markdown com cabeçalho nomeado
 
 4 tabelas de chave e valor tinham a linha de cabeçalho vazia (`| | |`), que o GFM mostra como uma linha em branco no topo. O padrão veio dos documentos de planejamento de outro projeto, usados como modelo, e passou adiante por cópia. Cada tabela tem agora um cabeçalho tirado do contexto (`Projeto | Atual`, `Validação | Detalhe`, `Roadmap | Current`, `Registro | Referência`). `scripts/check_markdown_tables.py` falha se algum arquivo Markdown versionado tiver um cabeçalho vazio, fora de blocos de código; roda com `make docs-lint`. A regra está no AGENTS.md §8.

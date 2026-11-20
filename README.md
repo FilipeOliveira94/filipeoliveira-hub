@@ -58,7 +58,7 @@ make clean     # remove dist/ e .astro/
 
 ## Como contribuir
 
-Cada issue é feita em branch própria, com PR. Ninguém além do Reviewer dá push na `main`. As regras completas estão em [`AGENTS.md`](AGENTS.md).
+Cada issue é feita em branch própria, com PR. O Claude no T3 abre o PR e só o Filipe faz o merge na `main`. As regras completas estão em [`AGENTS.md`](AGENTS.md).
 
 ## Licença
 
