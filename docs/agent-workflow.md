@@ -2,7 +2,7 @@
 
 Três prompts conduzem uma issue: planejar, implementar e fechar. Eles não dependem de ferramenta; as regras ficam em [`AGENTS.md`](../AGENTS.md). Troque os campos entre `<>`, rode o prompt de plano primeiro e aprove o plano antes de qualquer mudança em arquivo.
 
-O fluxo é **branch + PR por issue**. O dev commita, dá push somente da branch da issue, abre o PR, analisa o CI e sinaliza ao PO e ao Reviewer. O dev nunca dá push na `main` (AGENTS.md §5).
+O fluxo é **branch + PR por issue**. O Claude no T3 commita, dá push somente da branch da issue, abre o PR com resumo e analisa o CI. Nunca dá push na `main` nem faz merge (AGENTS.md §5).
 
 ---
 
@@ -61,9 +61,8 @@ Revise o diff atual contra o plano combinado e o critério de aceite. Não adici
 - Aplique o "Checklist de fechamento de issue" (AGENTS.md §10).
 - Faça o commit no padrão Conventional Commits, na branch da issue.
 - Dê push somente da branch da issue, abra o PR e analise o CI. Nunca dê push na main (AGENTS.md §5).
-- Com o CI analisado, sinalize ao PO e ao Reviewer que está pronto e classifique a mudança como pequena ou grande (AGENTS.md §3).
 
 Devolva um relatório de conclusão curto, a branch, o hash do commit, o link do PR, o resultado do CI e a próxima tarefa.
 ```
 
-Depois do PR, a entrega precisa da aprovação do PO e do Reviewer no mesmo head do PR. Mudança pequena (critério em AGENTS.md §3) precisa só do PO. Qualquer objeção bloqueia; cada correção (novos commits, CI analisado, novo sinal) é uma rodada e, após duas rodadas de divergência, o Filipe decide. Merge, exclusão de branch e CD são do Reviewer, sempre após o sim explícito do Filipe.
+Depois do PR, o Filipe revisa, faz o merge e apaga a branch. Para um merge mais complicado, ele pode pedir ao Reviewer de Projetos (bot) que abra uma thread no T3 para o Claude revisar o PR e resumir o veredito. Nenhum agente ou bot faz merge.

@@ -18,12 +18,12 @@ O site é estático, feito em Astro, publicado no GitHub Pages em `FilipeOliveir
 
 | Papel | Responsabilidade |
 | --- | --- |
-| Filipe | Dono do projeto. Decide escopo e conteúdo, responde às perguntas das issues e dá o OK final. |
-| PO | Mantém o plano e o roadmap. Aprova a entrega de cada issue contra o aceite. |
-| Dev | Implementa uma issue por vez em branch própria, abre o PR, analisa o CI e sinaliza ao PO e ao Reviewer que está pronto. |
-| Reviewer | Revisa o PR. Responsável pelo merge, exclusão de branch e CD, sempre depois do sim do Filipe. |
+| Filipe | Dono do projeto. Pede status, escolhe a issue, decide escopo e conteúdo, responde às perguntas das issues, revisa o PR, faz o merge e apaga a branch. |
+| Claude no T3 Code (Claude Opus 5.5) | Por issue: planeja, implementa numa branch nova a partir da `main` atualizada, roda as verificações, faz o commit, dá push da branch e abre o PR com resumo. Nunca faz merge. Fallback: Grok 4.7 pelo provider Cursor no T3, só quando acabar o limite do Claude Pro. |
+| PO de Projetos (bot) | Só quando o Filipe pede: status, envio de issue ao T3, resumo do que foi feito após o merge e visão de produto. |
+| Reviewer de Projetos (bot) | Só quando o Filipe pede, para merge mais complicado: abre uma thread no T3 para o Claude revisar o PR e resume o veredito. Nunca faz merge nem apaga branch. |
 
-Uma issue só é entregue com **aprovação dupla: PO e Reviewer**, no mesmo head do PR. Exceção: mudança pequena (docs, texto, ajuste de config, bump patch de dependência, ou bugfix contido de até ~50 linhas em até 3 arquivos, sem tocar arquitetura, modelo de dados/schema, auth/segurança, infra/deploy, API pública ou lógica de pipeline; na dúvida, é grande; o dev classifica na entrega) precisa só do PO; o Reviewer faz o merge sem revisar.
+Não há aprovação dupla. A entrega de uma issue é o PR aberto com o resumo; quem aprova e faz o merge é o Filipe.
 
 ## 4. Fluxo de trabalho obrigatório
 
@@ -37,9 +37,8 @@ Para cada issue:
 6. Rode as verificações da issue (`make check`, `make build` e as que o aceite pedir) e leia o resultado.
 7. Corrija as regressões causadas pela mudança.
 8. Aplique o checklist de fechamento (seção 10) na mesma branch.
-9. Faça o commit, dê push **somente da branch da issue**, abra o PR e analise o CI.
-10. Com o CI analisado, sinalize ao PO e ao Reviewer que está pronto e entregue o relatório de conclusão (seção 9).
-11. Qualquer objeção bloqueia. Cada correção (novos commits, CI analisado, novo sinal) é uma rodada. Após duas rodadas de divergência, o Filipe decide.
+9. Faça o commit, dê push **somente da branch da issue**, abra o PR com o resumo e analise o CI.
+10. Entregue o relatório de conclusão (seção 9). O Filipe revisa o PR; pedidos de ajuste viram novos commits na mesma branch.
 
 Não marque uma issue como concluída sem ter verificado o critério de aceite.
 
@@ -50,8 +49,8 @@ Um ponto de entrada da issue que não foi executado não está verificado. Diga 
 ## 5. Git e entrega
 
 - A partir da fase 0, todo trabalho é feito em **branch + PR por issue**. Uma branch por issue, um PR por issue.
-- A ordem do Filipe para implementar autoriza o dev a commitar, dar push **somente da branch da issue**, abrir o PR e ler o CI. O dev **nunca faz push na `main`**.
-- Merge, exclusão de branch e pipelines de CD são do Reviewer, sempre após o sim explícito do Filipe. O Filipe pode fazer ele mesmo ou ordenar que um bot específico faça.
+- A ordem do Filipe para implementar autoriza o Claude no T3 a commitar, dar push **somente da branch da issue**, abrir o PR e ler o CI. Ninguém além do Filipe faz push na `main`.
+- Merge e exclusão de branch são do Filipe. Nenhum agente ou bot faz merge, apaga branch ou dá push na `main`.
 - Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `ci:`, `refactor:`).
 - Não use `--force` em branch compartilhada, não reescreva o histórico da `main` e não pule hooks sem motivo registrado.
 - O commit `chore: estrutura inicial do projeto` foi feito direto na `main` local. Foi uma exceção única, autorizada pelo Filipe. Não repita.
