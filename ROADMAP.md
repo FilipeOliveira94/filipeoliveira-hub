@@ -46,20 +46,6 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 
 ---
 
-## Tamanho e risco
-
-Toda issue tem um Size (S, M, L) e um Risk (Low, Med, High) na escala de `~/.agents/claude/workflow.md` (repositório `FilipeOliveira94/agent-config`). A nota decide se o Claude para para aprovação do plano e o esforço inicial do modelo (`AGENTS.md` §4.1). Risco alto aqui está em `AGENTS.md` §3, "Agent workflow". A coluna Tam. é a estimativa antiga, em dias; para planejar, vale esta tabela.
-
-As issues em aberto da fase atual estão abaixo. As de outra fase ganham nota quando a fase abrir, ou no plano da issue. Ao fechar uma issue, anote o tamanho real ao lado da estimativa.
-
-| Issue | Size | Risk | Motivo |
-| --- | --- | --- | --- |
-| I-01 | S | Low | Estrutura Astro e lint; nada publicado ainda |
-| I-02 | S | Low | Helper do caminho base; a verificação de links cobre os dois casos |
-| I-03 | S | High | Workflow de deploy e deploy key dos assets privados (D-021): um erro publica o site quebrado ou expõe o repositório de assets |
-| I-04 | M | Med | Várias verificações de CI (axe, Lighthouse, par PT/EN, fotos); um erro aparece no próprio PR |
-| I-29 | M | Low | Tradução de muitos arquivos; o conteúdo do site não muda |
-
 ## Visão das fases
 
 | Fase | Escopo | Issues | Critério de saída | Status |
@@ -230,7 +216,7 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 
 | Data | Mudança |
 | --- | --- |
-| 2026-11-24 | Tamanho e risco (escala do agent-config) substituem pequena/grande; notas das issues abertas da fase 0. Nova I-29: traduzir a documentação para inglês. `verified` não exige mais aprovação dupla |
+| 2026-11-24 | Nova I-29: traduzir a documentação para inglês. `verified` não exige mais aprovação dupla. Tamanho e risco substituem pequena/grande no fluxo (`AGENTS.md` §4.1); as notas das issues entram num passo seguinte |
 | 2026-11-20 | Fluxo de desenvolvimento simplificado (D-019): merge na `main` com o Filipe |
 | 2026-11-17 | D-021 (fotos no repositório privado de assets): aceite da I-03, I-04 e I-11 ajustado; risco de assets privados adicionado |
 | 2026-11-15 | Roadmap inicial: fases 0 a 5 e issues I-01 a I-28 do plano final, todas `not started` |
