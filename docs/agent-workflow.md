@@ -66,4 +66,4 @@ Revise o diff atual contra o plano combinado e o critério de aceite. Não adici
 Devolva um relatório de conclusão curto, a branch, o hash do commit, o link do PR, o resultado do CI e a próxima tarefa.
 ```
 
-Depois do PR, o Filipe revisa, faz o merge e apaga a branch. Para um merge mais complicado, ele pode pedir ao Reviewer de Projetos (bot) que abra uma thread no T3 para o Claude revisar o PR e resumir o veredito. Nenhum agente ou bot faz merge.
+Depois do PR, o Filipe revisa, faz o merge e apaga a branch. Para um merge mais complicado, ele pode abrir uma thread no T3 para o Claude revisar o PR. Nenhum agente faz merge.

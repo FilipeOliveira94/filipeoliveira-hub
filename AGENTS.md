@@ -18,12 +18,17 @@ O site é estático, feito em Astro, publicado no GitHub Pages em `FilipeOliveir
 
 | Papel | Responsabilidade |
 | --- | --- |
-| Filipe | Dono do projeto. Pede status, escolhe a issue, decide escopo e conteúdo, responde às perguntas das issues, revisa o PR, faz o merge e apaga a branch. |
+| Filipe | Dono do projeto. Escolhe a issue, decide escopo e conteúdo, responde às perguntas das issues, aprova o plano da tarefa grande, revisa o PR, faz o merge e apaga a branch. |
 | Claude no T3 Code (Claude Opus 5.5) | Por issue: planeja, implementa numa branch nova a partir da `main` atualizada, roda as verificações, faz o commit, dá push da branch e abre o PR com resumo. Nunca faz merge. Fallback: Grok 4.7 pelo provider Cursor no T3, só quando acabar o limite do Claude Pro. |
-| PO de Projetos (bot) | Só quando o Filipe pede: status, envio de issue ao T3, resumo do que foi feito após o merge e visão de produto. |
-| Reviewer de Projetos (bot) | Só quando o Filipe pede, para merge mais complicado: abre uma thread no T3 para o Claude revisar o PR e resume o veredito. Nunca faz merge nem apaga branch. |
 
-Não há aprovação dupla. A entrega de uma issue é o PR aberto com o resumo; quem aprova e faz o merge é o Filipe.
+Não há bots de PO ou Reviewer nem subagentes de revisão neste projeto (ver "Agent workflow" abaixo). A entrega de uma issue é o PR aberto com o resumo; quem aprova e faz o merge é o Filipe.
+
+### Agent workflow
+
+Gates e política de modelos: `~/.agents/claude/workflow.md` (repositório `FilipeOliveira94/agent-config`).
+
+- **Profile:** solo. O Claude Opus 5.5 planeja e implementa; sem subagentes de revisão.
+- **Model exceptions:** nenhuma
 
 ## 4. Fluxo de trabalho obrigatório
 
@@ -55,7 +60,7 @@ Um ponto de entrada da issue que não foi executado não está verificado. Diga 
 
 - O prompt da issue diz qual modo seguir.
 - O Claude pode reclassificar a tarefa para grande se, ao planejar, ela se mostrar maior. Nunca reclassifica de grande para pequena.
-- A aprovação chega na mesma thread, direto do Filipe ou repassada pelo PO de Projetos com "Plano aprovado pelo Filipe: implemente.", às vezes com ajustes. Incorpore os ajustes antes de implementar.
+- A aprovação chega na mesma thread, às vezes com ajustes. Incorpore os ajustes antes de implementar.
 
 ## 5. Git e entrega
 
