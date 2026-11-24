@@ -8,7 +8,7 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 | --- | --- |
 | Last updated | 2026-11-24 |
 
-**Expected / Seen:** a nota de cada issue como `Size/Risk`, na escala de `~/.agents/claude/workflow.md` (repositório `FilipeOliveira94/agent-config`; risco alto aqui está em `AGENTS.md` §3). Expected é a estimativa antes do trabalho, com `-` em Seen até a issue fechar; aí Seen registra o que o trabalho se mostrou. Substitui a antiga coluna Tam. (P/M/G em dias).
+**Expected/Seen Risk e Size:** cada célula é `esperado/visto`. Risk é `Lo`, `Med` ou `Hi`; Size é `Sm`, `Md` ou `Lg` (escala em `~/.agents/claude/workflow.md`, repositório `FilipeOliveira94/agent-config`; risco alto aqui está em `AGENTS.md` §3). Uma issue aberta tem só a metade esperada (`Med/-`, `Md/-`); a metade vista é preenchida quando ela fecha. Substitui a antiga coluna Tam. (P/M/G em dias).
 
 **Status:** `not started` · `in progress` · `delivered` · `verified` · `blocked`
 
@@ -70,13 +70,13 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 
 O plano final deixava o push e a criação do repositório no GitHub com o Filipe. Pela instrução de 2026-11-15 (D-019), o Claude no T3 só dá push da branch da issue; o merge na `main` é do Filipe.
 
-| ID | Título | Expected | Seen | Depende de | Status | Aceite |
+| ID | Título | Expected/Seen Risk | Expected/Seen Size | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-01 | Criar repositório e estrutura Astro | S/Low | - | — | Not started | Repo público `FilipeOliveira94/filipeoliveira-hub`, Astro com TypeScript, MDX e lint. `npm run build` gera `dist/` sem erros e `astro check` passa |
-| I-02 | Caminho base configurável | S/Low | - | I-01 | Not started | `site` e `base` lidos de variáveis e helper único para links e assets. Dado `BASE_PATH=/filipeoliveira-hub` ou `BASE_PATH=/`, quando o build roda, então a verificação de links em `dist/` passa nos dois casos |
-| I-03 | Deploy no GitHub Pages | S/High | - | I-02 | Not started | Workflow de publicação em `main` com `configure-pages` e `deploy-pages`. Dado um push em `main`, quando o workflow termina, então a URL do Pages serve a nova versão com CSS e assets carregando. O workflow roda também em `pull_request` (sem deploy) e, quando o secret `ASSETS_DEPLOY_KEY` existe, faz o checkout de `FilipeOliveira94/filipeoliveira-hub-assets` em `.assets/` com `persist-credentials: false` (D-021); sem o secret, o build passa. O checkout principal usa `fetch-depth: 0` para a verificação de fotos da I-04 |
-| I-04 | Verificações de PR | M/Med | - | I-01 | Not started | `astro check`, build, verificação de links, axe e Lighthouse CI. Um PR com link interno quebrado, violação axe ou nota abaixo de 95 falha. O CI também falha se faltar o par PT/EN de uma página ou item de conteúdo, e se um arquivo de imagem estiver rastreado ou for adicionado por um commit do PR (`scripts/check-no-photos.mjs`, D-021) |
-| I-29 | Traduzir a documentação do repositório para inglês | M/Low | - | — | Not started | ROADMAP, PROJECT_STATUS, DECISIONS, `docs/` e README em inglês (decisão do Filipe, 2026-11-24; o `AGENTS.md` e os prompts já estão em inglês). O conteúdo do site não muda: segue com o par PT e EN. IDs de issue e de decisão não mudam |
+| I-01 | Criar repositório e estrutura Astro | Lo/- | Sm/- | — | Not started | Repo público `FilipeOliveira94/filipeoliveira-hub`, Astro com TypeScript, MDX e lint. `npm run build` gera `dist/` sem erros e `astro check` passa |
+| I-02 | Caminho base configurável | Lo/- | Sm/- | I-01 | Not started | `site` e `base` lidos de variáveis e helper único para links e assets. Dado `BASE_PATH=/filipeoliveira-hub` ou `BASE_PATH=/`, quando o build roda, então a verificação de links em `dist/` passa nos dois casos |
+| I-03 | Deploy no GitHub Pages | Hi/- | Sm/- | I-02 | Not started | Workflow de publicação em `main` com `configure-pages` e `deploy-pages`. Dado um push em `main`, quando o workflow termina, então a URL do Pages serve a nova versão com CSS e assets carregando. O workflow roda também em `pull_request` (sem deploy) e, quando o secret `ASSETS_DEPLOY_KEY` existe, faz o checkout de `FilipeOliveira94/filipeoliveira-hub-assets` em `.assets/` com `persist-credentials: false` (D-021); sem o secret, o build passa. O checkout principal usa `fetch-depth: 0` para a verificação de fotos da I-04 |
+| I-04 | Verificações de PR | Med/- | Md/- | I-01 | Not started | `astro check`, build, verificação de links, axe e Lighthouse CI. Um PR com link interno quebrado, violação axe ou nota abaixo de 95 falha. O CI também falha se faltar o par PT/EN de uma página ou item de conteúdo, e se um arquivo de imagem estiver rastreado ou for adicionado por um commit do PR (`scripts/check-no-photos.mjs`, D-021) |
+| I-29 | Traduzir a documentação do repositório para inglês | Lo/- | Md/- | — | Not started | ROADMAP, PROJECT_STATUS, DECISIONS, `docs/` e README em inglês (decisão do Filipe, 2026-11-24; o `AGENTS.md` e os prompts já estão em inglês). O conteúdo do site não muda: segue com o par PT e EN. IDs de issue e de decisão não mudam |
 
 ---
 
@@ -90,15 +90,15 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 - [ ] Foto e experiências do CV na home.
 - [ ] Contador correto.
 
-| ID | Título | Expected | Seen | Depende de | Status | Aceite |
+| ID | Título | Expected/Seen Risk | Expected/Seen Size | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-05 | Identidade visual | M/Low | - | I-01 | Not started | Paleta, tipografia, escala de espaçamento e tokens como variáveis CSS, com uma página de amostra dos componentes para aprovação. Todo par de texto e fundo da paleta tem contraste ≥ 4,5:1; as fontes são servidas localmente; o Filipe aprova a amostra antes de a I-06 fechar |
-| I-06 | Layout base | M/Low | - | I-05 | Not started | Cabeçalho, rodapé, navegação, seletor de idioma e link de pular para o conteúdo, usando os tokens. Navegação completa por teclado com foco visível e zero violações axe |
-| I-07 | Roteamento PT/EN | M/Med | - | I-02 | Not started | PT na raiz, EN em `/en/`, seletor de idioma e textos de interface em dicionário. Dado que estou numa página com par, quando uso o seletor, então chego à página equivalente; o `hreflang` é recíproco |
-| I-08 | Collections e schemas | M/Med | - | I-01 | Not started | `cases`, `projects`, `experience` e `skills` (inclui formação, certificações e idiomas) com Zod. Frontmatter inválido, case sem par PT/EN ou métrica sem `source` quebra o build |
-| I-09 | Contador dinâmico de anos em dados | S/Low | - | I-01 | Not started | Função `yearsSince` a partir de 2019-09-01, usada na home. Testes unitários cobrem 2026-08-31 → 6, 2026-09-01 → 7 e 2026-11-15 → 7; busca no repo não encontra o número escrito à mão em conteúdo |
-| I-10 | Recorte de experiências | M/High | - | I-07, I-08 | Not started | `experience.yaml` com as seis experiências do CV, datas em mês e ano, em PT e EN. As seis entradas aparecem com os períodos e cargos do CV; nenhuma frase fora da fonte; o inglês é revisão do Filipe no release |
-| I-11 | Home | M/High | - | I-06, I-08, I-09, I-10 | Not started | Título "Engenheiro de Dados Sênior", foto, contador, localização, experiências, skills, destaque do case e contato (e-mail, LinkedIn, GitHub). A foto não entra neste repositório (D-021): `scripts/prepare-assets.mjs` lê `photos/portrait.jpg` de `.assets/` (ou de `ASSETS_DIR`), recorta com `sharp` para `src/assets/generated/` e o Astro gera AVIF/WebP com texto alternativo; sem `.assets/`, o script sai com código 0 e a home mostra um placeholder neutro. Com o secret, o CI confere que a foto real está em `dist/`. Depende dos passos manuais do Filipe na ADR-0001 (D-021). Em viewport mobile, nome, foto, título, contador, cidade e links de contato aparecem sem rolagem; não há telefone |
+| I-05 | Identidade visual | Lo/- | Md/- | I-01 | Not started | Paleta, tipografia, escala de espaçamento e tokens como variáveis CSS, com uma página de amostra dos componentes para aprovação. Todo par de texto e fundo da paleta tem contraste ≥ 4,5:1; as fontes são servidas localmente; o Filipe aprova a amostra antes de a I-06 fechar |
+| I-06 | Layout base | Lo/- | Md/- | I-05 | Not started | Cabeçalho, rodapé, navegação, seletor de idioma e link de pular para o conteúdo, usando os tokens. Navegação completa por teclado com foco visível e zero violações axe |
+| I-07 | Roteamento PT/EN | Med/- | Md/- | I-02 | Not started | PT na raiz, EN em `/en/`, seletor de idioma e textos de interface em dicionário. Dado que estou numa página com par, quando uso o seletor, então chego à página equivalente; o `hreflang` é recíproco |
+| I-08 | Collections e schemas | Med/- | Md/- | I-01 | Not started | `cases`, `projects`, `experience` e `skills` (inclui formação, certificações e idiomas) com Zod. Frontmatter inválido, case sem par PT/EN ou métrica sem `source` quebra o build |
+| I-09 | Contador dinâmico de anos em dados | Lo/- | Sm/- | I-01 | Not started | Função `yearsSince` a partir de 2019-09-01, usada na home. Testes unitários cobrem 2026-08-31 → 6, 2026-09-01 → 7 e 2026-11-15 → 7; busca no repo não encontra o número escrito à mão em conteúdo |
+| I-10 | Recorte de experiências | Hi/- | Md/- | I-07, I-08 | Not started | `experience.yaml` com as seis experiências do CV, datas em mês e ano, em PT e EN. As seis entradas aparecem com os períodos e cargos do CV; nenhuma frase fora da fonte; o inglês é revisão do Filipe no release |
+| I-11 | Home | Hi/- | Md/- | I-06, I-08, I-09, I-10 | Not started | Título "Engenheiro de Dados Sênior", foto, contador, localização, experiências, skills, destaque do case e contato (e-mail, LinkedIn, GitHub). A foto não entra neste repositório (D-021): `scripts/prepare-assets.mjs` lê `photos/portrait.jpg` de `.assets/` (ou de `ASSETS_DIR`), recorta com `sharp` para `src/assets/generated/` e o Astro gera AVIF/WebP com texto alternativo; sem `.assets/`, o script sai com código 0 e a home mostra um placeholder neutro. Com o secret, o CI confere que a foto real está em `dist/`. Depende dos passos manuais do Filipe na ADR-0001 (D-021). Em viewport mobile, nome, foto, título, contador, cidade e links de contato aparecem sem rolagem; não há telefone |
 
 ---
 
@@ -112,15 +112,15 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 - [ ] Inglês revisado pelo Filipe.
 - [ ] Issue de release (I-18) fechada.
 
-| ID | Título | Expected | Seen | Depende de | Status | Aceite |
+| ID | Título | Expected/Seen Risk | Expected/Seen Size | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-12 | Mermaid em SVG no build | M/Med | - | I-08 | Not started | `rehype-mermaid` com Playwright no CI. A página com diagrama não carrega JS de Mermaid e o SVG tem título e descrição |
-| I-13 | Template de case | M/Low | - | I-07, I-08 | Not started | Página com as oito seções do modelo e bloco de resumo. Um case de exemplo renderiza todas as seções em PT e EN |
-| I-14 | Case open-data-platform | L/High | - | I-12, I-13 | Not started | Leitura do repo, perguntas ao Filipe, redação em PT e EN e pelo menos dois diagramas. Toda afirmação técnica aponta para arquivo ou documento do repo ou para resposta do Filipe; todo número tem fonte; lacunas ficam registradas na issue, não preenchidas |
-| I-15 | Galeria de projetos | M/Med | - | I-07, I-08 | Not started | `projects.yaml` e página com dois grupos, "Engenharia de dados" em destaque e "Análise e ML" abaixo. Os dez projetos da tabela abaixo aparecem com os links indicados; os quatro com link antigo divergente guardam o antigo em `legacyLinks`; cada URL foi testada e as quebradas estão listadas na issue; `dra-victoria-laufer` existe com `kind: client` e `draft: true` e não é publicado; `opendatasus_flu_analysis`, `agent-skills` e `filipe-portfolio` não aparecem |
-| I-16 | Skills, certificações, formação e idiomas na home | M/High | - | I-08, I-11 | Not started | Preenche `skills.yaml` com o conteúdo já decidido no plano. Não é condicional e bloqueia o release (I-18). A home mostra os grupos de skills, as quatro certificações só com o ano de obtenção, a formação e os idiomas, em PT e EN; nada inventado fora do CV |
-| I-17 | SEO básico | M/Med | - | I-07, I-11 | Not started | Metadados, canonical, `hreflang`, Open Graph estático, sitemap, `robots.txt` e JSON-LD. O sitemap lista todas as rotas com o caminho base correto e o validador de dados estruturados não aponta erros |
-| I-18 | Release do MVP | S/High | - | I-03, I-04, I-11, I-14, I-15, I-16, I-17 | Not started | Checklist final e revisão do Filipe, inclusive dos textos em inglês traduzidos a partir do CV. Lighthouse ≥ 95 em home, case e galeria; zero violações axe; todos os links internos válidos; Filipe aprova os textos PT e EN |
+| I-12 | Mermaid em SVG no build | Med/- | Md/- | I-08 | Not started | `rehype-mermaid` com Playwright no CI. A página com diagrama não carrega JS de Mermaid e o SVG tem título e descrição |
+| I-13 | Template de case | Lo/- | Md/- | I-07, I-08 | Not started | Página com as oito seções do modelo e bloco de resumo. Um case de exemplo renderiza todas as seções em PT e EN |
+| I-14 | Case open-data-platform | Hi/- | Lg/- | I-12, I-13 | Not started | Leitura do repo, perguntas ao Filipe, redação em PT e EN e pelo menos dois diagramas. Toda afirmação técnica aponta para arquivo ou documento do repo ou para resposta do Filipe; todo número tem fonte; lacunas ficam registradas na issue, não preenchidas |
+| I-15 | Galeria de projetos | Med/- | Md/- | I-07, I-08 | Not started | `projects.yaml` e página com dois grupos, "Engenharia de dados" em destaque e "Análise e ML" abaixo. Os dez projetos da tabela abaixo aparecem com os links indicados; os quatro com link antigo divergente guardam o antigo em `legacyLinks`; cada URL foi testada e as quebradas estão listadas na issue; `dra-victoria-laufer` existe com `kind: client` e `draft: true` e não é publicado; `opendatasus_flu_analysis`, `agent-skills` e `filipe-portfolio` não aparecem |
+| I-16 | Skills, certificações, formação e idiomas na home | Hi/- | Md/- | I-08, I-11 | Not started | Preenche `skills.yaml` com o conteúdo já decidido no plano. Não é condicional e bloqueia o release (I-18). A home mostra os grupos de skills, as quatro certificações só com o ano de obtenção, a formação e os idiomas, em PT e EN; nada inventado fora do CV |
+| I-17 | SEO básico | Med/- | Md/- | I-07, I-11 | Not started | Metadados, canonical, `hreflang`, Open Graph estático, sitemap, `robots.txt` e JSON-LD. O sitemap lista todas as rotas com o caminho base correto e o validador de dados estruturados não aponta erros |
+| I-18 | Release do MVP | Hi/- | Sm/- | I-03, I-04, I-11, I-14, I-15, I-16, I-17 | Not started | Checklist final e revisão do Filipe, inclusive dos textos em inglês traduzidos a partir do CV. Lighthouse ≥ 95 em home, case e galeria; zero violações axe; todos os links internos válidos; Filipe aprova os textos PT e EN |
 
 ### Projetos da I-15
 
@@ -147,12 +147,12 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 
 **Critério de saída:** cada issue fecha de forma independente.
 
-| ID | Título | Expected | Seen | Depende de | Status | Aceite |
+| ID | Título | Expected/Seen Risk | Expected/Seen Size | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-19 | Página detalhada de experiência profissional | L/High | - | I-18 e respostas do Filipe | Not started | A issue começa com perguntas ao Filipe sobre cada experiência (escopo, decisões, resultados, o que é confidencial) e só então escreve. Números profissionais do CV entram aqui, não no MVP. Todo conteúdo vem das respostas registradas na issue |
-| I-20 | Fichas de projetos profissionais e de cliente | M/High | - | I-19 | Not started | Inclui `dra-victoria-laufer`, hoje reservado só com a descrição pública do GitHub. A ficha só é publicada com texto aprovado pelo Filipe |
-| I-21 | Cases de A Conta e PedsLetter | L/High | - | I-13 e insumos do Filipe | Not started | Projetos novos; dependem de links e material do Filipe. Mesmo critério da I-14 |
-| I-22 | Blog com RSS | M/Low | - | I-18 | Not started | Lista, post, tags e feed, publicado quando houver dois ou três posts. Feed válido e rascunho ausente em produção |
+| I-19 | Página detalhada de experiência profissional | Hi/- | Lg/- | I-18 e respostas do Filipe | Not started | A issue começa com perguntas ao Filipe sobre cada experiência (escopo, decisões, resultados, o que é confidencial) e só então escreve. Números profissionais do CV entram aqui, não no MVP. Todo conteúdo vem das respostas registradas na issue |
+| I-20 | Fichas de projetos profissionais e de cliente | Hi/- | Md/- | I-19 | Not started | Inclui `dra-victoria-laufer`, hoje reservado só com a descrição pública do GitHub. A ficha só é publicada com texto aprovado pelo Filipe |
+| I-21 | Cases de A Conta e PedsLetter | Hi/- | Lg/- | I-13 e insumos do Filipe | Not started | Projetos novos; dependem de links e material do Filipe. Mesmo critério da I-14 |
+| I-22 | Blog com RSS | Lo/- | Md/- | I-18 | Not started | Lista, post, tags e feed, publicado quando houver dois ou três posts. Feed válido e rascunho ausente em produção |
 
 ---
 
@@ -165,11 +165,11 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 - [ ] Domínio com HTTPS.
 - [ ] Sitemap enviado.
 
-| ID | Título | Expected | Seen | Depende de | Status | Aceite |
+| ID | Título | Expected/Seen Risk | Expected/Seen Size | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-23 | Domínio customizado e HTTPS | S/High | - | Compra do domínio e I-02 | Not started | Passos do domínio listados abaixo. Dado o DNS propagado, quando acesso `https://filipeoliveira-hub.com.br`, então o site carrega com certificado válido, `www` e a URL `github.io` redirecionam, e canonical e sitemap usam o domínio |
-| I-24 | Analytics com GoatCounter | S/Med | - | I-18 | Not started | Script do GoatCounter e eventos de clique nos links de LinkedIn, GitHub, e-mail e repositórios. Um clique em link de saída gera evento no painel e nenhum cookie é criado |
-| I-25 | Search Console | S/Low | - | I-23 | Not started | Propriedade verificada e sitemap aceito |
+| I-23 | Domínio customizado e HTTPS | Hi/- | Sm/- | Compra do domínio e I-02 | Not started | Passos do domínio listados abaixo. Dado o DNS propagado, quando acesso `https://filipeoliveira-hub.com.br`, então o site carrega com certificado válido, `www` e a URL `github.io` redirecionam, e canonical e sitemap usam o domínio |
+| I-24 | Analytics com GoatCounter | Med/- | Sm/- | I-18 | Not started | Script do GoatCounter e eventos de clique nos links de LinkedIn, GitHub, e-mail e repositórios. Um clique em link de saída gera evento no painel e nenhum cookie é criado |
+| I-25 | Search Console | Lo/- | Sm/- | I-23 | Not started | Propriedade verificada e sitemap aceito |
 
 ### Passos do domínio (I-23)
 
@@ -190,11 +190,11 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 
 **Critério de saída:** cada issue fecha de forma independente.
 
-| ID | Título | Expected | Seen | Depende de | Status | Aceite |
+| ID | Título | Expected/Seen Risk | Expected/Seen Size | Depende de | Status | Aceite |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-26 | Imagem Open Graph por página | M/Low | - | I-17 | Not started | Case e galeria têm imagem própria de 1200×630 |
-| I-27 | Tema escuro | M/Low | - | I-05 | Not started | Contraste AA nos dois temas, inclusive nos diagramas |
-| I-28 | Arquivar o portfólio antigo | S/Med | - | I-18 | Not started | Depois do release: despublicar o GitHub Pages de `filipe-portfolio` e arquivar o repositório. Arquivar sozinho não tira o site antigo do ar. O Pages antigo deixa de ser servido e o repositório fica arquivado |
+| I-26 | Imagem Open Graph por página | Lo/- | Md/- | I-17 | Not started | Case e galeria têm imagem própria de 1200×630 |
+| I-27 | Tema escuro | Lo/- | Md/- | I-05 | Not started | Contraste AA nos dois temas, inclusive nos diagramas |
+| I-28 | Arquivar o portfólio antigo | Med/- | Sm/- | I-18 | Not started | Depois do release: despublicar o GitHub Pages de `filipe-portfolio` e arquivar o repositório. Arquivar sozinho não tira o site antigo do ar. O Pages antigo deixa de ser servido e o repositório fica arquivado |
 
 ---
 
@@ -216,7 +216,7 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 
 | Data | Mudança |
 | --- | --- |
-| 2026-11-24 | Nova I-29: traduzir a documentação para inglês. `verified` não exige mais aprovação dupla. Tamanho e risco substituem pequena/grande no fluxo (`AGENTS.md` §4.1); toda issue ganhou nota Expected |
+| 2026-11-24 | Nova I-29: traduzir a documentação para inglês. `verified` não exige mais aprovação dupla. Tamanho e risco substituem pequena/grande no fluxo (`AGENTS.md` §4.1); toda issue ganhou as colunas Expected/Seen Risk e Size |
 | 2026-11-20 | Fluxo de desenvolvimento simplificado (D-019): merge na `main` com o Filipe |
 | 2026-11-17 | D-021 (fotos no repositório privado de assets): aceite da I-03, I-04 e I-11 ajustado; risco de assets privados adicionado |
 | 2026-11-15 | Roadmap inicial: fases 0 a 5 e issues I-01 a I-28 do plano final, todas `not started` |

@@ -54,7 +54,7 @@ An entry point of the issue that was not run is not verified. Say which one and 
 
 ### 4.1 Size and risk
 
-- Every issue carries a Size (S, M, L) and a Risk (Low, Med, High) on the scale in `~/.agents/claude/workflow.md`. Ratings go in the roadmap's Expected and Seen columns (format in the same file); until an issue has one, Claude rates it in the plan.
+- Every issue carries a Size (S, M, L) and a Risk (Low, Med, High) on the scale in `~/.agents/claude/workflow.md`. Ratings go in the roadmap's "Expected/Seen Risk" and "Expected/Seen Size" columns (format in the same file); until an issue has one, Claude rates it in the plan.
 - **S + Low:** Claude plans and implements straight through to the PR.
 - **Anything else:** Claude plans and **stops**: it presents the plan in the thread and waits for Filipe's approval before touching code. Approval arrives in the same thread, sometimes with adjustments; apply them before implementing.
 - **High risk or L size:** the thread runs at Opus high effort, set when it starts; Claude never switches its own model or effort. An L plan says whether to split the issue.
@@ -126,7 +126,7 @@ Filipe makes the final decisions and approves significant changes.
 
 Before the closing commit, on the issue branch, check each item and update only what the verified evidence supports:
 
-- `ROADMAP.md`: the issue status, a Changelog line, the Last updated date, and the Seen rating once the roadmap has the rating columns.
+- `ROADMAP.md`: the issue status, a Changelog line, the Last updated date, and the seen half of its Risk and Size.
 - `PROJECT_STATUS.md`: the phase table, Next work consistent with the acceptance, and the Last updated date.
 - `docs/status-log.md`: a new entry with what was done and what the checks showed.
 - `DECISIONS.md`: a decision changes state, or gains the Implementado column, only with evidence from a verified issue.

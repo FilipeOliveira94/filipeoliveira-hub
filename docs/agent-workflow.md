@@ -12,7 +12,7 @@ The flow is **branch + PR per issue**. Claude in T3 commits, pushes only the iss
 Follow AGENTS.md.
 
 I want to work on issue: <I-NN> — <title>.
-Rating: <S|M|L> / <Low|Med|High> (the roadmap's Expected rating; estimate it in the plan if missing).
+Rating: <S|M|L> / <Low|Med|High> (the expected half of the roadmap's Risk and Size columns; estimate it in the plan if missing).
 
 First read the code, the docs, the issue in ROADMAP.md, the acceptance criterion and PROJECT_STATUS.md. Do not edit files yet.
 
