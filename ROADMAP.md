@@ -6,14 +6,14 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 
 | Roadmap | Current |
 | --- | --- |
-| Last updated | 2026-11-20 |
+| Last updated | 2026-11-24 |
 
 **Tamanhos:** P até meio dia · M de um a dois dias · G de três a cinco dias.
 
 **Status:** `not started` · `in progress` · `delivered` · `verified` · `blocked`
 
 - **delivered:** a mudança existe na branch da issue e o PR está aberto.
-- **verified:** o critério de aceite foi conferido, o resultado está em `docs/status-log.md` e a entrega teve aprovação dupla, PO e Reviewer.
+- **verified:** o critério de aceite foi conferido e o resultado está em `docs/status-log.md`.
 - Não comece uma issue antes de as dependências dela estarem verificadas.
 - Não crie diretórios vazios para fases que ainda não começaram.
 - Cada issue é feita em branch própria, com PR. Regras em `AGENTS.md`.
@@ -46,6 +46,20 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 
 ---
 
+## Tamanho e risco
+
+Toda issue tem um Size (S, M, L) e um Risk (Low, Med, High) na escala de `~/.agents/claude/workflow.md` (repositório `FilipeOliveira94/agent-config`). A nota decide se o Claude para para aprovação do plano e o esforço inicial do modelo (`AGENTS.md` §4.1). Risco alto aqui está em `AGENTS.md` §3, "Agent workflow". A coluna Tam. é a estimativa antiga, em dias; para planejar, vale esta tabela.
+
+As issues em aberto da fase atual estão abaixo. As de outra fase ganham nota quando a fase abrir, ou no plano da issue. Ao fechar uma issue, anote o tamanho real ao lado da estimativa.
+
+| Issue | Size | Risk | Motivo |
+| --- | --- | --- | --- |
+| I-01 | S | Low | Estrutura Astro e lint; nada publicado ainda |
+| I-02 | S | Low | Helper do caminho base; a verificação de links cobre os dois casos |
+| I-03 | S | High | Workflow de deploy e deploy key dos assets privados (D-021): um erro publica o site quebrado ou expõe o repositório de assets |
+| I-04 | M | Med | Várias verificações de CI (axe, Lighthouse, par PT/EN, fotos); um erro aparece no próprio PR |
+| I-29 | M | Low | Tradução de muitos arquivos; o conteúdo do site não muda |
+
 ## Visão das fases
 
 | Fase | Escopo | Issues | Critério de saída | Status |
@@ -76,6 +90,7 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 | I-02 | Caminho base configurável | P | I-01 | Not started | `site` e `base` lidos de variáveis e helper único para links e assets. Dado `BASE_PATH=/filipeoliveira-hub` ou `BASE_PATH=/`, quando o build roda, então a verificação de links em `dist/` passa nos dois casos |
 | I-03 | Deploy no GitHub Pages | P | I-02 | Not started | Workflow de publicação em `main` com `configure-pages` e `deploy-pages`. Dado um push em `main`, quando o workflow termina, então a URL do Pages serve a nova versão com CSS e assets carregando. O workflow roda também em `pull_request` (sem deploy) e, quando o secret `ASSETS_DEPLOY_KEY` existe, faz o checkout de `FilipeOliveira94/filipeoliveira-hub-assets` em `.assets/` com `persist-credentials: false` (D-021); sem o secret, o build passa. O checkout principal usa `fetch-depth: 0` para a verificação de fotos da I-04 |
 | I-04 | Verificações de PR | M | I-01 | Not started | `astro check`, build, verificação de links, axe e Lighthouse CI. Um PR com link interno quebrado, violação axe ou nota abaixo de 95 falha. O CI também falha se faltar o par PT/EN de uma página ou item de conteúdo, e se um arquivo de imagem estiver rastreado ou for adicionado por um commit do PR (`scripts/check-no-photos.mjs`, D-021) |
+| I-29 | Traduzir a documentação do repositório para inglês | M | — | Not started | ROADMAP, PROJECT_STATUS, DECISIONS, `docs/` e README em inglês (decisão do Filipe, 2026-11-24; o `AGENTS.md` e os prompts já estão em inglês). O conteúdo do site não muda: segue com o par PT e EN. IDs de issue e de decisão não mudam |
 
 ---
 
@@ -215,6 +230,7 @@ Só depois da compra de `filipeoliveira-hub.com.br`:
 
 | Data | Mudança |
 | --- | --- |
+| 2026-11-24 | Tamanho e risco (escala do agent-config) substituem pequena/grande; notas das issues abertas da fase 0. Nova I-29: traduzir a documentação para inglês. `verified` não exige mais aprovação dupla |
 | 2026-11-20 | Fluxo de desenvolvimento simplificado (D-019): merge na `main` com o Filipe |
 | 2026-11-17 | D-021 (fotos no repositório privado de assets): aceite da I-03, I-04 e I-11 ajustado; risco de assets privados adicionado |
 | 2026-11-15 | Roadmap inicial: fases 0 a 5 e issues I-01 a I-28 do plano final, todas `not started` |

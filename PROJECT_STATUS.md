@@ -11,7 +11,7 @@ Ledger operacional da **fase corrente**. O backlog de issues e o texto de aceite
 
 **Status:** not started · in progress · delivered · verified · blocked
 
-**Verified** significa que o critério de aceite foi conferido, que a evidência está em `docs/status-log.md` e que a entrega teve aprovação dupla, PO e Reviewer. Não trate o que está planejado como pronto.
+**Verified** significa que o critério de aceite foi conferido e que a evidência está em `docs/status-log.md`. Não trate o que está planejado como pronto.
 
 **O que entra aqui:** objetivo atual, progresso das issues da fase corrente, aceite da fase, última validação, decisões que travam este trabalho, riscos ativos, bloqueios e próximo trabalho.
 
