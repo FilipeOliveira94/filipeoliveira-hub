@@ -57,7 +57,7 @@ An entry point of the issue that was not run is not verified. Say which one and 
 - Every issue carries a Size (S, M, L) and a Risk (Low, Med, High) on the scale in `~/.agents/claude/workflow.md`. Ratings go in the roadmap's "Expected/Seen Risk" and "Expected/Seen Size" columns (format in the same file); until an issue has one, Claude rates it in the plan.
 - **S + Low:** Claude plans and implements straight through to the PR.
 - **Anything else:** Claude plans and **stops**: it presents the plan in the thread and waits for Filipe's approval before touching code. Approval arrives in the same thread, sometimes with adjustments; apply them before implementing.
-- **High risk or L size:** the thread runs at Opus high effort, set when it starts; Claude never switches its own model or effort. An L plan says whether to split the issue.
+- **High risk or L size:** the thread runs at Opus high effort, set when it starts; Claude never switches its model or effort by itself; a switch happens only when Filipe decides it. An L plan says whether to split the issue.
 - Claude may raise a rating while planning and says why; it never lowers one without Filipe.
 
 ## 5. Git and delivery

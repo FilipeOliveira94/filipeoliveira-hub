@@ -41,7 +41,7 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 **Removido do plano:**
 
 - Currículo em HTML e PDF para baixar.
-- `opendatasus_flu_analysis`, `agent-skills` e o portfólio antigo como item da galeria.
+- `opendatasus_flu_analysis`, `agent-config` e o portfólio antigo como item da galeria.
 - Telefone, e os cursos Hadoop/Spark e Django listados junto das certificações no CV, ficam fora do site por padrão.
 
 ---
@@ -117,7 +117,7 @@ O plano final deixava o push e a criação do repositório no GitHub com o Filip
 | I-12 | Mermaid em SVG no build | Med/- | Md/- | I-08 | Not started | `rehype-mermaid` com Playwright no CI. A página com diagrama não carrega JS de Mermaid e o SVG tem título e descrição |
 | I-13 | Template de case | Lo/- | Md/- | I-07, I-08 | Not started | Página com as oito seções do modelo e bloco de resumo. Um case de exemplo renderiza todas as seções em PT e EN |
 | I-14 | Case open-data-platform | Hi/- | Lg/- | I-12, I-13 | Not started | Leitura do repo, perguntas ao Filipe, redação em PT e EN e pelo menos dois diagramas. Toda afirmação técnica aponta para arquivo ou documento do repo ou para resposta do Filipe; todo número tem fonte; lacunas ficam registradas na issue, não preenchidas |
-| I-15 | Galeria de projetos | Med/- | Md/- | I-07, I-08 | Not started | `projects.yaml` e página com dois grupos, "Engenharia de dados" em destaque e "Análise e ML" abaixo. Os dez projetos da tabela abaixo aparecem com os links indicados; os quatro com link antigo divergente guardam o antigo em `legacyLinks`; cada URL foi testada e as quebradas estão listadas na issue; `dra-victoria-laufer` existe com `kind: client` e `draft: true` e não é publicado; `opendatasus_flu_analysis`, `agent-skills` e `filipe-portfolio` não aparecem |
+| I-15 | Galeria de projetos | Med/- | Md/- | I-07, I-08 | Not started | `projects.yaml` e página com dois grupos, "Engenharia de dados" em destaque e "Análise e ML" abaixo. Os dez projetos da tabela abaixo aparecem com os links indicados; os quatro com link antigo divergente guardam o antigo em `legacyLinks`; cada URL foi testada e as quebradas estão listadas na issue; `dra-victoria-laufer` existe com `kind: client` e `draft: true` e não é publicado; `opendatasus_flu_analysis`, `agent-config` e `filipe-portfolio` não aparecem |
 | I-16 | Skills, certificações, formação e idiomas na home | Hi/- | Md/- | I-08, I-11 | Not started | Preenche `skills.yaml` com o conteúdo já decidido no plano. Não é condicional e bloqueia o release (I-18). A home mostra os grupos de skills, as quatro certificações só com o ano de obtenção, a formação e os idiomas, em PT e EN; nada inventado fora do CV |
 | I-17 | SEO básico | Med/- | Md/- | I-07, I-11 | Not started | Metadados, canonical, `hreflang`, Open Graph estático, sitemap, `robots.txt` e JSON-LD. O sitemap lista todas as rotas com o caminho base correto e o validador de dados estruturados não aponta erros |
 | I-18 | Release do MVP | Hi/- | Sm/- | I-03, I-04, I-11, I-14, I-15, I-16, I-17 | Not started | Checklist final e revisão do Filipe, inclusive dos textos em inglês traduzidos a partir do CV. Lighthouse ≥ 95 em home, case e galeria; zero violações axe; todos os links internos válidos; Filipe aprova os textos PT e EN |

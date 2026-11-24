@@ -67,7 +67,7 @@
 **Removido do plano:**
 
 - Currículo em HTML e PDF para baixar.
-- `opendatasus_flu_analysis`, `agent-skills` e o portfólio antigo como item da galeria.
+- `opendatasus_flu_analysis`, `agent-config` e o portfólio antigo como item da galeria.
 - Telefone, e os cursos Hadoop/Spark e Django listados junto das certificações no CV.
 
 ## Como registrar uma nova decisão
