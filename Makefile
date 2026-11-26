@@ -7,7 +7,7 @@ BASE_PATH ?= /
 CHROME_PATH ?= $(lastword $(wildcard $(HOME)/.cache/ms-playwright/chromium-*/chrome-linux64/chrome))
 export CHROME_PATH
 
-.PHONY: help install dev build check lint test links photos pairs axe lighthouse verify docs-lint clean
+.PHONY: help install dev build check lint test links photos pairs axe lighthouse domain verify docs-lint clean
 
 help: ## Lists the available targets
 	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  %-10s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -44,6 +44,10 @@ axe: ## Runs axe on every page of dist/ in light and dark (needs Chrome)
 
 lighthouse: ## Runs Lighthouse CI on dist/ built with BASE_PATH=/ (needs Chrome)
 	$(NPM) run lighthouse
+
+domain: ## Checks the live custom domain: HTTPS, certificate and redirects (SITE_URL and PAGES_URL required)
+	@test -n "$(SITE_URL)" -a -n "$(PAGES_URL)" || { echo "Usage: make domain SITE_URL=https://<domain> PAGES_URL=https://<user>.github.io/<repo>/"; exit 2; }
+	node scripts/check-domain.mjs --site "$(SITE_URL)" --pages "$(PAGES_URL)"
 
 verify: lint check test docs-lint photos ## Everything CI runs: builds and checks in both base path modes, axe and Lighthouse
 	BASE_PATH=/ $(NPM) run build && BASE_PATH=/ $(NPM) run links
