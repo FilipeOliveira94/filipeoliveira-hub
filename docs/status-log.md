@@ -4,6 +4,23 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-26 — PR checks (I-04) and I-01 verified
+
+Branch `feat/i-04-pr-checks`. Rating raised from Med/Md to Hi/Md in the plan, approved by Filipe: the change edits the deploy workflow and builds the guard for the no-photos rule.
+
+- `scripts/check-no-photos.mjs` fails on an image file outside the D-027 places (`src/assets/{brand,diagrams,projects}/` and the 12 favicon names of the assets repository's `brand/favicon/` at the root of `public/`). It checks the index and, with `--range`, every file each commit adds or changes, including what a merge commit brings in, so an image deleted by a later commit still fails. An image is found by its extension or by its first bytes (JPEG, PNG, GIF, WebP, AVIF/HEIF, TIFF and RAW, JPEG XL, JPEG 2000, PSD, BMP). Only git objects are read, so `.assets/` is never looked at. CI passes the PR's `base..head`, or the pushed range on `main`.
+- `scripts/check-pairs.mjs` fails when a page in `dist/` lacks its mirror under `en/` (or the reverse; `404.html` exempt) or when a file under `src/content/<collection>/pt/` lacks its `en/` pair (or the reverse).
+- `scripts/check-axe.mjs` serves `dist/` under `BASE_PATH` and runs axe-core 4.14.0 (every non-experimental rule) through `puppeteer-core` 25.18.0 on every page, in light and dark.
+- `lighthouserc.cjs` runs Lighthouse CI (`@lhci/cli` 0.16.1, Lighthouse 13.6.0) on every page of the root build: accessibility, best practices or SEO below 0.95 fail; `is-crawlable` is skipped while the site is `noindex` (I-18 removes both). `scripts/lighthouse-summary.mjs` writes the four scores to the job summary; the reports are an Actions artifact for 14 days. Nothing is uploaded to a public host.
+- `deploy.yml`: the image check runs right after checkout, before `npm ci`; pairs, axe and Lighthouse run after the root build and also gate the deploy of `main`. The `deploy` job, the permissions and the assets key step are unchanged.
+- `scripts/lib/dist.mjs` holds the `dist/` helpers that `check-links.mjs`, axe and the pair check share. New placeholder component; `src/pages/en/index.astro` is the EN pair with the D-022 English title, and both pages have a meta description made of the name and that title. The axe run found the placeholder link below 3:1 in dark, because `body` had no background and axe measured against white; `body` now uses `Canvas` and `CanvasText`.
+
+Checked locally with Playwright Chromium 1255 as `CHROME_PATH`: `make verify` passes (ESLint, `astro check` 0 errors, 32 unit tests, docs-lint, image check, both base path builds and link checks, pairs, axe, Lighthouse). The image check over the whole history (`--range HEAD`, 27 commits) passes. Lighthouse on both pages: performance 100, accessibility 100, best practices 96 (`favicon.ico` 404 in the console), SEO 100. Before the fixes, `npm run pairs` failed on `index.html` without an EN pair, and SEO scored 50 (`noindex`, no meta description). A throwaway page outside the repository with an image without `alt`, no `lang` and no `main` fails axe (10 violations across light and dark) and Lighthouse (accessibility 71, SEO 71, exit 1). Unit tests cover the failing cases of the image check (renamed JPEG, image added then deleted, image moved out of an allowed directory, text overwritten with image bytes, merge commit) with bytes generated in temporary repositories. Not verified yet: the run on GitHub's runner with its Google Chrome; that is read on the PR. Seen rating: Hi risk, Md size.
+
+I-01 verified: run 45817084985 on `main` built and deployed; the Pages API reports `build_type: workflow`; `https://filipeoliveira94.github.io/filipeoliveira-hub/` answers 200 with the placeholder, its link under `/filipeoliveira-hub/` and its inline CSS.
+
+---
+
 ### 2026-11-26 — Astro structure, base path and deploy (I-01)
 
 Branch `feat/i-01-astro-deploy`. New Astro 7.4.13 project with `@astrojs/mdx` 8.1.6, strict TypeScript 6.0.3 (the newest `@astrojs/check` 0.9.12 accepts), ESLint 10 with `eslint-plugin-astro` and `typescript-eslint`, all pinned, on Node 22.23.4 (`.nvmrc`). `astro.config.mjs` reads `site` from `SITE_URL` and `base` from `BASE_PATH`; the URL is not written in code. `src/lib/paths.ts` holds the single helper, `withBase`, over a pure `joinBase` that the unit tests cover. `src/pages/index.astro` is a placeholder with the name and the D-022 title, `lang="pt-BR"` and `noindex` until I-18. `scripts/check-links.mjs` fails on any `href`, `src`, `srcset` or CSS `url()` in `dist/` that is outside the base path, has no file, or names a missing `#id`.

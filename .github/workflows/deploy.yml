@@ -45,13 +45,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          # Full history: the photo check of I-04 reads every commit of the PR.
+          # Full history: the image check reads every commit of the PR.
           fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
+      # Runs before anything else: no image outside the D-027 places may be
+      # tracked or added by a commit, even one a later commit deletes (D-021).
+      # It needs only git and Node, so it runs before the dependencies.
+      - name: Check for image files (D-021, D-027)
+        run: node scripts/check-no-photos.mjs --range "$RANGE"
+        env:
+          # A pull request checks its own commits; a push, the pushed ones.
+          RANGE: ${{ github.event_name == 'pull_request' && format('{0}..{1}', github.event.pull_request.base.sha, github.event.pull_request.head.sha) || format('{0}..{1}', github.event.before, github.sha) }}
       # Photos and brand originals from the private repository (D-021), with a
       # read-only deploy key scoped to it. The key is not left in .git/config.
       - name: Fetch private assets
@@ -81,6 +89,28 @@ jobs:
         run: npm run links
         env:
           BASE_PATH: /
+      # PR checks of I-04 (D-014, D-015) on the root build. A failure here
+      # also stops the deploy of main.
+      - name: Check PT/EN pairs
+        run: npm run pairs
+      - name: Accessibility (axe, light and dark)
+        run: npm run axe
+        env:
+          BASE_PATH: /
+      - name: Lighthouse CI
+        id: lighthouse
+        run: npm run lighthouse
+      - name: Lighthouse scores in the job summary
+        if: ${{ !cancelled() && steps.lighthouse.outcome != 'skipped' }}
+        run: node scripts/lighthouse-summary.mjs >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the Lighthouse reports
+        if: ${{ !cancelled() && steps.lighthouse.outcome != 'skipped' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          include-hidden-files: true
+          retention-days: 14
       - name: Build under the project path (BASE_PATH=/filipeoliveira-hub)
         run: npm run build
         env:

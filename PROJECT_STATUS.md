@@ -5,7 +5,7 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 | Project | Current |
 | --- | --- |
 | Repository | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
-| Last updated | 2026-11-26 (America/Sao_Paulo). I-01 delivered (Astro project, base path helper, link check, Pages workflow); the deploy is checked after the merge |
+| Last updated | 2026-11-26 (America/Sao_Paulo). I-01 verified (the Pages URL serves the placeholder); I-04 delivered (image, PT/EN pair, axe and Lighthouse checks) |
 | Current phase | Phase 0 — Foundation |
 | Phase status | In progress |
 
@@ -21,13 +21,13 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 ## Current objective
 
-**Phase 0 — Foundation.** I-29 (docs in English) is verified. I-01 is delivered: the Astro project builds a placeholder home page, every internal link goes through `withBase` (`src/lib/paths.ts`), and `.github/workflows/deploy.yml` builds and checks every PR and deploys `main` to GitHub Pages. The deploy itself is verified after Filipe merges the PR.
+**Phase 0 — Foundation.** I-29 and I-01 are verified: the first deploy from `main` serves the placeholder at `https://filipeoliveira94.github.io/filipeoliveira-hub/`. I-04 is delivered: the `build` job of `deploy.yml` now fails on an image file outside the D-027 places (tracked or added by any commit of the PR), on a missing PT/EN pair, on an axe violation in light or dark, and on Lighthouse accessibility, best practices or SEO below 95; performance goes to the job summary.
 
 ## Next work
 
-1. **I-01 after the merge** — set Settings → Pages → Source = GitHub Actions if the API still reports `build_type: legacy`, then check that the first run on `main` deploys and that the Pages URL serves the placeholder. Then I-01 moves to verified.
-2. **I-04** — PR checks (Med, Md): axe, Lighthouse, the PT/EN pair check and the photo check, on top of the I-01 workflow.
-3. **I-23** — Custom domain and HTTPS (Hi, Sm), once I-01 is merged. The DNS and the Pages settings are Filipe's manual steps.
+1. **I-04 after the PR's CI** — read the PR run (axe and Lighthouse with the runner's Chrome, the job summary table, the reports artifact). Once it is green and merged, I-04 moves to verified.
+2. **I-23** — Custom domain and HTTPS (Hi, Sm). The DNS and the Pages settings are Filipe's manual steps.
+3. **I-05** — Brand tokens and component sample (Lo, Sm); its favicons also remove the `favicon.ico` 404 that keeps best practices at 96.
 4. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phases 0 and 1 are built.
 
 ---
@@ -36,10 +36,10 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 | ID | Title | Status | Evidence |
 | --- | --- | --- | --- |
-| I-01 | Astro structure, base path and deploy to GitHub Pages | Delivered | `docs/status-log.md` (2026-11-26); deploy pending the merge |
+| I-01 | Astro structure, base path and deploy to GitHub Pages | Verified | `docs/status-log.md` (2026-11-26) |
 | I-02 | Configurable base path | Withdrawn | Merged into I-01 |
 | I-03 | Deploy to GitHub Pages | Withdrawn | Merged into I-01 |
-| I-04 | PR checks | Not started | — |
+| I-04 | PR checks | Delivered | `docs/status-log.md` (2026-11-26); CI of the PR pending |
 | I-23 | Custom domain and HTTPS | Not started | — |
 | I-29 | Translate the repository docs to English | Verified | `docs/status-log.md` (2026-11-25) |
 
@@ -57,9 +57,9 @@ Acceptance text of each issue: `ROADMAP.md` → Phase 0.
 | Validation | Detail |
 | --- | --- |
 | Date | 2026-11-26 |
-| Environment | Local checkout in WSL2, Node 22.23.4; GitHub Actions on the I-01 PR |
-| Checks | `make verify`: ESLint, `astro check`, 11 unit tests, `make docs-lint`, build and link check with `BASE_PATH=/` and `BASE_PATH=/filipeoliveira-hub` |
-| Result | All pass locally. A build at the root checked with `BASE_PATH=/filipeoliveira-hub` fails the link check, as it should. The deploy job runs only after the merge |
+| Environment | Local checkout in WSL2, Node 22.23.4, Playwright Chromium 1255 as `CHROME_PATH`; GitHub Actions on the I-04 PR |
+| Checks | `make verify`: ESLint, `astro check`, 32 unit tests (axe tests in a real browser included), docs-lint, image check, both base path builds with the link check, PT/EN pairs, axe in light and dark, Lighthouse CI |
+| Result | All pass locally. Lighthouse on both placeholder pages: performance 100, accessibility 100, best practices 96 (`favicon.ico` 404), SEO 100 with `is-crawlable` skipped. A throwaway bad page fails axe and Lighthouse (accessibility 71, SEO 71) |
 
 ---
 
@@ -95,7 +95,9 @@ Full index: [`DECISIONS.md`](DECISIONS.md). Only the ones that block the current
 
 ## Risks and limitations
 
-- GitHub Pages reported `build_type: legacy` (deploy from a branch) on 2026-11-26. Until Filipe sets Source = GitHub Actions, the deploy job of the workflow fails.
+- The Lighthouse `is-crawlable` audit is skipped while the site is `noindex`. I-18 removes both; until then a `noindex` left by mistake is not caught by CI.
+- Best practices sits at 96 because `favicon.ico` returns 404; one more failing audit would drop it below 95. The favicons of I-05 remove the 404.
+- The image check guards paths and file contents, not intent: a photo saved in an allowed directory (for example `src/assets/projects/`) passes it. Review stays the guard there.
 - An internal link written without the base path helper breaks only under the `github.io` path. CI builds and runs `scripts/check-links.mjs` for both values of `BASE_PATH`.
 - The repository is public. Drafts are visible in it, even with `draft: true`.
 - The photo and the CV were received in the T3 thread and are not in the repository. I-11 and I-16 depend on them. The photo never enters this repository: it goes to the private `filipeoliveira-hub-assets` repository, which needs the deploy key and the secret before I-11 (D-021).
@@ -111,6 +113,10 @@ None.
 ## Log
 
 Recent entries only. Full history: [`docs/status-log.md`](docs/status-log.md).
+
+### 2026-11-26 — PR checks (I-04) and I-01 verified
+
+Branch `feat/i-04-pr-checks`. Image, PT/EN pair, axe and Lighthouse checks in the `build` job; EN placeholder at `/en/`. I-01 verified after the first deploy. Detail in `docs/status-log.md`.
 
 ### 2026-11-26 — Astro structure, base path and deploy (I-01)
 

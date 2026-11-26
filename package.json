@@ -12,7 +12,11 @@
     "check": "astro check",
     "lint": "eslint .",
     "test": "node --test \"src/**/*.test.mjs\" \"scripts/**/*.test.mjs\"",
-    "links": "node scripts/check-links.mjs"
+    "links": "node scripts/check-links.mjs",
+    "photos": "node scripts/check-no-photos.mjs --range origin/main..HEAD",
+    "pairs": "node scripts/check-pairs.mjs",
+    "axe": "node scripts/check-axe.mjs",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@astrojs/mdx": "8.1.6",
@@ -21,9 +25,12 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "@eslint/js": "10.0.1",
+    "@lhci/cli": "0.16.1",
+    "axe-core": "4.14.0",
     "eslint": "10.15.0",
     "eslint-plugin-astro": "3.2.1",
     "globals": "17.14.0",
+    "puppeteer-core": "25.18.0",
     "typescript": "6.0.3",
     "typescript-eslint": "8.74.0"
   }

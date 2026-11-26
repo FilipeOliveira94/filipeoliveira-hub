@@ -56,12 +56,18 @@ make check     # astro check
 make lint      # ESLint
 make test      # unit tests (Node's built-in test runner)
 make links     # link and asset check on dist/ for BASE_PATH
+make photos    # no image outside the D-027 places, tracked or added since origin/main
+make pairs     # every page in dist/ and every content item has its PT/EN pair
+make axe       # axe on every page of dist/, in light and dark (needs Chrome)
+make lighthouse # Lighthouse CI on dist/ built with BASE_PATH=/ (needs Chrome)
 make verify    # everything CI runs, in both base path modes
 make docs-lint # checks the Markdown tables
-make clean     # removes dist/ and .astro/
+make clean     # removes dist/, .astro/ and .lighthouseci/
 ```
 
 `SITE_URL` and `BASE_PATH` set Astro's `site` and `base`. Locally both may be left unset. In CI they come from `actions/configure-pages`. Every internal link and asset goes through `withBase` in `src/lib/paths.ts`; a link written without it fails `make links` under `BASE_PATH=/filipeoliveira-hub`.
+
+`make axe` and `make lighthouse` need Chrome. The Makefile uses the newest Playwright Chromium in `~/.cache/ms-playwright` when there is one; otherwise set `CHROME_PATH` or install Google Chrome. In CI, accessibility, best practices or SEO below 95 fail the PR and the performance score is reported in the job summary (D-014). The site is `noindex` until the release, so the Lighthouse `is-crawlable` audit is skipped until I-18.
 
 The private assets (D-021) are fetched into `.assets/` only by CI, with the `ASSETS_DEPLOY_KEY` secret. The build passes without them.
 

@@ -1,6 +1,10 @@
 node_modules/
 dist/
 .astro/
+# Lighthouse CI reports (I-04), and the Chrome profiles chrome-launcher leaves
+# under a Windows-style name when it runs in WSL.
+.lighthouseci/
+C:*
 # Private assets, fetched by CI from filipeoliveira-hub-assets (D-021).
 .assets/
 .env
