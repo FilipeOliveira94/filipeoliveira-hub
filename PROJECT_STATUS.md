@@ -7,7 +7,7 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 | Repository | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
 | Last updated | 2026-11-26 (America/Sao_Paulo). Phase 0 verified: I-23 puts the site on `https://filipeoliveira-hub.com.br`; I-04 verified |
 | Current phase | Phase 1 — Identity and home |
-| Phase status | Not started |
+| Phase status | In progress |
 
 **Status:** not started · in progress · delivered · verified · blocked
 
@@ -25,9 +25,10 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 ## Next work
 
-1. **I-05** — Brand tokens and component sample (Lo, Sm); its favicons also remove the `favicon.ico` 404 that keeps best practices at 96.
-2. **I-07, I-08, I-09** — PT/EN routing, collections and the years counter; they depend only on I-01.
-3. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phase 1 is built.
+1. **I-05** — Filipe approves the component sample at `/brand/` (needed before I-06 closes).
+2. **I-06** — Base layout (Lo, Md), on the I-05 tokens and logo.
+3. **I-07, I-08, I-09** — PT/EN routing, collections and the years counter; they depend only on I-01.
+4. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phase 1 is built.
 
 ---
 
@@ -35,7 +36,7 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 | ID | Title | Status | Evidence |
 | --- | --- | --- | --- |
-| I-05 | Brand tokens and component sample | Not started | — |
+| I-05 | Brand tokens and component sample | Delivered | `docs/status-log.md` 2026-11-26; sample at `/brand/` awaits Filipe's approval |
 | I-06 | Base layout | Not started | — |
 | I-07 | PT/EN routing | Not started | — |
 | I-08 | Collections and schemas | Not started | — |

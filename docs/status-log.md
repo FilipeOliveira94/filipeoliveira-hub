@@ -4,6 +4,20 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-26 — Brand tokens and component sample (I-05)
+
+Branch `feat/i-05-brand-tokens`. The brand comes from the private assets repository at commit `358a354` (D-023), copied unchanged into the D-027 places and listed in `src/assets/brand/README.md`: `tokens.css`, the four logo SVGs, Urbanist 500 and 700 (woff2, with `OFL.txt`), and `favicon.ico`, `favicon.svg` and `apple-touch-icon.png` at the root of `public/`. No photo was copied.
+
+- `src/styles/global.css` imports the tokens and adds the local `@font-face` rules, color roles (`--color-*` over `--fi-*`), a 1.25 type scale, a nine-step spacing scale, radii, visible focus (3px accent outline), reduced motion, and the base components (button, secondary button, tag, card). `--fi-dot` is decorative only: 3.78:1 on the light background.
+- `src/components/BaseHead.astro` holds the shared meta, the favicon links and the global styles; the placeholder pages use it, so they show the brand font and colors in both themes.
+- `src/lib/contrast.mjs` lists every text/background pair the roles use; its test parses `tokens.css` and fails below 4.5:1 in light or dark, and checks that the `prefers-color-scheme` block matches `[data-theme="dark"]`. Lowest pair: `--fi-muted` on `--fi-b1`, 5.17:1 light and 6.75:1 dark.
+- `/brand/` and `/en/brand/` show the logo, colors with the contrast table, type and spacing scales and the components, `noindex` like every page.
+- `scripts/check-links.mjs` now parses `srcset` as the HTML spec does: Vite inlines the small Fi mark as a `data:` URL, whose commas the old split broke into a false broken link.
+
+Checked: `astro check` 0 errors, ESLint, 62 unit tests pass (2 axe tests skipped without `CHROME_PATH`), link check with `BASE_PATH=/` and `/filipeoliveira-hub`, PT/EN pairs, axe on 4 pages in light and dark, docs-lint and the image check pass. Lighthouse CI on the 4 pages: 100 in all four categories; best practices was 96 before, from the `favicon.ico` 404. Browser proof on the preview build (Chromium, 1440 and 390 px, light and dark, PT and EN): Urbanist 500 and 700 load from the site, no third-party request, no console error or failed request, no horizontal scroll, the logo switches to its dark file in dark, and Tab shows the 3px focus outline on each link and button. Seen rating: Lo risk, Md size (about 700 hand-written lines). Pending: Filipe's approval of the sample.
+
+---
+
 ### 2026-11-26 — Custom domain (I-23), I-04 verified, phase 0 verified
 
 Branch `feat/i-23-custom-domain`. Filipe verified `filipeoliveira-hub.com.br` on the GitHub account (TXT `_github-pages-challenge-FilipeOliveira94`), created the four A and four AAAA apex records and the `www` CNAME to `filipeoliveira94.github.io` in the Registro.br DNS, set the domain in Settings → Pages and ticked Enforce HTTPS. No `public/CNAME`: GitHub ignores it when an Actions workflow publishes the site. No code change for `SITE_URL` and `BASE_PATH`: `configure-pages` now reports the domain and an empty base path.

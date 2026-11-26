@@ -42,7 +42,8 @@ const t = {
     components: 'Componentes',
     primary: 'Ação principal',
     secondary: 'Ação secundária',
-    link: 'Um link no meio do texto',
+    link: 'um link no meio do texto',
+    cardLink: 'Link dentro do card',
     paragraph: 'Parágrafo de exemplo em Urbanist 500, com',
     paragraphEnd: 'e texto auxiliar em tom mais suave.',
     mutedText: 'Texto auxiliar em --color-text-muted.',
@@ -74,7 +75,8 @@ const t = {
     components: 'Components',
     primary: 'Primary action',
     secondary: 'Secondary action',
-    link: 'A link inside the text',
+    link: 'a link inside the text',
+    cardLink: 'A link inside the card',
     paragraph: 'Sample paragraph in Urbanist 500, with',
     paragraphEnd: 'and supporting text in a softer tone.',
     mutedText: 'Supporting text in --color-text-muted.',
@@ -315,7 +317,7 @@ const home = lang === 'en' ? '/en/' : '/';
           <div class="row">
             {t.tags.map((tag) => <span class="tag">{tag}</span>)}
           </div>
-          <a href={withBase(home)}>{t.link}</a>
+          <a href={withBase(home)}>{t.cardLink}</a>
         </article>
       </section>
     </main>
