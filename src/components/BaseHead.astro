@@ -1,0 +1,23 @@
+---
+// The <head> contents every page shares (I-05): meta, favicons and the global
+// styles with the brand tokens. noindex stays until the release (I-18).
+import { withBase } from '../lib/paths';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="description" content={description} />
+<title>{title}</title>
+<!-- Rounded dark box icons (Filipe's choice over the transparent favicon.svg).
+     favicon.ico stays in public/ for clients that request it without a link. -->
+<link rel="icon" href={withBase('/icon-192-rounded.png')} type="image/png" sizes="192x192" />
+<link rel="apple-touch-icon" href={withBase('/apple-touch-icon-rounded.png')} />

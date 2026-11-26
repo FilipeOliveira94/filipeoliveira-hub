@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { checkLinks } from './check-links.mjs';
+import { checkLinks, srcsetUrls } from './check-links.mjs';
 
 async function site(files) {
   const dir = await mkdtemp(path.join(tmpdir(), 'check-links-'));
@@ -55,4 +55,12 @@ test('a root link fails when the site is under a project path', async () => {
   assert.equal(errors.length, 1);
   assert.match(errors[0], /outside the base path/);
   await rm(dir, { recursive: true });
+});
+
+test('srcsetUrls keeps a data: URL with commas whole', () => {
+  assert.deepEqual(srcsetUrls('/a.svg 1x, /b.svg 2x'), ['/a.svg', '/b.svg']);
+  assert.deepEqual(srcsetUrls("data:image/svg+xml,%3csvg%20a='1,2'%3e"), ["data:image/svg+xml,%3csvg%20a='1,2'%3e"]);
+  assert.deepEqual(srcsetUrls('/a.svg 480w, data:x,y 800w'), ['/a.svg', 'data:x,y']);
+  assert.deepEqual(srcsetUrls('/a.svg, /b.svg'), ['/a.svg', '/b.svg']);
+  assert.deepEqual(srcsetUrls('  '), []);
 });

@@ -1,7 +1,7 @@
 ---
 // Placeholder page until the real home page (I-06, I-11), shared by the PT
-// and EN pairs. noindex stays until the release (I-18). The only claims are
-// the name and the approved title of D-022.
+// and EN pairs. The only claims are the name and the approved title of D-022.
+import BaseHead from './BaseHead.astro';
 import { withBase } from '../lib/paths';
 
 interface Props {
@@ -16,29 +16,17 @@ const { lang, title, home } = Astro.props;
 <!doctype html>
 <html lang={lang}>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="description" content={`Filipe Oliveira — ${title}`} />
-    <title>Filipe Oliveira</title>
+    <BaseHead title="Filipe Oliveira" description={`Filipe Oliveira — ${title}`} />
     <style>
-      :root {
-        color-scheme: light dark;
-        font-family: system-ui, sans-serif;
-      }
       body {
-        margin: 0;
         min-height: 100vh;
         display: grid;
         place-content: center;
         text-align: center;
-        padding: 1rem;
-        /* An explicit background, so contrast is measured against the theme's own. */
-        background: Canvas;
-        color: CanvasText;
+        padding: var(--space-4);
       }
-      h1 {
-        margin: 0 0 0.5rem;
+      p {
+        color: var(--color-text-muted);
       }
     </style>
   </head>
