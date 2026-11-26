@@ -1,38 +1,6 @@
 ---
-// Placeholder home page until the real one (I-06). noindex stays until the
-// release (I-18). The only claim is the approved title of D-022.
-import { withBase } from '../lib/paths';
+// PT placeholder home page; its EN pair is en/index.astro (D-003).
+import PlaceholderPage from '../components/PlaceholderPage.astro';
 ---
 
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>Filipe Oliveira</title>
-    <style>
-      :root {
-        color-scheme: light dark;
-        font-family: system-ui, sans-serif;
-      }
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-content: center;
-        text-align: center;
-        padding: 1rem;
-      }
-      h1 {
-        margin: 0 0 0.5rem;
-      }
-    </style>
-  </head>
-  <body>
-    <main id="main">
-      <h1><a href={withBase('/')}>Filipe Oliveira</a></h1>
-      <p>Engenheiro de Dados &amp; Software</p>
-    </main>
-  </body>
-</html>
+<PlaceholderPage lang="pt-BR" title="Engenheiro de Dados & Software" home="/" />

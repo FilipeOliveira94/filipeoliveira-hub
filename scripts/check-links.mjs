@@ -3,29 +3,12 @@
 // Checks href, src and srcset in every HTML file and url() in every CSS file.
 // An absolute internal URL must start with the base path and point to a file
 // in dist/; a #fragment must match an id on the target page.
-import { readFile, readdir, stat } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { normalizeBase, resolveFile, walk } from './lib/dist.mjs';
 
 const EXTERNAL = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-
-async function walk(dir) {
-  const out = [];
-  for (const entry of await readdir(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...(await walk(full)));
-    else out.push(full);
-  }
-  return out;
-}
-
-async function isFile(file) {
-  try {
-    return (await stat(file)).isFile();
-  } catch {
-    return false;
-  }
-}
 
 function htmlRefs(html) {
   const refs = [];
@@ -51,22 +34,12 @@ function ids(html) {
   return new Set([...html.matchAll(/\sid\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)].map((m) => m[1] ?? m[2]));
 }
 
-/** Resolves a URL path inside dist/ to a file, the way GitHub Pages does. */
-async function resolveFile(distDir, sitePath) {
-  const rel = decodeURIComponent(sitePath).replace(/^\/+/, '');
-  const candidates = rel === '' || rel.endsWith('/')
-    ? [path.join(distDir, rel, 'index.html')]
-    : [path.join(distDir, rel), path.join(distDir, rel, 'index.html'), path.join(distDir, `${rel}.html`)];
-  for (const c of candidates) if (await isFile(c)) return c;
-  return null;
-}
-
 /**
  * Returns the list of broken references in distDir for the given base path.
  * Each item is "<file>: <reference> (<reason>)".
  */
 export async function checkLinks(distDir, basePath = '/') {
-  const base = `/${basePath.replace(/^\/+|\/+$/g, '')}/`.replace(/^\/\/$/, '/');
+  const base = normalizeBase(basePath);
   const files = await walk(distDir);
   const errors = [];
   const idCache = new Map();
