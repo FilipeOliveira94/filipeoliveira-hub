@@ -1,0 +1,233 @@
+/*
+ * Site-wide styles (I-05). Brand colors come from the assets repository's
+ * tokens.css (D-023), copied unchanged into src/assets/brand/. This file adds
+ * the local Urbanist faces, the semantic color roles, the spacing and type
+ * scales, and the base element and component styles. Light and dark follow
+ * prefers-color-scheme with no switch.
+ *
+ * Every text/background pair used below is listed in src/lib/contrast.mjs and
+ * checked for >= 4.5:1 in both themes by its test. --fi-dot is decorative only:
+ * it is 3.78:1 on the light background, so it never colors text.
+ */
+@import '../assets/brand/tokens.css';
+
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/brand/fonts/urbanist-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/brand/fonts/urbanist-latin-700-normal.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* Color roles. Pairs are checked in src/lib/contrast.mjs. */
+  --color-bg: var(--fi-bg);
+  --color-surface: var(--fi-c0);
+  --color-surface-strong: var(--fi-b1);
+  --color-border: var(--fi-b2);
+  --color-text: var(--fi-ink);
+  --color-text-muted: var(--fi-muted);
+  --color-link: var(--fi-accent);
+  --color-accent: var(--fi-accent);
+  --color-on-accent: var(--fi-bg);
+  --color-focus: var(--fi-accent);
+  --color-dot: var(--fi-dot);
+
+  /* Type: Urbanist 500 for text, 700 for headings and the name (DESIGN.md). */
+  --font-sans: 'Urbanist', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --weight-regular: 500;
+  --weight-bold: 700;
+  --tracking-tight: -0.02em;
+
+  /* Type scale: major third (1.25) from 1rem; the two largest steps grow
+     with the viewport. */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5625rem;
+  --text-xl: clamp(1.5625rem, 1.2rem + 1.6vw, 1.953rem);
+  --text-2xl: clamp(1.953rem, 1.4rem + 2.4vw, 2.441rem);
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+
+  /* Spacing scale: 4px steps at the small end, then wider. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Shape. 22% is the brand's cell corner; these are the UI radii. */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --border-width: 1px;
+  --focus-width: 3px;
+
+  --measure: 68ch;
+  --page-max: 72rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  font-synthesis: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--space-4);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-2xl);
+}
+
+h2 {
+  font-size: var(--text-xl);
+}
+
+h3 {
+  font-size: var(--text-lg);
+}
+
+h4 {
+  font-size: var(--text-md);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+  max-width: var(--measure);
+}
+
+strong,
+b {
+  font-weight: var(--weight-bold);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.14em;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Components shown on the sample page. I-06 and later issues use them. */
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.button:hover {
+  text-decoration: underline;
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--color-link);
+}
+
+.tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  line-height: var(--leading-tight);
+}
+
+.card {
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.card > :last-child {
+  margin-bottom: 0;
+}

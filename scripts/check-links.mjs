@@ -16,12 +16,33 @@ function htmlRefs(html) {
     refs.push(m[1] ?? m[2]);
   }
   for (const m of html.matchAll(/\ssrcset\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)) {
-    for (const part of (m[1] ?? m[2]).split(',')) {
-      const url = part.trim().split(/\s+/)[0];
-      if (url) refs.push(url);
-    }
+    refs.push(...srcsetUrls(m[1] ?? m[2]));
   }
   return refs;
+}
+
+/**
+ * The URLs of a srcset, parsed as the HTML spec does: a URL runs to the next
+ * whitespace, so a data: URL with commas inside stays whole; a trailing comma
+ * ends a candidate without descriptors.
+ */
+export function srcsetUrls(srcset) {
+  const urls = [];
+  let rest = srcset;
+  for (;;) {
+    rest = rest.replace(/^[\s,]+/, '');
+    if (!rest) return urls;
+    let url = rest.match(/^\S+/)[0];
+    rest = rest.slice(url.length);
+    if (url.endsWith(',')) {
+      url = url.replace(/,+$/, '');
+    } else {
+      // Skip the descriptors, up to the comma that ends the candidate.
+      const end = rest.indexOf(',');
+      rest = end === -1 ? '' : rest.slice(end + 1);
+    }
+    if (url) urls.push(url);
+  }
 }
 
 function cssRefs(css) {

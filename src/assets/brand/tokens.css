@@ -1,0 +1,42 @@
+/* Gerado por tools/brand/build.mjs a partir de brand/fi-grid.mjs. Não edite à mão. */
+:root {
+  --fi-bg: #FFFFFF;
+  --fi-ink: #241A3D;
+  --fi-muted: #5E5470;
+  --fi-accent: #5B2BB8;
+  --fi-c0: #F3F0F9;
+  --fi-b1: #E2D8F6;
+  --fi-b2: #C9B6F0;
+  --fi-l2: #8458DB;
+  --fi-l3: #5D2DBE;
+  --fi-l4: #3C1089;
+  --fi-dot: #F0377F;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fi-bg: #120B20;
+    --fi-ink: #F1ECFA;
+    --fi-muted: #B3A8C9;
+    --fi-accent: #C9ADFF;
+    --fi-c0: #1A1229;
+    --fi-b1: #2B1E4A;
+    --fi-b2: #42306F;
+    --fi-l2: #8A62E8;
+    --fi-l3: #B08CFF;
+    --fi-l4: #DECDFF;
+    --fi-dot: #FF6FA6;
+  }
+}
+:root[data-theme="dark"] {
+  --fi-bg: #120B20;
+  --fi-ink: #F1ECFA;
+  --fi-muted: #B3A8C9;
+  --fi-accent: #C9ADFF;
+  --fi-c0: #1A1229;
+  --fi-b1: #2B1E4A;
+  --fi-b2: #42306F;
+  --fi-l2: #8A62E8;
+  --fi-l3: #B08CFF;
+  --fi-l4: #DECDFF;
+  --fi-dot: #FF6FA6;
+}
