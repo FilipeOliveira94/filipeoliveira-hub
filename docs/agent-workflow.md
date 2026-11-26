@@ -1,6 +1,6 @@
 # Workflow prompts
 
-Three prompts drive an issue: plan, implement and close. The rules live in [`AGENTS.md`](../AGENTS.md). Replace the fields between `<>` and run the plan prompt first. Above S + Low, the plan is approved before any file change; an S + Low issue goes straight to the PR (AGENTS.md §4.1).
+Three prompts drive an issue: plan, implement and close. The rules live in [`AGENTS.md`](../AGENTS.md). Replace the fields between `<>` and run the plan prompt first. Above Sm + Lo, the plan is approved before any file change; an Sm + Lo issue goes straight to the PR (AGENTS.md §4.1).
 
 The flow is **branch + PR per issue**. Claude in T3 commits, pushes only the issue branch, opens the PR with a summary and reads the CI. It never pushes to `main` and never merges (AGENTS.md §5).
 
@@ -12,7 +12,7 @@ The flow is **branch + PR per issue**. Claude in T3 commits, pushes only the iss
 Follow AGENTS.md.
 
 I want to work on issue: <I-NN> — <title>.
-Rating: <S|M|L> / <Low|Med|High> (the expected half of the roadmap's Risk and Size columns; estimate it in the plan if missing).
+Rating: <Sm|Md|Lg> / <Lo|Med|Hi> (the expected half of the roadmap's Risk and Size columns; estimate it in the plan if missing).
 
 First read the code, the docs, the issue in ROADMAP.md, the acceptance criterion and PROJECT_STATUS.md. Do not edit files yet.
 
@@ -28,10 +28,10 @@ Return:
 9. For a content issue: the source of each piece of information (CV, old portfolio or Filipe's answer) and the questions that need an answer before writing.
 10. The Size and Risk, and whether planning raises either.
 
-Keep the scope to this issue. Do not implement future phases and do not change the stack silently. If the issue turns out bigger or riskier, raise the rating and say why. Above S + Low: present the plan and wait for my approval before editing. S + Low: go straight on to implement and close.
+Keep the scope to this issue. Do not implement future phases and do not change the stack silently. If the issue turns out bigger or riskier, raise the rating and say why. Above Sm + Lo: present the plan and wait for my approval before editing. Sm + Lo: go straight on to implement and close.
 ```
 
-## 2. Implement (straight away for S + Low; after the plan is approved otherwise)
+## 2. Implement (straight away for Sm + Lo; after the plan is approved otherwise)
 
 ```text
 Follow AGENTS.md.

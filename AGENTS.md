@@ -28,7 +28,7 @@ Language, size and risk, and model policy: `~/.agents/claude/workflow.md` (repo 
 
 - **Profile:** solo. Claude Opus 5.5 plans and implements; no review subagents.
 - **Language:** English for everything; site content always in a PT and EN pair (§6).
-- **High risk here:** the deploy workflow and the assets deploy key (D-021); content claims without a source (§6); anything that could publish a photo, a phone number or a CV file.
+- **Hi risk here:** the deploy workflow and the assets deploy key (D-021); content claims without a source (§6); anything that could publish a photo, a phone number or a CV file.
 - **Model exceptions:** none
 
 ## 4. Required workflow
@@ -37,7 +37,7 @@ For each issue:
 
 1. Read `PROJECT_STATUS.md`, the issue in `ROADMAP.md` and the related decisions in `DECISIONS.md`.
 2. Check dependencies, assumptions, risks and the issue's acceptance criterion.
-3. Check the issue's Size and Risk (section 4.1) and plan it. Above S + Low, present the plan and wait for Filipe's approval before editing files.
+3. Check the issue's Size and Risk (section 4.1) and plan it. Above Sm + Lo, present the plan and wait for Filipe's approval before editing files.
 4. Create a branch for the issue from an up-to-date `main` (section 5).
 5. Implement the smallest coherent increment that meets the acceptance.
 6. Run the issue's checks (`make check`, `make build` and whatever the acceptance asks for) and read the result.
@@ -54,10 +54,10 @@ An entry point of the issue that was not run is not verified. Say which one and 
 
 ### 4.1 Size and risk
 
-- Every issue carries a Size (S, M, L) and a Risk (Low, Med, High) on the scale in `~/.agents/claude/workflow.md`. Ratings go in the roadmap's "Expected/Seen Risk" and "Expected/Seen Size" columns (format in the same file); until an issue has one, Claude rates it in the plan.
-- **S + Low:** Claude plans and implements straight through to the PR.
+- Every issue carries a Size (Sm, Md, Lg) and a Risk (Lo, Med, Hi) on the scale in `~/.agents/claude/workflow.md`. Ratings go in the roadmap's "Expected/Seen Risk" and "Expected/Seen Size" columns (format in the same file); until an issue has one, Claude rates it in the plan.
+- **Sm + Lo:** Claude plans and implements straight through to the PR.
 - **Anything else:** Claude plans and **stops**: it presents the plan in the thread and waits for Filipe's approval before touching code. Approval arrives in the same thread, sometimes with adjustments; apply them before implementing.
-- **High risk or L size:** the thread runs at Opus high effort, set when it starts; Claude never switches its model or effort by itself; a switch happens only when Filipe decides it. An L plan says whether to split the issue.
+- **Hi risk or Lg size:** the thread runs at Opus high effort, set when it starts; Claude never switches its model or effort by itself; a switch happens only when Filipe decides it. An Lg plan says whether to split the issue.
 - Claude may raise a rating while planning and says why; it never lowers one without Filipe.
 
 ## 5. Git and delivery

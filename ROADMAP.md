@@ -8,7 +8,7 @@ As fases e as issues I-01 a I-28 vêm do plano final do PO (`filipeoliveira-hub-
 | --- | --- |
 | Last updated | 2026-11-24 |
 
-**Expected/Seen Risk e Size:** cada célula é `esperado/visto`. Risk é `Lo`, `Med` ou `Hi`; Size é `Sm`, `Md` ou `Lg` (escala em `~/.agents/claude/workflow.md`, repositório `FilipeOliveira94/agent-config`; risco alto aqui está em `AGENTS.md` §3). Uma issue aberta tem só a metade esperada (`Med/-`, `Md/-`); a metade vista é preenchida quando ela fecha. Substitui a antiga coluna Tam. (P/M/G em dias).
+**Expected/Seen Risk e Size:** cada célula é `esperado/visto`. Risk é `Lo`, `Med` ou `Hi`; Size é `Sm`, `Md` ou `Lg` (escala em `~/.agents/claude/workflow.md`, repositório `FilipeOliveira94/agent-config`; `Hi risk here` está em `AGENTS.md` §3). Uma issue aberta tem só a metade esperada (`Med/-`, `Md/-`); a metade vista é preenchida quando ela fecha. Substitui a antiga coluna Tam. (P/M/G em dias).
 
 **Status:** `not started` · `in progress` · `delivered` · `verified` · `blocked`
 
