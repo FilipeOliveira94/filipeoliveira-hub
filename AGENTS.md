@@ -2,9 +2,9 @@
 
 ## 1. Project goal
 
-Filipe Oliveira's portfolio site. It is proof of seniority for Senior, Staff, Principal and Specialist Data Engineering roles, in Brazil and remote, showing decisions, trade-offs and results.
+Filipe Oliveira's site: his data and software engineering work, shown through case studies with architecture diagrams, projects and an experience summary, with the decisions, trade-offs and results of each. Site text never says it is looking for a job.
 
-The site is static, built with Astro and published on GitHub Pages at `FilipeOliveira94/filipeoliveira-hub`, with Portuguese at the root and English under `/en/`. Scope, phases and issues are in `ROADMAP.md`. Settled decisions are in `DECISIONS.md`.
+The site is static, built with Astro and published on GitHub Pages from `FilipeOliveira94/filipeoliveira-hub` at `filipeoliveira-hub.com.br`, with Portuguese at the root and English under `/en/`. Scope, phases and issues are in `ROADMAP.md`. Settled decisions are in `DECISIONS.md`.
 
 ## 2. Language
 
@@ -81,16 +81,16 @@ An entry point of the issue that was not run is not verified. Say which one and 
 - No phone number on the site.
 - Every content item and every page has a PT and EN pair. English derived from the CV is a translation and needs Filipe's review before the release (I-18).
 - The number of years of experience is never written by hand in any content file. It comes from the `yearsSince` function (I-09).
-- Photos and source images do not go into this repository, not even in an intermediate commit. The originals live in the private `filipeoliveira-hub-assets` repository and the build fetches them (D-021).
+- Photos do not go into this repository, not even in an intermediate commit. The originals live in the private `filipeoliveira-hub-assets` repository and the build fetches them (D-021). Diagrams, project images and brand files go only in the directories listed in D-027.
 - Do not version secrets, tokens or `.env` files with real values. The repository is public, and a draft with `draft: true` is visible in it too.
 
 ## 7. Technical principles
 
 - Prefer the simple solution. The site is content and ships the minimum JavaScript to the client.
-- Every internal link and every asset goes through the base path helper (I-02). A link written without the helper breaks only in production.
+- Every internal link and every asset goes through the base path helper (I-01). A link written without the helper breaks only in production.
 - Astro's `site` and `base` come from the `SITE_URL` and `BASE_PATH` variables. Do not write the site URL in code.
 - Content lives in collections with a Zod schema. Invalid frontmatter breaks the build.
-- Accessibility: WCAG 2.2 AA, contrast ≥ 4.5:1, visible focus, keyboard navigation, `lang` per page and a text summary for each diagram.
+- Accessibility: WCAG 2.2 AA, contrast ≥ 4.5:1, visible focus, keyboard navigation, `lang` per page, light and dark themes by system setting (D-023) and a text summary for each diagram.
 - Performance: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1, JS ≤ 50 KB per page, local fonts and AVIF/WebP images with explicit dimensions.
 - Pin dependency versions and version the lockfile.
 - Do not add a dependency, service or tool without explaining what it is for and what it costs to maintain.

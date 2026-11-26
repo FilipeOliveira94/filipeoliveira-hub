@@ -4,6 +4,18 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-25 — Roadmap revision
+
+Branch `docs/roadmap-revision`, docs only. A review of the roadmap found that the MVP left out most of what the site is for: the professional work was in phase 3, the plan asked for two diagrams, the project cards had no images, and the identity was still "created from scratch" although the brand was approved on 2026-11-18 in the assets repository. Filipe answered five questions in the thread and agreed with the rest of the review.
+
+Decisions D-022 to D-029: the home page title is "Engenheiro de Dados & Software"; the site uses the approved brand in light and dark by system setting; diagrams are branded SVG files, not Mermaid; the hero uses video version 4, the if/fi moment and the Fi grid; the domain is bought and is set in phase 0; work images are allowed in listed directories; the MVP has two or three short professional case studies; the projects page groups current and earlier projects, with images. D-004, D-005, D-010, D-013 and D-017 are superseded. D-014 no longer fails a PR on the Lighthouse performance score.
+
+Roadmap: I-02 and I-03 are merged into I-01, and I-27 into I-05, I-06 and I-12. I-23 moves to phase 0. New issues I-30 (hero), I-31 (Fi grid) and I-32 (short professional case studies). `AGENTS.md` §1 and the README no longer say the site supports a job search, and `AGENTS.md` §6 points to D-027 for images.
+
+Checked: `make docs-lint` passes. No site code was written. Hosting stays on GitHub Pages (D-002).
+
+---
+
 ### 2026-11-25 — Agent workflow, ratings and English docs (I-29)
 
 Branch `chore/agent-workflow` (PR #6), docs only. The project adopts the agent workflow in `~/.agents/claude/workflow.md` (repo `FilipeOliveira94/agent-config`) with profile `solo`: Claude Opus 5.5 plans and implements, with no PO or Reviewer bots and no review subagents. Size and risk replace the small or large task rule (`AGENTS.md` §4.1). Every issue in `ROADMAP.md` has Expected/Seen Risk and Size columns; all of them were open, so they have only the expected half. `verified` no longer needs double approval. D-019 revised. New issue I-29.

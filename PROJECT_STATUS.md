@@ -5,7 +5,7 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 | Project | Current |
 | --- | --- |
 | Repository | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
-| Last updated | 2026-11-25 (America/Sao_Paulo). Agent workflow and ratings adopted; I-29 verified (docs in English); no site issue started |
+| Last updated | 2026-11-25 (America/Sao_Paulo). Roadmap revised with Filipe (D-022 to D-029); I-29 verified (docs in English); no site issue started |
 | Current phase | Phase 0 — Foundation |
 | Phase status | In progress |
 
@@ -27,7 +27,9 @@ The repository has only the documentation structure: agent instructions, roadmap
 
 ## Next work
 
-1. **I-01** — Create the repository and the Astro structure (Lo, Sm). Astro with TypeScript, MDX and lint. Acceptance: `npm run build` produces `dist/` without errors and `astro check` passes. Done on its own branch, with a PR. Detail: `ROADMAP.md` → Phase 0.
+1. **I-01** — Astro structure, base path and deploy to GitHub Pages (Hi, Md). Astro with TypeScript, MDX and lint, `SITE_URL` and `BASE_PATH` with the link helper, and the publishing workflow. Hi risk because of the deploy workflow: the plan stops for Filipe's approval. Detail: `ROADMAP.md` → Phase 0.
+2. **I-23** — Custom domain and HTTPS (Hi, Sm), once I-01 is merged. The DNS and the Pages settings are Filipe's manual steps.
+3. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phases 0 and 1 are built.
 
 ---
 
@@ -35,17 +37,18 @@ The repository has only the documentation structure: agent instructions, roadmap
 
 | ID | Title | Status | Evidence |
 | --- | --- | --- | --- |
-| I-01 | Create the repository and the Astro structure | Not started | — |
-| I-02 | Configurable base path | Not started | — |
-| I-03 | Deploy to GitHub Pages | Not started | — |
+| I-01 | Astro structure, base path and deploy to GitHub Pages | Not started | — |
+| I-02 | Configurable base path | Withdrawn | Merged into I-01 |
+| I-03 | Deploy to GitHub Pages | Withdrawn | Merged into I-01 |
 | I-04 | PR checks | Not started | — |
+| I-23 | Custom domain and HTTPS | Not started | — |
 | I-29 | Translate the repository docs to English | Verified | `docs/status-log.md` (2026-11-25) |
 
 Acceptance text of each issue: `ROADMAP.md` → Phase 0.
 
 ### Phase 0 acceptance
 
-- [ ] The Pages URL serves the home page.
+- [ ] `https://filipeoliveira-hub.com.br` serves the home page over HTTPS.
 - [ ] CI is green.
 
 ---
@@ -68,9 +71,12 @@ Full index: [`DECISIONS.md`](DECISIONS.md). Only the ones that block the current
 | ID | Relevance | State |
 | --- | --- | --- |
 | D-001 | I-01 generates the project in Astro, with TypeScript and MDX | `approved` |
-| D-002 | I-03 publishes to GitHub Pages with Source = GitHub Actions | `approved` |
-| D-008 | I-02 reads `SITE_URL` and `BASE_PATH` and creates the link and asset helper | `approved` |
+| D-002 | I-01 publishes to GitHub Pages with Source = GitHub Actions | `approved` |
+| D-008 | I-01 reads `SITE_URL` and `BASE_PATH` and creates the link and asset helper | `approved` |
+| D-014 | I-04 fails a PR on accessibility, best practices and SEO below 95; performance is reported | `approved` |
 | D-015 | I-04 runs `astro check`, build, links, axe and Lighthouse CI on the PR | `approved` |
+| D-026 | I-23 sets the purchased domain on GitHub Pages | `approved` |
+| D-027 | I-04 allows image files only in the listed directories | `approved` |
 | D-019 | Branch + PR per issue; Claude in T3 opens the PR and Filipe merges | `approved` |
 
 ---
@@ -79,21 +85,22 @@ Full index: [`DECISIONS.md`](DECISIONS.md). Only the ones that block the current
 
 | Phase | Scope | Status |
 | --- | --- | --- |
-| 0 | Repo, Astro structure, CI and deploy | In progress |
-| 1 | Visual identity, layout, i18n, collections, counter, experience, home page | Not started |
-| 2 | Case study, gallery, skills, SEO and MVP release | Not started |
+| 0 | Astro structure, deploy, domain and PR checks | In progress |
+| 1 | Brand, layout in both themes, i18n, collections, counter, experience, hero, home page | Not started |
+| 2 | Diagrams, case studies, projects page, skills, SEO and MVP release | Not started |
 | 3 | Future content: detailed experience, client sheets, new case studies, blog | Not started |
-| 4 | Domain, HTTPS, analytics, Search Console | Not started |
-| 5 | Per-page OG, dark theme, archive the old portfolio | Not started |
+| 4 | Analytics, Search Console | Not started |
+| 5 | Per-page OG, archive the old portfolio | Not started |
 
 ---
 
 ## Risks and limitations
 
 - The Makefile has targets that depend on `package.json`. Until I-01, `install`, `dev`, `build` and `check` fail with a clear message. Each target's commands are a forecast, and I-01 adjusts them to the real scripts.
-- An internal link written without the base path helper breaks only in production. I-02 covers this with a build for both values of `BASE_PATH`.
+- An internal link written without the base path helper breaks only under the `github.io` path. I-01 covers this with a build for both values of `BASE_PATH`.
 - The repository is public. Drafts are visible in it, even with `draft: true`.
-- The photo and the CV were received in the T3 thread and are not in the repository. I-11 and I-16 depend on them. The photo never enters this repository: it goes to the private `filipeoliveira-hub-assets` repository, which Filipe creates with the deploy key and the secret before I-11 (D-021).
+- The photo and the CV were received in the T3 thread and are not in the repository. I-11 and I-16 depend on them. The photo never enters this repository: it goes to the private `filipeoliveira-hub-assets` repository, which needs the deploy key and the secret before I-11 (D-021).
+- The hero videos are in private Releases of the assets repository, which the deploy key cannot download. I-30 settles the access.
 - The final plan left the push and the creation of the repository to Filipe. Under the current flow, the merge into `main` is Filipe's (D-019).
 
 ## Blockers
@@ -105,6 +112,10 @@ None.
 ## Log
 
 Recent entries only. Full history: [`docs/status-log.md`](docs/status-log.md).
+
+### 2026-11-25 — Roadmap revision
+
+Branch `docs/roadmap-revision`, docs only. Review of the roadmap against the approved brand and Filipe's goals; decisions D-022 to D-029. Detail in `docs/status-log.md`.
 
 ### 2026-11-25 — Agent workflow, ratings and English docs (I-29)
 
