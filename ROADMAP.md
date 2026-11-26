@@ -78,20 +78,21 @@ Claude in T3 only pushes the issue branch; the merge into `main` is Filipe's (D-
 | I-01 | Astro structure, base path and deploy to GitHub Pages | Hi/Hi | Md/Md | — | Verified | Astro with TypeScript, MDX and lint; `npm run build` produces `dist/` without errors and `astro check` passes. `site` and `base` read from `SITE_URL` and `BASE_PATH`, with a single helper for links and assets; the link check on `dist/` passes with `BASE_PATH=/` and with `BASE_PATH=/filipeoliveira-hub`. Publishing workflow on `main` with `configure-pages` and `deploy-pages`: given a push to `main`, when the workflow finishes, then the Pages URL serves the new version with CSS and assets loading. The workflow also runs on `pull_request` (without deploying) and, when the `ASSETS_DEPLOY_KEY` secret exists, checks out `FilipeOliveira94/filipeoliveira-hub-assets` into `.assets/` with `persist-credentials: false` (D-021); without the secret, the build passes. The main checkout uses `fetch-depth: 0` for the photo check of I-04 |
 | I-02 | Configurable base path | -/- | -/- | — | Withdrawn | Merged into I-01 (2026-11-25) |
 | I-03 | Deploy to GitHub Pages | -/- | -/- | — | Withdrawn | Merged into I-01 (2026-11-25) |
-| I-04 | PR checks | Med/Hi | Md/Md | I-01 | Delivered | `astro check`, build, link check, axe and Lighthouse CI. A PR with a broken internal link, an axe violation, or a Lighthouse accessibility, best-practices or SEO score below 95 fails; the performance score is reported and does not fail the PR (D-014). CI also fails if a page or content item lacks its PT/EN pair, and if an image file outside the allowed directories of D-027 is tracked or added by a commit of the PR (`scripts/check-no-photos.mjs`, D-021) |
+| I-04 | PR checks | Med/Hi | Md/Md | I-01 | Verified | `astro check`, build, link check, axe and Lighthouse CI. A PR with a broken internal link, an axe violation, or a Lighthouse accessibility, best-practices or SEO score below 95 fails; the performance score is reported and does not fail the PR (D-014). CI also fails if a page or content item lacks its PT/EN pair, and if an image file outside the allowed directories of D-027 is tracked or added by a commit of the PR (`scripts/check-no-photos.mjs`, D-021) |
 | I-23 | Custom domain and HTTPS | Hi/- | Sm/- | I-01 | Not started | The domain is bought (Filipe, 2026-11-25). Domain steps listed below. Given the DNS has propagated, when I open `https://filipeoliveira-hub.com.br`, then the site loads with a valid certificate, `www` and the `github.io` URL redirect, and the build uses the domain as `SITE_URL` with `BASE_PATH=/` |
 | I-29 | Translate the repository docs to English | Lo/Lo | Md/Sm | — | Verified | ROADMAP, PROJECT_STATUS, DECISIONS, `docs/` and README in English (Filipe's decision, 2026-11-24; `AGENTS.md` and the prompts were already in English). The site content does not change: it keeps its PT and EN pair. Issue and decision IDs do not change |
 
 ### Domain steps (I-23)
 
-The DNS and the GitHub settings are Filipe's manual steps:
+The DNS and the GitHub settings are Filipe's manual steps, in this order. Setting the domain in Pages before the DNS resolves makes the `github.io` URL redirect to a domain that does not answer yet.
 
-1. Verify the domain in the GitHub account (TXT record).
-2. In the Registro.br DNS, create the apex A records for `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, plus GitHub's AAAA records.
+1. Verify the domain in the GitHub account (Settings → Pages → Add a domain): GitHub shows a TXT record `_github-pages-challenge-FilipeOliveira94` with a value; create it in the Registro.br DNS and click Verify.
+2. In the Registro.br DNS, create the apex A records for `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`, and the apex AAAA records for `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153` and `2606:50c0:8003::153`.
 3. Create the `www` CNAME pointing to `filipeoliveira94.github.io`.
-4. Enter the domain in Settings → Pages and add `public/CNAME`.
+4. Once the records resolve, enter `filipeoliveira-hub.com.br` in the repository's Settings → Pages. No `public/CNAME`: GitHub ignores that file when the site is published by an Actions workflow.
 5. Tick Enforce HTTPS once the certificate is issued.
-6. Change `SITE_URL` to the domain and `BASE_PATH` to `/`.
+6. Re-run the deploy on `main`. `SITE_URL` and `BASE_PATH` need no code change: `actions/configure-pages` reports the domain as the origin and an empty base path, which `deploy.yml` turns into `/`.
+7. Check the result: `make domain SITE_URL=https://filipeoliveira-hub.com.br PAGES_URL=https://filipeoliveira94.github.io/filipeoliveira-hub/`.
 
 ---
 
