@@ -4,6 +4,16 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-26 — Astro structure, base path and deploy (I-01)
+
+Branch `feat/i-01-astro-deploy`. New Astro 7.4.13 project with `@astrojs/mdx` 8.1.6, strict TypeScript 6.0.3 (the newest `@astrojs/check` 0.9.12 accepts), ESLint 10 with `eslint-plugin-astro` and `typescript-eslint`, all pinned, on Node 22.23.4 (`.nvmrc`). `astro.config.mjs` reads `site` from `SITE_URL` and `base` from `BASE_PATH`; the URL is not written in code. `src/lib/paths.ts` holds the single helper, `withBase`, over a pure `joinBase` that the unit tests cover. `src/pages/index.astro` is a placeholder with the name and the D-022 title, `lang="pt-BR"` and `noindex` until I-18. `scripts/check-links.mjs` fails on any `href`, `src`, `srcset` or CSS `url()` in `dist/` that is outside the base path, has no file, or names a missing `#id`.
+
+`.github/workflows/deploy.yml` runs on pushes to `main` and on PRs. A `pages-config` job (only `pages: read`) reads the Pages origin and base path with `configure-pages`. The `build` job (`contents: read`) checks out with `fetch-depth: 0`, fetches `filipeoliveira-hub-assets` into `.assets/` with `ASSETS_DEPLOY_KEY` and `persist-credentials: false` only when the secret exists, runs lint, `astro check` and the unit tests, then builds and checks links with `BASE_PATH=/`, with `BASE_PATH=/filipeoliveira-hub`, and with the Pages values. Only a push to `main` uploads the artifact and runs the `deploy` job, the only one with `pages: write` and `id-token: write`.
+
+Checked locally: `make verify` passes (ESLint, `astro check` with 0 errors, 11 unit tests, `make docs-lint`, build and link check in both modes). A root build checked with `BASE_PATH=/filipeoliveira-hub` fails the link check. No image file was added. Not verified yet: the deploy itself and the Pages URL serving the new version, which need the merge; on 2026-11-26 the Pages API reported `build_type: legacy`, so Filipe sets Source = GitHub Actions first. Seen rating: Hi risk, Md size.
+
+---
+
 ### 2026-11-25 — Roadmap revision
 
 Branch `docs/roadmap-revision`, docs only. A review of the roadmap found that the MVP left out most of what the site is for: the professional work was in phase 3, the plan asked for two diagrams, the project cards had no images, and the identity was still "created from scratch" although the brand was approved on 2026-11-18 in the assets repository. Filipe answered five questions in the thread and agreed with the rest of the review.

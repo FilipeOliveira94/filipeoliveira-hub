@@ -6,7 +6,7 @@ The phases and issues I-01 to I-28 come from the PO's final plan (`filipeoliveir
 
 | Roadmap | Current |
 | --- | --- |
-| Last updated | 2026-11-25 |
+| Last updated | 2026-11-26 |
 
 **Expected/Seen Risk and Size:** each cell is `expected/seen`. Risk is `Lo`, `Med` or `Hi`; Size is `Sm`, `Md` or `Lg` (scale in `~/.agents/claude/workflow.md`, repo `FilipeOliveira94/agent-config`; Hi risk here is listed in `AGENTS.md` §3). An open issue has only the expected half (`Med/-`, `Md/-`); the seen half is filled when it closes. These columns replace the old Size column (P/M/G in days).
 
@@ -75,7 +75,7 @@ Claude in T3 only pushes the issue branch; the merge into `main` is Filipe's (D-
 
 | ID | Title | Expected/Seen Risk | Expected/Seen Size | Depends on | Status | Acceptance |
 | --- | --- | --- | --- | --- | --- | --- |
-| I-01 | Astro structure, base path and deploy to GitHub Pages | Hi/- | Md/- | — | Not started | Astro with TypeScript, MDX and lint; `npm run build` produces `dist/` without errors and `astro check` passes. `site` and `base` read from `SITE_URL` and `BASE_PATH`, with a single helper for links and assets; the link check on `dist/` passes with `BASE_PATH=/` and with `BASE_PATH=/filipeoliveira-hub`. Publishing workflow on `main` with `configure-pages` and `deploy-pages`: given a push to `main`, when the workflow finishes, then the Pages URL serves the new version with CSS and assets loading. The workflow also runs on `pull_request` (without deploying) and, when the `ASSETS_DEPLOY_KEY` secret exists, checks out `FilipeOliveira94/filipeoliveira-hub-assets` into `.assets/` with `persist-credentials: false` (D-021); without the secret, the build passes. The main checkout uses `fetch-depth: 0` for the photo check of I-04 |
+| I-01 | Astro structure, base path and deploy to GitHub Pages | Hi/Hi | Md/Md | — | Delivered | Astro with TypeScript, MDX and lint; `npm run build` produces `dist/` without errors and `astro check` passes. `site` and `base` read from `SITE_URL` and `BASE_PATH`, with a single helper for links and assets; the link check on `dist/` passes with `BASE_PATH=/` and with `BASE_PATH=/filipeoliveira-hub`. Publishing workflow on `main` with `configure-pages` and `deploy-pages`: given a push to `main`, when the workflow finishes, then the Pages URL serves the new version with CSS and assets loading. The workflow also runs on `pull_request` (without deploying) and, when the `ASSETS_DEPLOY_KEY` secret exists, checks out `FilipeOliveira94/filipeoliveira-hub-assets` into `.assets/` with `persist-credentials: false` (D-021); without the secret, the build passes. The main checkout uses `fetch-depth: 0` for the photo check of I-04 |
 | I-02 | Configurable base path | -/- | -/- | — | Withdrawn | Merged into I-01 (2026-11-25) |
 | I-03 | Deploy to GitHub Pages | -/- | -/- | — | Withdrawn | Merged into I-01 (2026-11-25) |
 | I-04 | PR checks | Med/- | Md/- | I-01 | Not started | `astro check`, build, link check, axe and Lighthouse CI. A PR with a broken internal link, an axe violation, or a Lighthouse accessibility, best-practices or SEO score below 95 fails; the performance score is reported and does not fail the PR (D-014). CI also fails if a page or content item lacks its PT/EN pair, and if an image file outside the allowed directories of D-027 is tracked or added by a commit of the PR (`scripts/check-no-photos.mjs`, D-021) |
@@ -226,6 +226,7 @@ The DNS and the GitHub settings are Filipe's manual steps:
 
 | Date | Change |
 | --- | --- |
+| 2026-11-26 | I-01 delivered: Astro 7.4.13 with TypeScript, MDX and ESLint, the `withBase` helper, the link check in both base path modes and the Pages workflow. Seen rating Hi/Md. The deploy itself is checked after the merge |
 | 2026-11-25 | Roadmap revised with Filipe (D-022 to D-029). I-02 and I-03 merged into I-01; I-23 (domain, already bought) moved to phase 0; I-27 (dark theme) merged into I-05, I-06 and I-12. New I-30 (hero), I-31 (Fi grid) and I-32 (short professional case studies). I-05 imports the approved brand; I-12 uses branded SVG diagrams, not Mermaid; I-15 groups projects as current and earlier, with images; the Lighthouse performance score no longer fails a PR |
 | 2026-11-25 | I-29 verified: the repository docs are in English. Scope, acceptance and IDs unchanged |
 | 2026-11-24 | New I-29: translate the docs to English. `verified` no longer needs double approval. Size and risk replace small/large in the flow (`AGENTS.md` §4.1); every issue gained the Expected/Seen Risk and Size columns |
