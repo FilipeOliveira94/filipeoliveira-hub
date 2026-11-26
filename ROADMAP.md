@@ -53,7 +53,7 @@ The phases and issues I-01 to I-28 come from the PO's final plan (`filipeoliveir
 
 | Phase | Scope | Issues | Exit criteria | Status |
 | --- | --- | --- | --- | --- |
-| 0. Foundation | Astro structure, deploy, domain and PR checks | I-01, I-04, I-23, I-29 | The domain serves the home page over HTTPS and CI is green | In progress |
+| 0. Foundation | Astro structure, deploy, domain and PR checks | I-01, I-04, I-23, I-29 | The domain serves the home page over HTTPS and CI is green | Verified |
 | 1. Identity and home | Brand, layout in both themes, i18n, collections, counter, experience, hero, home | I-05 to I-11, I-30, I-31 | PT/EN home page live with the brand, the hero, the photo, experience from the CV and a correct counter | Not started |
 | 2. Cases, projects and MVP release | Diagrams, case studies, projects page, skills/education/certifications/languages, SEO, quality | I-12 to I-18, I-32 | MVP items live, English reviewed by Filipe and the release issue closed | Not started |
 | 3. Future content | Detailed experience, client sheets, A Conta, PedsLetter, blog | I-19 to I-22 | Each issue closes on its own | Not started |
@@ -68,8 +68,8 @@ The phases and issues I-01 to I-28 come from the PO's final plan (`filipeoliveir
 
 **Exit criteria:**
 
-- [ ] `https://filipeoliveira-hub.com.br` serves the home page over HTTPS.
-- [ ] CI is green.
+- [x] `https://filipeoliveira-hub.com.br` serves the home page over HTTPS.
+- [x] CI is green.
 
 Claude in T3 only pushes the issue branch; the merge into `main` is Filipe's (D-019). I-01 now carries the base path and the deploy, so the first merged PR puts a page online.
 
@@ -79,7 +79,7 @@ Claude in T3 only pushes the issue branch; the merge into `main` is Filipe's (D-
 | I-02 | Configurable base path | -/- | -/- | — | Withdrawn | Merged into I-01 (2026-11-25) |
 | I-03 | Deploy to GitHub Pages | -/- | -/- | — | Withdrawn | Merged into I-01 (2026-11-25) |
 | I-04 | PR checks | Med/Hi | Md/Md | I-01 | Verified | `astro check`, build, link check, axe and Lighthouse CI. A PR with a broken internal link, an axe violation, or a Lighthouse accessibility, best-practices or SEO score below 95 fails; the performance score is reported and does not fail the PR (D-014). CI also fails if a page or content item lacks its PT/EN pair, and if an image file outside the allowed directories of D-027 is tracked or added by a commit of the PR (`scripts/check-no-photos.mjs`, D-021) |
-| I-23 | Custom domain and HTTPS | Hi/- | Sm/- | I-01 | Not started | The domain is bought (Filipe, 2026-11-25). Domain steps listed below. Given the DNS has propagated, when I open `https://filipeoliveira-hub.com.br`, then the site loads with a valid certificate, `www` and the `github.io` URL redirect, and the build uses the domain as `SITE_URL` with `BASE_PATH=/` |
+| I-23 | Custom domain and HTTPS | Hi/Hi | Sm/Sm | I-01 | Verified | The domain is bought (Filipe, 2026-11-25). Domain steps listed below. Given the DNS has propagated, when I open `https://filipeoliveira-hub.com.br`, then the site loads with a valid certificate, `www` and the `github.io` URL redirect, and the build uses the domain as `SITE_URL` with `BASE_PATH=/` |
 | I-29 | Translate the repository docs to English | Lo/Lo | Md/Sm | — | Verified | ROADMAP, PROJECT_STATUS, DECISIONS, `docs/` and README in English (Filipe's decision, 2026-11-24; `AGENTS.md` and the prompts were already in English). The site content does not change: it keeps its PT and EN pair. Issue and decision IDs do not change |
 
 ### Domain steps (I-23)
@@ -227,6 +227,7 @@ The DNS and the GitHub settings are Filipe's manual steps, in this order. Settin
 
 | Date | Change |
 | --- | --- |
+| 2026-11-26 | I-23 verified, seen Hi/Sm: `https://filipeoliveira-hub.com.br` serves the site with a Let's Encrypt certificate; `http`, `www` and the `github.io` URL redirect to it; the deploy builds with the domain as `SITE_URL` and `BASE_PATH=/`. New `make domain` check. Domain steps corrected: AAAA values, order, and no `public/CNAME` under the Actions source. I-04 verified (run 45849859303 on `main`). Phase 0 verified |
 | 2026-11-26 | I-04 delivered: image check over the tracked files and every commit of the PR, PT/EN pair check, axe in light and dark and Lighthouse CI in the `build` job; EN placeholder at `/en/`. Rating raised to Hi risk (deploy workflow and the photo guard), seen Hi/Md. I-18 gains the removal of the `is-crawlable` skip. I-01 verified: the first deploy from `main` serves the placeholder at the Pages URL |
 | 2026-11-26 | I-01 delivered: Astro 7.4.13 with TypeScript, MDX and ESLint, the `withBase` helper, the link check in both base path modes and the Pages workflow. Seen rating Hi/Md. The deploy itself is checked after the merge |
 | 2026-11-25 | Roadmap revised with Filipe (D-022 to D-029). I-02 and I-03 merged into I-01; I-23 (domain, already bought) moved to phase 0; I-27 (dark theme) merged into I-05, I-06 and I-12. New I-30 (hero), I-31 (Fi grid) and I-32 (short professional case studies). I-05 imports the approved brand; I-12 uses branded SVG diagrams, not Mermaid; I-15 groups projects as current and earlier, with images; the Lighthouse performance score no longer fails a PR |

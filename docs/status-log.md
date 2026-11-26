@@ -4,6 +4,19 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-26 — Custom domain (I-23), I-04 verified, phase 0 verified
+
+Branch `feat/i-23-custom-domain`. Filipe verified `filipeoliveira-hub.com.br` on the GitHub account (TXT `_github-pages-challenge-FilipeOliveira94`), created the four A and four AAAA apex records and the `www` CNAME to `filipeoliveira94.github.io` in the Registro.br DNS, set the domain in Settings → Pages and ticked Enforce HTTPS. No `public/CNAME`: GitHub ignores it when an Actions workflow publishes the site. No code change for `SITE_URL` and `BASE_PATH`: `configure-pages` now reports the domain and an empty base path.
+
+- `scripts/check-domain.mjs` (`make domain SITE_URL=… PAGES_URL=…`) follows each redirect by hand and fails unless the PT and EN home pages answer 200 over HTTPS (Node rejects an invalid certificate) and `http://`, `https://www.` and the `github.io` URL (PT and EN) end on the matching page of the domain. It reads the network, so it is not in CI. Ten unit tests with a stubbed `fetch` cover the passing case, a redirect chain, a certificate error, HTTP served without a redirect, `www` without DNS, `github.io` still serving, a redirect that drops the path, a 404, a redirect loop and an invalid `--site`.
+- The domain steps in `ROADMAP.md` gain the AAAA values and the order (DNS before the Pages setting), and drop `public/CNAME`.
+
+Checked: the Pages API reports `cname: filipeoliveira-hub.com.br`, `protected_domain_state: verified`, `https_enforced: true` and an approved certificate for the apex and `www`. Public DNS (dns.google) returns the four A and four AAAA records and the `www` CNAME. Run 45849859303 on `main`, re-run after the setting, succeeds in all three jobs; its published build logs `SITE_URL: https://filipeoliveira-hub.com.br` and `BASE_PATH: /`, and its link check passes. `make domain` passes; before the DNS records it failed on `ENOTFOUND` and on the `github.io` URL still serving the site. `https://filipeoliveira-hub.com.br/` serves the placeholder (`lang="pt-BR"`, its link at `/`) with a Let's Encrypt certificate (CN `filipeoliveira-hub.com.br`, expires 2027-02-24). Locally: ESLint, 40 unit tests pass (2 axe tests skipped without `CHROME_PATH`), docs-lint and the image check pass. Seen rating: Hi risk, Sm size.
+
+I-04 verified: the same run on `main` (first run 2026-11-26 15:30, the merge of PR #9) passes the image, pair, axe and Lighthouse checks on GitHub's runner. Implemented filled for D-014, D-015 and D-027. With I-01, I-04, I-23 and I-29 verified, phase 0 meets its exit criteria.
+
+---
+
 ### 2026-11-26 — PR checks (I-04) and I-01 verified
 
 Branch `feat/i-04-pr-checks`. Rating raised from Med/Md to Hi/Md in the plan, approved by Filipe: the change edits the deploy workflow and builds the guard for the no-photos rule.

@@ -10,8 +10,8 @@ Site of Filipe Oliveira, Data & Software Engineer. It brings together case studi
 
 | Field | Now |
 | --- | --- |
-| Current phase | Phase 0 — Foundation. I-29 is verified; I-01 (Astro structure and deploy) is delivered |
-| Next issue | I-04 — PR checks |
+| Current phase | Phase 0 — Foundation is verified: the site is live at `https://filipeoliveira-hub.com.br` and CI is green. Phase 1 — Identity and home is next |
+| Next issue | I-05 — Brand tokens and component sample |
 | Ledger | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) · scope in [`ROADMAP.md`](ROADMAP.md) |
 
 ---
@@ -24,7 +24,7 @@ Site of Filipe Oliveira, Data & Software Engineer. It brings together case studi
 | Content | Content Collections with a Zod schema |
 | Languages | Portuguese at the root and English under `/en/` |
 | Hosting | GitHub Pages, published by GitHub Actions |
-| Planned URL | `https://filipeoliveira-hub.com.br` |
+| URL | `https://filipeoliveira-hub.com.br` (the `github.io` URL redirects to it) |
 | Identity | The Fi brand from the private assets repository, in light and dark themes |
 | Diagrams | Branded SVG files, committed in light and dark versions |
 
