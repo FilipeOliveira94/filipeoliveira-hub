@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+# Private assets, fetched by CI from filipeoliveira-hub-assets (D-021).
+.assets/
+.env
+.env.*
+!.env.example

@@ -5,7 +5,7 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 | Project | Current |
 | --- | --- |
 | Repository | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
-| Last updated | 2026-11-25 (America/Sao_Paulo). Roadmap revised with Filipe (D-022 to D-029); I-29 verified (docs in English); no site issue started |
+| Last updated | 2026-11-26 (America/Sao_Paulo). I-01 delivered (Astro project, base path helper, link check, Pages workflow); the deploy is checked after the merge |
 | Current phase | Phase 0 — Foundation |
 | Phase status | In progress |
 
@@ -21,15 +21,14 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 ## Current objective
 
-**Phase 0 — Foundation.** I-29 (docs in English) is verified; the site issues have not started.
-
-The repository has only the documentation structure: agent instructions, roadmap, decisions, this ledger, the license and a Makefile whose targets do nothing yet. The Astro project has not been generated. There is no `package.json`, `src/`, `public/` or CI workflow.
+**Phase 0 — Foundation.** I-29 (docs in English) is verified. I-01 is delivered: the Astro project builds a placeholder home page, every internal link goes through `withBase` (`src/lib/paths.ts`), and `.github/workflows/deploy.yml` builds and checks every PR and deploys `main` to GitHub Pages. The deploy itself is verified after Filipe merges the PR.
 
 ## Next work
 
-1. **I-01** — Astro structure, base path and deploy to GitHub Pages (Hi, Md). Astro with TypeScript, MDX and lint, `SITE_URL` and `BASE_PATH` with the link helper, and the publishing workflow. Hi risk because of the deploy workflow: the plan stops for Filipe's approval. Detail: `ROADMAP.md` → Phase 0.
-2. **I-23** — Custom domain and HTTPS (Hi, Sm), once I-01 is merged. The DNS and the Pages settings are Filipe's manual steps.
-3. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phases 0 and 1 are built.
+1. **I-01 after the merge** — set Settings → Pages → Source = GitHub Actions if the API still reports `build_type: legacy`, then check that the first run on `main` deploys and that the Pages URL serves the placeholder. Then I-01 moves to verified.
+2. **I-04** — PR checks (Med, Md): axe, Lighthouse, the PT/EN pair check and the photo check, on top of the I-01 workflow.
+3. **I-23** — Custom domain and HTTPS (Hi, Sm), once I-01 is merged. The DNS and the Pages settings are Filipe's manual steps.
+4. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phases 0 and 1 are built.
 
 ---
 
@@ -37,7 +36,7 @@ The repository has only the documentation structure: agent instructions, roadmap
 
 | ID | Title | Status | Evidence |
 | --- | --- | --- | --- |
-| I-01 | Astro structure, base path and deploy to GitHub Pages | Not started | — |
+| I-01 | Astro structure, base path and deploy to GitHub Pages | Delivered | `docs/status-log.md` (2026-11-26); deploy pending the merge |
 | I-02 | Configurable base path | Withdrawn | Merged into I-01 |
 | I-03 | Deploy to GitHub Pages | Withdrawn | Merged into I-01 |
 | I-04 | PR checks | Not started | — |
@@ -57,10 +56,10 @@ Acceptance text of each issue: `ROADMAP.md` → Phase 0.
 
 | Validation | Detail |
 | --- | --- |
-| Date | 2026-11-25 |
-| Environment | Local checkout in WSL2 |
-| Checks | `make docs-lint`; a search for Portuguese words in the docs; issue and decision IDs compared with the Portuguese version |
-| Result | `make docs-lint` passes. The Portuguese left is quoted site content, proper names, branch names and commit messages. The issue IDs (I-01 to I-29) and decision IDs (D-001 to D-021) match the Portuguese version. There is no build, test or CI to run yet |
+| Date | 2026-11-26 |
+| Environment | Local checkout in WSL2, Node 22.23.4; GitHub Actions on the I-01 PR |
+| Checks | `make verify`: ESLint, `astro check`, 11 unit tests, `make docs-lint`, build and link check with `BASE_PATH=/` and `BASE_PATH=/filipeoliveira-hub` |
+| Result | All pass locally. A build at the root checked with `BASE_PATH=/filipeoliveira-hub` fails the link check, as it should. The deploy job runs only after the merge |
 
 ---
 
@@ -96,8 +95,8 @@ Full index: [`DECISIONS.md`](DECISIONS.md). Only the ones that block the current
 
 ## Risks and limitations
 
-- The Makefile has targets that depend on `package.json`. Until I-01, `install`, `dev`, `build` and `check` fail with a clear message. Each target's commands are a forecast, and I-01 adjusts them to the real scripts.
-- An internal link written without the base path helper breaks only under the `github.io` path. I-01 covers this with a build for both values of `BASE_PATH`.
+- GitHub Pages reported `build_type: legacy` (deploy from a branch) on 2026-11-26. Until Filipe sets Source = GitHub Actions, the deploy job of the workflow fails.
+- An internal link written without the base path helper breaks only under the `github.io` path. CI builds and runs `scripts/check-links.mjs` for both values of `BASE_PATH`.
 - The repository is public. Drafts are visible in it, even with `draft: true`.
 - The photo and the CV were received in the T3 thread and are not in the repository. I-11 and I-16 depend on them. The photo never enters this repository: it goes to the private `filipeoliveira-hub-assets` repository, which needs the deploy key and the secret before I-11 (D-021).
 - The hero videos are in private Releases of the assets repository, which the deploy key cannot download. I-30 settles the access.
@@ -112,6 +111,10 @@ None.
 ## Log
 
 Recent entries only. Full history: [`docs/status-log.md`](docs/status-log.md).
+
+### 2026-11-26 — Astro structure, base path and deploy (I-01)
+
+Branch `feat/i-01-astro-deploy`. Astro project, `withBase` helper, link check in both base path modes and the Pages workflow. Delivered; the deploy is checked after the merge. Detail in `docs/status-log.md`.
 
 ### 2026-11-25 — Roadmap revision
 

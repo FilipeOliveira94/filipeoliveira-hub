@@ -2,7 +2,7 @@
 
 Site of Filipe Oliveira, Data & Software Engineer. It brings together case studies with architecture diagrams, current and earlier projects and an experience summary, in Portuguese and English.
 
-> The Astro structure has not been generated yet. Today this repository holds only the project documentation. The site is not live yet.
+> The site is a placeholder page until the MVP release. It is published from `main` to GitHub Pages by `.github/workflows/deploy.yml`.
 
 ---
 
@@ -10,13 +10,13 @@ Site of Filipe Oliveira, Data & Software Engineer. It brings together case studi
 
 | Field | Now |
 | --- | --- |
-| Current phase | Phase 0 — Foundation. I-29 (docs in English) is verified; the site issues have not started |
-| Next issue | I-01 — Astro structure, base path and deploy to GitHub Pages |
+| Current phase | Phase 0 — Foundation. I-29 is verified; I-01 (Astro structure and deploy) is delivered |
+| Next issue | I-04 — PR checks |
 | Ledger | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) · scope in [`ROADMAP.md`](ROADMAP.md) |
 
 ---
 
-## Planned stack
+## Stack
 
 | Item | Choice |
 | --- | --- |
@@ -45,17 +45,25 @@ The reason for each choice is in [`DECISIONS.md`](DECISIONS.md).
 
 ## Makefile
 
-The targets below start working once the Astro project exists (I-01). Until then, `install`, `dev`, `build` and `check` stop with a message saying that `package.json` is missing.
+Node 22.23.4 or newer (`.nvmrc`).
 
 ```bash
 make help      # lists the targets
-make install   # installs the dependencies
+make install   # npm ci from the lockfile
 make dev       # development server
-make build     # static build into dist/
+make build     # static build into dist/ (BASE_PATH=/ by default)
 make check     # astro check
+make lint      # ESLint
+make test      # unit tests (Node's built-in test runner)
+make links     # link and asset check on dist/ for BASE_PATH
+make verify    # everything CI runs, in both base path modes
 make docs-lint # checks the Markdown tables
 make clean     # removes dist/ and .astro/
 ```
+
+`SITE_URL` and `BASE_PATH` set Astro's `site` and `base`. Locally both may be left unset. In CI they come from `actions/configure-pages`. Every internal link and asset goes through `withBase` in `src/lib/paths.ts`; a link written without it fails `make links` under `BASE_PATH=/filipeoliveira-hub`.
+
+The private assets (D-021) are fetched into `.assets/` only by CI, with the `ASSETS_DEPLOY_KEY` secret. The build passes without them.
 
 ---
 

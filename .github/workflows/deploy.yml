@@ -1,0 +1,128 @@
+name: Build and deploy to GitHub Pages
+
+# Pull requests run the same build and checks as a deploy, without deploying.
+# Only a push to main deploys (AGENTS.md §5, I-01).
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+# Default for every job; each job below states only what it needs.
+permissions:
+  contents: read
+
+# A new push to a pull request replaces its running check; on main, runs queue.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # Reads the Pages site URL and base path, so they are never written in code.
+  # Isolated in its own job because it is the only one that reads the Pages API.
+  pages-config:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: read
+    outputs:
+      origin: ${{ steps.pages.outputs.origin }}
+      base_path: ${{ steps.pages.outputs.base_path }}
+    steps:
+      - name: Read the GitHub Pages configuration
+        id: pages
+        uses: actions/configure-pages@v6
+
+  build:
+    needs: pages-config
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      # A secret cannot be read in a step condition; only whether it exists is.
+      # Pull requests from forks do not receive it, and the build passes without it.
+      HAS_ASSETS_KEY: ${{ secrets.ASSETS_DEPLOY_KEY != '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Full history: the photo check of I-04 reads every commit of the PR.
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # Photos and brand originals from the private repository (D-021), with a
+      # read-only deploy key scoped to it. The key is not left in .git/config.
+      - name: Fetch private assets
+        if: env.HAS_ASSETS_KEY == 'true'
+        uses: actions/checkout@v7
+        with:
+          repository: FilipeOliveira94/filipeoliveira-hub-assets
+          ssh-key: ${{ secrets.ASSETS_DEPLOY_KEY }}
+          path: .assets
+          persist-credentials: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Type check (astro check)
+        run: npm run check
+      - name: Unit tests
+        run: npm test
+
+      # The link check runs on a build at the domain root and on a build under
+      # the project path: a link written without the helper breaks only there.
+      - name: Build at the root (BASE_PATH=/)
+        run: npm run build
+        env:
+          BASE_PATH: /
+      - name: Check links at the root
+        run: npm run links
+        env:
+          BASE_PATH: /
+      - name: Build under the project path (BASE_PATH=/filipeoliveira-hub)
+        run: npm run build
+        env:
+          BASE_PATH: /filipeoliveira-hub
+      - name: Check links under the project path
+        run: npm run links
+        env:
+          BASE_PATH: /filipeoliveira-hub
+
+      # The build that is published, with the URL and base path GitHub Pages
+      # reports. An empty base path (custom domain) means the root.
+      - name: Build for GitHub Pages
+        run: npm run build
+        env:
+          SITE_URL: ${{ needs.pages-config.outputs.origin }}
+          BASE_PATH: ${{ needs.pages-config.outputs.base_path || '/' }}
+      - name: Check links in the published build
+        run: npm run links
+        env:
+          BASE_PATH: ${{ needs.pages-config.outputs.base_path || '/' }}
+      - name: Upload Pages artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Only this job can publish.
+    permissions:
+      pages: write
+      id-token: write
+    # One deployment at a time; a running deployment is never cancelled.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

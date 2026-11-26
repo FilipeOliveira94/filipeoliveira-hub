@@ -1,40 +1,37 @@
 # filipeoliveira-hub — common development commands
-#
-# The Astro project has not been generated yet (I-01). Until then, the targets
-# that depend on package.json stop with a message and install or create nothing.
-# The commands are a forecast for Astro; I-01 adjusts them to the real scripts.
 
 NPM ?= npm
-NPX ?= npx
+BASE_PATH ?= /
 
-.PHONY: docs-lint help install dev build check clean
-
-# Stops the recipe if the Astro project does not exist yet.
-define require_package
-	@if [ ! -f package.json ]; then \
-		echo "package.json not found: the Astro project has not been generated yet (I-01, see ROADMAP.md)." >&2; \
-		exit 1; \
-	fi
-endef
+.PHONY: help install dev build check lint test links verify docs-lint clean
 
 help: ## Lists the available targets
 	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  %-10s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-install: ## Installs the dependencies (npm ci when there is a lockfile)
-	$(require_package)
-	@if [ -f package-lock.json ]; then $(NPM) ci; else $(NPM) install; fi
+install: ## Installs the pinned dependencies from the lockfile
+	$(NPM) ci
 
 dev: ## Starts the Astro development server
-	$(require_package)
 	$(NPM) run dev
 
-build: ## Builds the static site into dist/
-	$(require_package)
-	$(NPM) run build
+build: ## Builds the static site into dist/ (BASE_PATH=/ by default)
+	BASE_PATH=$(BASE_PATH) $(NPM) run build
 
-check: ## Runs astro check
-	$(require_package)
-	$(NPX) astro check
+check: ## Runs astro check (types and Astro diagnostics)
+	$(NPM) run check
+
+lint: ## Runs ESLint
+	$(NPM) run lint
+
+test: ## Runs the unit tests (Node's built-in test runner)
+	$(NPM) test
+
+links: ## Checks the internal links and assets in dist/ for BASE_PATH
+	BASE_PATH=$(BASE_PATH) $(NPM) run links
+
+verify: lint check test docs-lint ## Everything CI runs: also builds and checks links in both base path modes
+	BASE_PATH=/ $(NPM) run build && BASE_PATH=/ $(NPM) run links
+	BASE_PATH=/filipeoliveira-hub $(NPM) run build && BASE_PATH=/filipeoliveira-hub $(NPM) run links
 
 docs-lint: ## Checks the Markdown tables (no empty header)
 	python3 scripts/check_markdown_tables.py
