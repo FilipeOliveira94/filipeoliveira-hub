@@ -1,43 +1,43 @@
-# filipeoliveira-hub — comandos comuns de desenvolvimento
+# filipeoliveira-hub — common development commands
 #
-# O projeto Astro ainda não foi gerado (I-01). Até lá, os alvos que dependem
-# de package.json param com uma mensagem e não instalam nem criam nada.
-# Os comandos são a previsão para o Astro; a I-01 ajusta aos scripts reais.
+# The Astro project has not been generated yet (I-01). Until then, the targets
+# that depend on package.json stop with a message and install or create nothing.
+# The commands are a forecast for Astro; I-01 adjusts them to the real scripts.
 
 NPM ?= npm
 NPX ?= npx
 
 .PHONY: docs-lint help install dev build check clean
 
-# Para a receita se o projeto Astro ainda não existir.
+# Stops the recipe if the Astro project does not exist yet.
 define require_package
 	@if [ ! -f package.json ]; then \
-		echo "package.json não encontrado: o projeto Astro ainda não foi gerado (I-01, ver ROADMAP.md)." >&2; \
+		echo "package.json not found: the Astro project has not been generated yet (I-01, see ROADMAP.md)." >&2; \
 		exit 1; \
 	fi
 endef
 
-help: ## Lista os alvos disponíveis
-	@awk 'BEGIN {FS = ":.*##"; printf "Alvos:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  %-10s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
+help: ## Lists the available targets
+	@awk 'BEGIN {FS = ":.*##"; printf "Targets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  %-10s %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-install: ## Instala as dependências (npm ci se houver lockfile)
+install: ## Installs the dependencies (npm ci when there is a lockfile)
 	$(require_package)
 	@if [ -f package-lock.json ]; then $(NPM) ci; else $(NPM) install; fi
 
-dev: ## Sobe o servidor de desenvolvimento do Astro
+dev: ## Starts the Astro development server
 	$(require_package)
 	$(NPM) run dev
 
-build: ## Gera o site estático em dist/
+build: ## Builds the static site into dist/
 	$(require_package)
 	$(NPM) run build
 
-check: ## Roda o astro check
+check: ## Runs astro check
 	$(require_package)
 	$(NPX) astro check
 
-docs-lint: ## Verifica as tabelas Markdown (nenhum cabeçalho vazio)
+docs-lint: ## Checks the Markdown tables (no empty header)
 	python3 scripts/check_markdown_tables.py
 
-clean: ## Remove dist/ e .astro/ (não remove node_modules)
+clean: ## Removes dist/ and .astro/ (keeps node_modules)
 	rm -rf dist .astro

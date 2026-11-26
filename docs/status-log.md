@@ -1,43 +1,51 @@
-# Status log (arquivo)
+# Status log (archive)
 
-Histórico cronológico do projeto, com a entrada mais recente no topo. O ledger operacional é o [`PROJECT_STATUS.md`](../PROJECT_STATUS.md), que cobre só a fase corrente e é reescrito a cada fase. A evidência de cada issue fica aqui.
-
----
-
-### 2026-11-20 — Tarefa pequena ou grande
-
-Branch `chore/fluxo-pequena-grande`, só documentação. Nova regra do Filipe: tarefa pequena (docs, texto, config, bump patch, ou bugfix contido de até ~50 linhas em até 3 arquivos, sem tocar arquitetura, schema, segurança, infra, API pública ou pipeline) o Claude planeja e implementa direto até o PR; tarefa grande, ou na dúvida, o Claude planeja e espera a aprovação do Filipe na thread. O prompt da issue diz o modo; o Claude pode reclassificar para grande. Atualizados `AGENTS.md` (§4 passo 3 e nova §4.1) e `docs/agent-workflow.md`. `make docs-lint` passou.
+Chronological history of the project, newest entry first. The operational ledger is [`PROJECT_STATUS.md`](../PROJECT_STATUS.md), which covers only the current phase and is rewritten each phase. Each issue's evidence lives here.
 
 ---
 
-### 2026-11-20 — Fluxo de desenvolvimento simplificado
+### 2026-11-25 — Agent workflow, ratings and English docs (I-29)
 
-Branch `chore/fluxo-dev-simplificado`, só documentação. O Claude no T3 Code planeja, implementa numa branch nova, roda as verificações, dá push da branch e abre o PR com resumo, sem merge. O Filipe revisa, faz o merge e apaga a branch. PO de Projetos e Reviewer de Projetos (bots) só agem quando o Filipe pede e nunca fazem merge. Sai a aprovação dupla PO e Reviewer. Atualizados `AGENTS.md` (§3 a §5), `docs/agent-workflow.md`, D-019 em `DECISIONS.md`, `ROADMAP.md`, `PROJECT_STATUS.md` e `README.md`. As entradas antigas deste log ficam como estavam.
+Branch `chore/agent-workflow` (PR #6), docs only. The project adopts the agent workflow in `~/.agents/claude/workflow.md` (repo `FilipeOliveira94/agent-config`) with profile `solo`: Claude Opus 5.5 plans and implements, with no PO or Reviewer bots and no review subagents. Size and risk replace the small or large task rule (`AGENTS.md` §4.1). Every issue in `ROADMAP.md` has Expected/Seen Risk and Size columns; all of them were open, so they have only the expected half. `verified` no longer needs double approval. D-019 revised. New issue I-29.
 
----
-
-### 2026-11-17 — Tabelas Markdown com cabeçalho nomeado
-
-4 tabelas de chave e valor tinham a linha de cabeçalho vazia (`| | |`), que o GFM mostra como uma linha em branco no topo. O padrão veio dos documentos de planejamento de outro projeto, usados como modelo, e passou adiante por cópia. Cada tabela tem agora um cabeçalho tirado do contexto (`Projeto | Atual`, `Validação | Detalhe`, `Roadmap | Current`, `Registro | Referência`). `scripts/check_markdown_tables.py` falha se algum arquivo Markdown versionado tiver um cabeçalho vazio, fora de blocos de código; roda com `make docs-lint`. A regra está no AGENTS.md §8.
+I-29: `ROADMAP.md`, `PROJECT_STATUS.md`, `DECISIONS.md`, `README.md`, ADR-0001, this log and the Makefile messages are rewritten in English; `AGENTS.md` and `docs/agent-workflow.md` already were. Site content quoted in the docs (the home page title, the location, the gallery group names) keeps its Portuguese text, as do proper names, branch names and commit messages. Checked: `make docs-lint` passes; a search for Portuguese words finds only those exceptions; the issue IDs (I-01 to I-29) and decision IDs (D-001 to D-021) match the Portuguese version. Seen rating: Lo risk, Sm size (docs only, one session).
 
 ---
 
-### 2026-11-17 — Fotos originais em repositório privado (D-021)
+### 2026-11-20 — Small or large task
 
-Branch `docs/private-assets`, só documentação. A pedido do Filipe, a foto da home segue o modelo já validado no `dra-victoria-laufer` (ADR-0010): originais no repositório privado `FilipeOliveira94/filipeoliveira-hub-assets`, buscados no build do Actions por deploy key somente leitura (`ASSETS_DEPLOY_KEY`), sem Git LFS, em tamanho web.
+Branch `chore/fluxo-pequena-grande`, docs only. New rule from Filipe: for a small task (docs, text, config, a patch bump, or a contained bugfix of up to ~50 lines in up to 3 files, without touching architecture, schema, security, infra, public API or pipeline), Claude plans and implements straight through to the PR; for a large task, or when in doubt, Claude plans and waits for Filipe's approval in the thread. The issue prompt states the mode; Claude may reclassify a task as large. Updated `AGENTS.md` (§4 step 3 and a new §4.1) and `docs/agent-workflow.md`. `make docs-lint` passed.
 
-`docs/decisions/0001-private-assets-repository.md` (ADR-0001) registra contexto, alternativas e os passos manuais do Filipe; `DECISIONS.md` ganha a linha D-021 apontando para ela. `ROADMAP.md` ajusta o aceite da I-03 (checkout dos assets no workflow, também em PR), da I-04 (`check-no-photos`) e da I-11 (a foto vem de `.assets/`, não é copiada para o repositório). `AGENTS.md` §6 ganha a regra de não commitar fotos.
+---
 
-Verificado neste checkout: `git ls-files` não lista imagem, e `git log --all --diff-filter=A` por jpg, jpeg, png, webp, avif, heic, gif e tif não retorna nada. Não há histórico a reescrever. Nenhum código, workflow ou dependência foi criado; isso fica para a I-03, a I-04 e a I-11.
+### 2026-11-20 — Simplified development flow
 
-### 2026-11-15 — Estrutura inicial do projeto
+Branch `chore/fluxo-dev-simplificado`, docs only. Claude in T3 Code plans, implements on a new branch, runs the checks, pushes the branch and opens the PR with a summary, without merging. Filipe reviews, merges and deletes the branch. The PO de Projetos and Reviewer de Projetos bots act only when Filipe asks and never merge. The PO and Reviewer double approval is dropped. Updated `AGENTS.md` (§3 to §5), `docs/agent-workflow.md`, D-019 in `DECISIONS.md`, `ROADMAP.md`, `PROJECT_STATUS.md` and `README.md`. The older entries of this log stay as they were.
 
-Um commit na `main` local, `chore: estrutura inicial do projeto`, em cima de `45de9b0` (`docs: add README`). Foi a exceção autorizada pelo Filipe ao fluxo de branch + PR, que vale a partir da fase 0. Não houve push; o push da `main` é do Reviewer.
+---
 
-O commit cria `AGENTS.md`, `CLAUDE.md` (só `@AGENTS.md`), `DECISIONS.md`, `ROADMAP.md`, `PROJECT_STATUS.md`, `LICENSE` (MIT), `Makefile`, `docs/status-log.md` e `docs/agent-workflow.md`, e reescreve o `README.md`. O formato segue o do open-data-platform, adaptado ao site. As fases, as issues I-01 a I-28 e as decisões D-001 a D-018 vêm do plano final do PO. D-019 (fluxo de trabalho) e D-020 (licença) vêm das instruções do Filipe para esta estrutura.
+### 2026-11-17 — Markdown tables with named headers
 
-O README anterior citava blog técnico e currículo PT/EN. O currículo foi removido do plano (D-006) e o blog é a I-22, na fase 3; o README novo não promete nenhum dos dois para o MVP.
+Four key-value tables had an empty header row (`| | |`), which GFM shows as a blank row at the top. The pattern came from another project's planning documents, used as a template, and spread by copying. Each table now has a header taken from its context (today `Project | Current`, `Validation | Detail`, `Roadmap | Current` and `Record | Reference`). `scripts/check_markdown_tables.py` fails if any tracked Markdown file has an empty header outside code blocks; it runs with `make docs-lint`. The rule is in `AGENTS.md` §8.
 
-Nenhum código do site foi escrito. Não há `package.json`, `src/`, `public/`, workflow de CI nem dependência Node. O Makefile tem os alvos `help`, `install`, `dev`, `build`, `check` e `clean`. Verificado neste checkout: `make help` lista os seis alvos; `make build` sem `package.json` imprime a mensagem de que o projeto Astro ainda não foi gerado e sai com código 2.
+---
 
-A fase 0 não foi iniciada. Todas as issues estão `not started`. A próxima é a I-01.
+### 2026-11-17 — Original photos in a private repository (D-021)
+
+Branch `docs/private-assets`, docs only. At Filipe's request, the home page photo follows the model already validated in `dra-victoria-laufer` (its ADR-0010): originals in the private repository `FilipeOliveira94/filipeoliveira-hub-assets`, fetched in the Actions build with a read-only deploy key (`ASSETS_DEPLOY_KEY`), without Git LFS, at web size.
+
+`docs/decisions/0001-private-assets-repository.md` (ADR-0001) records the context, the alternatives and Filipe's manual steps; `DECISIONS.md` gains the D-021 row pointing to it. `ROADMAP.md` adjusts the acceptance of I-03 (assets checkout in the workflow, on PRs too), I-04 (`check-no-photos`) and I-11 (the photo comes from `.assets/` and is not copied into the repository). `AGENTS.md` §6 gains the rule against committing photos.
+
+Verified in this checkout: `git ls-files` lists no image, and `git log --all --diff-filter=A` for jpg, jpeg, png, webp, avif, heic, gif and tif returns nothing. There is no history to rewrite. No code, workflow or dependency was created; that is left to I-03, I-04 and I-11.
+
+### 2026-11-15 — Initial project structure
+
+One commit on local `main`, `chore: estrutura inicial do projeto`, on top of `45de9b0` (`docs: add README`). It was the exception Filipe authorized to the branch + PR flow, which applies from phase 0. There was no push; pushing `main` was the Reviewer's job.
+
+The commit creates `AGENTS.md`, `CLAUDE.md` (only `@AGENTS.md`), `DECISIONS.md`, `ROADMAP.md`, `PROJECT_STATUS.md`, `LICENSE` (MIT), `Makefile`, `docs/status-log.md` and `docs/agent-workflow.md`, and rewrites `README.md`. The format follows open-data-platform's, adapted to the site. The phases, issues I-01 to I-28 and decisions D-001 to D-018 come from the PO's final plan. D-019 (workflow) and D-020 (license) come from Filipe's instructions for this structure.
+
+The previous README mentioned a technical blog and a PT/EN résumé. The résumé was removed from the plan (D-006) and the blog is I-22, in phase 3; the new README promises neither for the MVP.
+
+No site code was written. There is no `package.json`, `src/`, `public/`, CI workflow or Node dependency. The Makefile has the targets `help`, `install`, `dev`, `build`, `check` and `clean`. Verified in this checkout: `make help` lists the six targets; `make build` without `package.json` prints the message that the Astro project has not been generated and exits with code 2.
+
+Phase 0 has not started. Every issue is `not started`. The next one is I-01.

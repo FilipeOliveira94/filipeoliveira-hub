@@ -11,7 +11,6 @@ The site is static, built with Astro and published on GitHub Pages at `FilipeOli
 - Reply to Filipe in English; he may write in Portuguese.
 - Code identifiers (variables, functions, files, schema keys), repository docs and commit messages are in English. Conventional Commits.
 - Site content always has a PT and an EN pair.
-- Docs written in Portuguese before 2026-11-24 stay in Portuguese until I-29 translates them. Until then, edit each file in its current language.
 
 ## 3. Roles
 
@@ -129,7 +128,7 @@ Before the closing commit, on the issue branch, check each item and update only 
 - `ROADMAP.md`: the issue status, a Changelog line, the Last updated date, and the seen half of its Risk and Size.
 - `PROJECT_STATUS.md`: the phase table, Next work consistent with the acceptance, and the Last updated date.
 - `docs/status-log.md`: a new entry with what was done and what the checks showed.
-- `DECISIONS.md`: a decision changes state, or gains the Implementado column, only with evidence from a verified issue.
+- `DECISIONS.md`: a decision changes state, or gets a value in the Implemented column, only with evidence from a verified issue.
 - `README.md`: changes only when a phase closes, or when the issue changes how the repository is used.
 
 `PROJECT_STATUS.md` tracks the **current phase** and is rewritten each phase. Do not use it as an evidence file. The issue inventory lives in `ROADMAP.md`, decisions in `DECISIONS.md` and history in `docs/status-log.md`.
