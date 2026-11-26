@@ -1,39 +1,16 @@
 ---
-// Placeholder page until the real home page (I-06, I-11), shared by the PT
-// and EN pairs. The only claims are the name and the approved title of D-022.
-import BaseHead from './BaseHead.astro';
-import { withBase } from '../lib/paths';
+// Placeholder home page until I-11, shared by the PT and EN pairs. The only
+// claims are the name and the approved title of D-022.
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 interface Props {
-  lang: 'pt-BR' | 'en';
   title: string;
-  home: string;
 }
 
-const { lang, title, home } = Astro.props;
+const { title } = Astro.props;
 ---
 
-<!doctype html>
-<html lang={lang}>
-  <head>
-    <BaseHead title="Filipe Oliveira" description={`Filipe Oliveira — ${title}`} />
-    <style>
-      body {
-        min-height: 100vh;
-        display: grid;
-        place-content: center;
-        text-align: center;
-        padding: var(--space-4);
-      }
-      p {
-        color: var(--color-text-muted);
-      }
-    </style>
-  </head>
-  <body>
-    <main id="main">
-      <h1><a href={withBase(home)}>Filipe Oliveira</a></h1>
-      <p>{title}</p>
-    </main>
-  </body>
-</html>
+<BaseLayout title="Filipe Oliveira" description={`Filipe Oliveira — ${title}`}>
+  <h1>Filipe Oliveira</h1>
+  <p class="muted">{title}</p>
+</BaseLayout>
