@@ -1,6 +1,6 @@
 # filipeoliveira-hub
 
-Portfolio of Filipe Oliveira, Data Engineer. The site brings together a technical case study with architecture diagrams, a project gallery and an experience summary, in Portuguese and English, to support the search for Data Engineering roles at senior level and above.
+Site of Filipe Oliveira, Data & Software Engineer. It brings together case studies with architecture diagrams, current and earlier projects and an experience summary, in Portuguese and English.
 
 > The Astro structure has not been generated yet. Today this repository holds only the project documentation. The site is not live yet.
 
@@ -11,7 +11,7 @@ Portfolio of Filipe Oliveira, Data Engineer. The site brings together a technica
 | Field | Now |
 | --- | --- |
 | Current phase | Phase 0 — Foundation. I-29 (docs in English) is verified; the site issues have not started |
-| Next issue | I-01 — Create the repository and the Astro structure |
+| Next issue | I-01 — Astro structure, base path and deploy to GitHub Pages |
 | Ledger | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) · scope in [`ROADMAP.md`](ROADMAP.md) |
 
 ---
@@ -24,7 +24,9 @@ Portfolio of Filipe Oliveira, Data Engineer. The site brings together a technica
 | Content | Content Collections with a Zod schema |
 | Languages | Portuguese at the root and English under `/en/` |
 | Hosting | GitHub Pages, published by GitHub Actions |
-| Planned URL | `https://filipeoliveira94.github.io/filipeoliveira-hub/` |
+| Planned URL | `https://filipeoliveira-hub.com.br` |
+| Identity | The Fi brand from the private assets repository, in light and dark themes |
+| Diagrams | Branded SVG files, committed in light and dark versions |
 
 The reason for each choice is in [`DECISIONS.md`](DECISIONS.md).
 
@@ -32,7 +34,7 @@ The reason for each choice is in [`DECISIONS.md`](DECISIONS.md).
 
 ## Documents
 
-- [`ROADMAP.md`](ROADMAP.md): phases, issues I-01 to I-29, dependencies and acceptance criteria.
+- [`ROADMAP.md`](ROADMAP.md): phases, issues I-01 to I-32, dependencies and acceptance criteria.
 - [`DECISIONS.md`](DECISIONS.md): settled decisions and what is in and out of the MVP.
 - [`PROJECT_STATUS.md`](PROJECT_STATUS.md): state of the current phase and next work.
 - [`AGENTS.md`](AGENTS.md): rules for contributors, people or agents.
