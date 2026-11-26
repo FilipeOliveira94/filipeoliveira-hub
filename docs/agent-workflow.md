@@ -1,69 +1,70 @@
-# Prompts do fluxo de trabalho
+# Workflow prompts
 
-Três prompts conduzem uma issue: planejar, implementar e fechar. Eles não dependem de ferramenta; as regras ficam em [`AGENTS.md`](../AGENTS.md). Troque os campos entre `<>` e rode o prompt de plano primeiro. Na tarefa grande, o plano é aprovado antes de qualquer mudança em arquivo; na pequena, o Claude segue direto até o PR (AGENTS.md §4.1).
+Three prompts drive an issue: plan, implement and close. The rules live in [`AGENTS.md`](../AGENTS.md). Replace the fields between `<>` and run the plan prompt first. Above Sm + Lo, the plan is approved before any file change; an Sm + Lo issue goes straight to the PR (AGENTS.md §4.1).
 
-O fluxo é **branch + PR por issue**. O Claude no T3 commita, dá push somente da branch da issue, abre o PR com resumo e analisa o CI. Nunca dá push na `main` nem faz merge (AGENTS.md §5).
+The flow is **branch + PR per issue**. Claude in T3 commits, pushes only the issue branch, opens the PR with a summary and reads the CI. It never pushes to `main` and never merges (AGENTS.md §5).
 
 ---
 
-## 1. Planejar (sem editar arquivos)
+## 1. Plan (no file edits)
 
 ```text
-Siga o AGENTS.md.
+Follow AGENTS.md.
 
-Quero trabalhar na issue: <I-NN> — <título>.
-Modo: <pequena | grande> (AGENTS.md §4.1).
+I want to work on issue: <I-NN> — <title>.
+Rating: <Sm|Md|Lg> / <Lo|Med|Hi> (the expected half of the roadmap's Risk and Size columns; estimate it in the plan if missing).
 
-Primeiro leia o código, a documentação, o item da issue no ROADMAP.md, o critério de aceite e o PROJECT_STATUS.md. Não edite arquivos ainda.
+First read the code, the docs, the issue in ROADMAP.md, the acceptance criterion and PROJECT_STATUS.md. Do not edit files yet.
 
-Devolva:
-1. Estado atual e arquivos relevantes.
-2. Dependências e pré-requisitos.
-3. Um plano de implementação pequeno e ordenado.
-4. O critério de aceite e como cada item será verificado.
-5. Riscos e premissas.
-6. Os comandos exatos que serão executados.
-7. Os arquivos que devem ser criados ou modificados.
-8. Quais itens do "Checklist de fechamento de issue" (AGENTS.md §10) esta issue toca.
-9. Para issue de conteúdo: a fonte de cada informação (CV, portfólio antigo ou resposta do Filipe) e as perguntas que precisam de resposta antes de escrever.
+Return:
+1. Current state and relevant files.
+2. Dependencies and prerequisites.
+3. A small, ordered implementation plan.
+4. The acceptance criterion and how each item will be verified.
+5. Risks and assumptions.
+6. The exact commands that will be run.
+7. The files to create or change.
+8. Which items of the "Issue closing checklist" (AGENTS.md §10) this issue touches.
+9. For a content issue: the source of each piece of information (CV, old portfolio or Filipe's answer) and the questions that need an answer before writing.
+10. The Size and Risk, and whether planning raises either.
 
-Mantenha o escopo nesta issue. Não implemente fases futuras e não mude a stack em silêncio. Se, ao planejar, a tarefa se mostrar maior, reclassifique-a para grande. Tarefa grande: apresente o plano e espere a minha aprovação antes de editar. Tarefa pequena: siga direto para implementar e fechar.
+Keep the scope to this issue. Do not implement future phases and do not change the stack silently. If the issue turns out bigger or riskier, raise the rating and say why. Above Sm + Lo: present the plan and wait for my approval before editing. Sm + Lo: go straight on to implement and close.
 ```
 
-## 2. Implementar (direto na tarefa pequena; depois do plano aprovado na grande)
+## 2. Implement (straight away for Sm + Lo; after the plan is approved otherwise)
 
 ```text
-Siga o AGENTS.md.
+Follow AGENTS.md.
 
-Implemente só o plano que acabamos de combinar.
-- Crie a branch da issue a partir da main atualizada. Não trabalhe na main.
-- Mantenha o diff focado. Explique qualquer desvio antes de fazê-lo.
-- Adicione ou atualize os testes do comportamento alterado.
-- Não implemente tarefas de fases futuras.
-- Não adicione dependências fora do plano aprovado.
-- Não invente conteúdo: o que não tiver fonte fica registrado como lacuna na issue.
-- Rode as verificações da issue e relate a saída real.
-- Atualize a documentação e o PROJECT_STATUS.md só para o que foi de fato verificado.
-- Não faça commit; o fechamento faz.
+Implement only the plan we just agreed on.
+- Create the issue branch from an up-to-date main. Do not work on main.
+- Keep the diff focused. Explain any deviation before making it.
+- Add or update the tests for the changed behavior.
+- Do not implement tasks from future phases.
+- Do not add dependencies outside the approved plan.
+- Do not invent content: anything without a source is recorded as a gap in the issue.
+- Run the issue's checks and report the actual output.
+- Update the docs and PROJECT_STATUS.md only for what was actually verified.
+- Do not commit; the close step does.
 
-Ao final, informe os arquivos alterados, as verificações executadas, os resultados, os critérios de aceite cumpridos e pendentes, as limitações e a próxima tarefa recomendada.
+At the end, report the changed files, the checks run, the results, the acceptance criteria met and pending, the limitations and the recommended next task.
 ```
 
-## 3. Fechar
+## 3. Close
 
 ```text
-Siga o AGENTS.md.
+Follow AGENTS.md.
 
-Revise o diff atual contra o plano combinado e o critério de aceite. Não adicione funcionalidades.
-- Procure mudanças fora do escopo, segredos, arquivos gerados, testes fracos e comportamento não documentado.
-- Confira que não há conteúdo sem fonte, PDF de currículo nem telefone.
-- Rode as verificações e relate a saída real.
-- Aponte os critérios de aceite não cumpridos ou não verificados.
-- Aplique o "Checklist de fechamento de issue" (AGENTS.md §10).
-- Faça o commit no padrão Conventional Commits, na branch da issue.
-- Dê push somente da branch da issue, abra o PR e analise o CI. Nunca dê push na main (AGENTS.md §5).
+Review the current diff against the agreed plan and the acceptance criterion. Do not add features.
+- Look for out-of-scope changes, secrets, generated files, weak tests and undocumented behavior.
+- Check that there is no content without a source, no CV PDF and no phone number.
+- Run the checks and report the actual output.
+- Point out acceptance criteria that are not met or not verified.
+- Apply the "Issue closing checklist" (AGENTS.md §10).
+- Commit with Conventional Commits, on the issue branch.
+- Push only the issue branch, open the PR and read the CI. Never push to main (AGENTS.md §5).
 
-Devolva um relatório de conclusão curto, a branch, o hash do commit, o link do PR, o resultado do CI e a próxima tarefa.
+Return a short completion report, the branch, the commit hash, the PR link, the CI result and the next task.
 ```
 
-Depois do PR, o Filipe revisa, faz o merge e apaga a branch. Para um merge mais complicado, ele pode pedir ao Reviewer de Projetos (bot) que abra uma thread no T3 para o Claude revisar o PR e resumir o veredito. Nenhum agente ou bot faz merge.
+After the PR, Filipe reviews it, merges it and deletes the branch. For a harder merge, he can open a T3 thread for Claude to review the PR. No agent merges.

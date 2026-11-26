@@ -1,138 +1,140 @@
-# filipeoliveira-hub — Instruções para agentes
+# filipeoliveira-hub — Agent instructions
 
-## 1. Objetivo do projeto
+## 1. Project goal
 
-Site de portfólio do Filipe Oliveira. Serve de prova de senioridade para vagas Senior, Staff, Principal e Especialista em Engenharia de Dados, no Brasil e remotas, mostrando decisões, trade-offs e resultados.
+Filipe Oliveira's portfolio site. It is proof of seniority for Senior, Staff, Principal and Specialist Data Engineering roles, in Brazil and remote, showing decisions, trade-offs and results.
 
-O site é estático, feito em Astro, publicado no GitHub Pages em `FilipeOliveira94/filipeoliveira-hub`, com português na raiz e inglês em `/en/`. O escopo, as fases e as issues estão em `ROADMAP.md`. As decisões fechadas estão em `DECISIONS.md`.
+The site is static, built with Astro and published on GitHub Pages at `FilipeOliveira94/filipeoliveira-hub`, with Portuguese at the root and English under `/en/`. Scope, phases and issues are in `ROADMAP.md`. Settled decisions are in `DECISIONS.md`.
 
-## 2. Linguagem
+## 2. Language
 
-- Comunique-se com o Filipe em português brasileiro.
-- Identificadores de código (variáveis, funções, arquivos, chaves de schema) em inglês.
-- Documentação do repositório em português.
-- Mensagens de commit no padrão Conventional Commits. A descrição pode ser em português, como em `chore: estrutura inicial do projeto`.
-- O conteúdo do site tem sempre par PT e EN.
+- Reply to Filipe in English; he may write in Portuguese.
+- Code identifiers (variables, functions, files, schema keys), repository docs and commit messages are in English. Conventional Commits.
+- Site content always has a PT and an EN pair.
 
-## 3. Papéis
+## 3. Roles
 
-| Papel | Responsabilidade |
+| Role | Responsibility |
 | --- | --- |
-| Filipe | Dono do projeto. Pede status, escolhe a issue, decide escopo e conteúdo, responde às perguntas das issues, revisa o PR, faz o merge e apaga a branch. |
-| Claude no T3 Code (Claude Opus 5.5) | Por issue: planeja, implementa numa branch nova a partir da `main` atualizada, roda as verificações, faz o commit, dá push da branch e abre o PR com resumo. Nunca faz merge. Fallback: Grok 4.7 pelo provider Cursor no T3, só quando acabar o limite do Claude Pro. |
-| PO de Projetos (bot) | Só quando o Filipe pede: status, envio de issue ao T3, resumo do que foi feito após o merge e visão de produto. |
-| Reviewer de Projetos (bot) | Só quando o Filipe pede, para merge mais complicado: abre uma thread no T3 para o Claude revisar o PR e resume o veredito. Nunca faz merge nem apaga branch. |
+| Filipe | Project owner. Picks the issue, decides scope and content, answers the issues' questions, approves plans, reviews the PR, merges it and deletes the branch. |
+| Claude in T3 Code (Claude Opus 5.5) | Per issue: checks the rating, plans, implements on a new branch from an up-to-date `main`, runs the checks, commits, pushes the branch and opens the PR with a summary. Never merges. |
 
-Não há aprovação dupla. A entrega de uma issue é o PR aberto com o resumo; quem aprova e faz o merge é o Filipe.
+There are no PO or Reviewer bots and no review subagents in this project (see "Agent workflow" below). An issue is delivered as an open PR with a summary; Filipe approves and merges it.
 
-## 4. Fluxo de trabalho obrigatório
+### Agent workflow
 
-Para cada issue:
+Language, size and risk, and model policy: `~/.agents/claude/workflow.md` (repo `FilipeOliveira94/agent-config`).
 
-1. Leia `PROJECT_STATUS.md`, o item da issue em `ROADMAP.md` e as decisões relacionadas em `DECISIONS.md`.
-2. Confira dependências, premissas, riscos e o critério de aceite da issue.
-3. Planeje a tarefa e classifique-a como pequena ou grande (seção 4.1). Na tarefa grande, apresente o plano e espere a aprovação do Filipe antes de editar arquivos.
-4. Crie uma branch para a issue a partir da `main` atualizada (seção 5).
-5. Implemente o menor incremento coerente que cumpre o aceite.
-6. Rode as verificações da issue (`make check`, `make build` e as que o aceite pedir) e leia o resultado.
-7. Corrija as regressões causadas pela mudança.
-8. Aplique o checklist de fechamento (seção 10) na mesma branch.
-9. Faça o commit, dê push **somente da branch da issue**, abra o PR com o resumo e analise o CI.
-10. Entregue o relatório de conclusão (seção 9). O Filipe revisa o PR; pedidos de ajuste viram novos commits na mesma branch.
+- **Profile:** solo. Claude Opus 5.5 plans and implements; no review subagents.
+- **Language:** English for everything; site content always in a PT and EN pair (§6).
+- **Hi risk here:** the deploy workflow and the assets deploy key (D-021); content claims without a source (§6); anything that could publish a photo, a phone number or a CV file.
+- **Model exceptions:** none
 
-Não marque uma issue como concluída sem ter verificado o critério de aceite.
+## 4. Required workflow
 
-Não mude em silêncio a stack, as dependências, o escopo ou o critério de aceite. Se a issue pedir uma mudança dessas, registre a proposta e espere a decisão do Filipe.
+For each issue:
 
-Um ponto de entrada da issue que não foi executado não está verificado. Diga qual é e por quê antes de tratar a issue como pronta.
+1. Read `PROJECT_STATUS.md`, the issue in `ROADMAP.md` and the related decisions in `DECISIONS.md`.
+2. Check dependencies, assumptions, risks and the issue's acceptance criterion.
+3. Check the issue's Size and Risk (section 4.1) and plan it. Above Sm + Lo, present the plan and wait for Filipe's approval before editing files.
+4. Create a branch for the issue from an up-to-date `main` (section 5).
+5. Implement the smallest coherent increment that meets the acceptance.
+6. Run the issue's checks (`make check`, `make build` and whatever the acceptance asks for) and read the result.
+7. Fix regressions caused by the change.
+8. Apply the closing checklist (section 10) on the same branch.
+9. Commit, push **only the issue branch**, open the PR with the summary and read the CI.
+10. Deliver the completion report (section 9). Filipe reviews the PR; requested changes become new commits on the same branch.
 
-### 4.1 Tarefa pequena ou grande
+Do not mark an issue as done without verifying its acceptance criterion.
 
-| Modo | Quando | O que o Claude faz |
-| --- | --- | --- |
-| Pequena | Docs, texto, ajuste de config, bump patch de dependência, ou bugfix contido de até ~50 linhas em até 3 arquivos, sem tocar arquitetura, modelo de dados ou schema, auth ou segurança, infra ou deploy, API pública ou lógica de pipeline. | Planeja e implementa direto até o PR. |
-| Grande | Todo o resto, ou na dúvida. | Planeja e **para**: apresenta o plano na thread e espera a aprovação do Filipe antes de mexer em código. |
+Do not silently change the stack, dependencies, scope or acceptance criterion. If the issue asks for such a change, record the proposal and wait for Filipe's decision.
 
-- O prompt da issue diz qual modo seguir.
-- O Claude pode reclassificar a tarefa para grande se, ao planejar, ela se mostrar maior. Nunca reclassifica de grande para pequena.
-- A aprovação chega na mesma thread, direto do Filipe ou repassada pelo PO de Projetos com "Plano aprovado pelo Filipe: implemente.", às vezes com ajustes. Incorpore os ajustes antes de implementar.
+An entry point of the issue that was not run is not verified. Say which one and why before treating the issue as done.
 
-## 5. Git e entrega
+### 4.1 Size and risk
 
-- A partir da fase 0, todo trabalho é feito em **branch + PR por issue**. Uma branch por issue, um PR por issue.
-- A ordem do Filipe para implementar autoriza o Claude no T3 a commitar, dar push **somente da branch da issue**, abrir o PR e ler o CI. Ninguém além do Filipe faz push na `main`.
-- Merge e exclusão de branch são do Filipe. Nenhum agente ou bot faz merge, apaga branch ou dá push na `main`.
+- Every issue carries a Size (Sm, Md, Lg) and a Risk (Lo, Med, Hi) on the scale in `~/.agents/claude/workflow.md`. Ratings go in the roadmap's "Expected/Seen Risk" and "Expected/Seen Size" columns (format in the same file); until an issue has one, Claude rates it in the plan.
+- **Sm + Lo:** Claude plans and implements straight through to the PR.
+- **Anything else:** Claude plans and **stops**: it presents the plan in the thread and waits for Filipe's approval before touching code. Approval arrives in the same thread, sometimes with adjustments; apply them before implementing.
+- **Hi risk or Lg size:** the thread runs at Opus high effort, set when it starts; Claude never switches its model or effort by itself; a switch happens only when Filipe decides it. An Lg plan says whether to split the issue.
+- Claude may raise a rating while planning and says why; it never lowers one without Filipe.
+
+## 5. Git and delivery
+
+- From phase 0 on, all work is **branch + PR per issue**. One branch per issue, one PR per issue.
+- Filipe's order to implement authorizes Claude in T3 to commit, push **only the issue branch**, open the PR and read the CI. Nobody but Filipe pushes to `main`.
+- Merge and branch deletion are Filipe's. No agent or bot merges, deletes a branch or pushes to `main`.
 - Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `ci:`, `refactor:`).
-- Não use `--force` em branch compartilhada, não reescreva o histórico da `main` e não pule hooks sem motivo registrado.
-- O commit `chore: estrutura inicial do projeto` foi feito direto na `main` local. Foi uma exceção única, autorizada pelo Filipe. Não repita.
+- Do not use `--force` on a shared branch, do not rewrite `main`'s history and do not skip hooks without a recorded reason.
+- The `chore: estrutura inicial do projeto` commit was made straight on local `main`. It was a one-time exception authorized by Filipe. Do not repeat it.
 
-## 6. Regras de conteúdo
+## 6. Content rules
 
-- **Nada inventado.** Experiências, skills, formação, certificações, idiomas e métricas só entram quando vêm de uma destas fontes:
-  1. o CV do Filipe;
-  2. o portfólio antigo, só quando o CV não cobrir o ponto;
-  3. resposta do Filipe registrada na issue.
-- Afirmação técnica de um case aponta para um arquivo ou documento do repositório do projeto, ou para resposta do Filipe. Todo número tem fonte.
-- Lacuna de informação fica registrada na issue. Não preencha com suposição.
-- Descrição de projeto na galeria só entra se vier da galeria antiga ou da descrição do repositório no GitHub. Sem fonte, o cartão mostra só título, tag e link.
-- **Sem PDF de CV e sem currículo para baixar no site.** Também não há página de currículo em HTML.
-- Sem telefone no site.
-- Todo item de conteúdo e toda página têm par PT e EN. O inglês derivado do CV é tradução e precisa da revisão do Filipe antes do release (I-18).
-- O número de anos de experiência não é escrito à mão em nenhum arquivo de conteúdo. Ele vem da função `yearsSince` (I-09).
-- Fotos e imagens de origem não entram neste repositório, nem em commit intermediário. Os originais ficam no repositório privado `filipeoliveira-hub-assets` e o build os busca (D-021).
-- Não versione segredos, tokens nem arquivos `.env` com valores reais. O repositório é público, e um rascunho com `draft: true` também fica visível nele.
+- **Nothing invented.** Experience, skills, education, certifications, languages and metrics go in only when they come from one of these sources:
+  1. Filipe's CV;
+  2. the old portfolio, only when the CV does not cover the point;
+  3. Filipe's answer recorded in the issue.
+- A technical claim in a case points to a file or document in the project's repository, or to Filipe's answer. Every number has a source.
+- A gap in information is recorded in the issue. Do not fill it with a guess.
+- A project description in the gallery goes in only if it comes from the old gallery or from the repository description on GitHub. Without a source, the card shows only title, tag and link.
+- **No CV PDF and no downloadable résumé on the site.** There is no HTML résumé page either.
+- No phone number on the site.
+- Every content item and every page has a PT and EN pair. English derived from the CV is a translation and needs Filipe's review before the release (I-18).
+- The number of years of experience is never written by hand in any content file. It comes from the `yearsSince` function (I-09).
+- Photos and source images do not go into this repository, not even in an intermediate commit. The originals live in the private `filipeoliveira-hub-assets` repository and the build fetches them (D-021).
+- Do not version secrets, tokens or `.env` files with real values. The repository is public, and a draft with `draft: true` is visible in it too.
 
-## 7. Princípios técnicos
+## 7. Technical principles
 
-- Prefira a solução simples. O site é de conteúdo e envia o mínimo de JavaScript ao cliente.
-- Todo link interno e todo asset passam pelo helper do caminho base (I-02). Um link escrito sem o helper quebra só em produção.
-- `site` e `base` do Astro vêm das variáveis `SITE_URL` e `BASE_PATH`. Não escreva a URL do site no código.
-- Conteúdo fica em collections com schema Zod. Frontmatter inválido quebra o build.
-- Acessibilidade: WCAG 2.2 AA, contraste ≥ 4,5:1, foco visível, navegação por teclado, `lang` por página e resumo textual para cada diagrama.
-- Performance: LCP ≤ 2,5 s, INP ≤ 200 ms, CLS ≤ 0,1, JS ≤ 50 KB por página, fontes locais e imagens em AVIF/WebP com dimensões explícitas.
-- Fixe as versões das dependências e versione o lockfile.
-- Não adicione dependência, serviço ou ferramenta sem explicar para que serve e quanto custa manter.
+- Prefer the simple solution. The site is content and ships the minimum JavaScript to the client.
+- Every internal link and every asset goes through the base path helper (I-02). A link written without the helper breaks only in production.
+- Astro's `site` and `base` come from the `SITE_URL` and `BASE_PATH` variables. Do not write the site URL in code.
+- Content lives in collections with a Zod schema. Invalid frontmatter breaks the build.
+- Accessibility: WCAG 2.2 AA, contrast ≥ 4.5:1, visible focus, keyboard navigation, `lang` per page and a text summary for each diagram.
+- Performance: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1, JS ≤ 50 KB per page, local fonts and AVIF/WebP images with explicit dimensions.
+- Pin dependency versions and version the lockfile.
+- Do not add a dependency, service or tool without explaining what it is for and what it costs to maintain.
 
-## 8. Testes, verificação e escopo
+## 8. Tests, verification and scope
 
-- Rode primeiro a verificação mais estreita e depois as mais amplas.
-- Não diga que um teste passou se ele não foi executado.
-- Se uma dependência ou um serviço externo estiver indisponível, relate a limitação. Não invente um resultado.
-- Não invente notas de Lighthouse, métricas de performance nem resultados de acessibilidade. Registre o que a ferramenta mostrou.
-- Trabalhe em uma issue por vez. Não implemente fases futuras na mesma mudança.
-- Não crie diretórios vazios para fases que ainda não começaram.
-- Prefira um TODO explícito ou um bloqueio documentado a uma implementação especulativa.
-- Markdown: toda tabela tem uma linha de cabeçalho que nomeia as colunas, tirada do contexto (`Issue P1-02 | Detalhe`, `Validação | Detalhe`). Nunca um cabeçalho vazio `| | |`, que o GFM mostra como linha em branco no topo. `make docs-lint` verifica.
+- Run the narrowest check first, then the broader ones.
+- Do not say a test passed if it was not run.
+- If a dependency or external service is unavailable, report the limitation. Do not invent a result.
+- Do not invent Lighthouse scores, performance metrics or accessibility results. Record what the tool showed.
+- Work on one issue at a time. Do not implement future phases in the same change.
+- Do not create empty directories for phases that have not started.
+- Prefer an explicit TODO or a documented blocker over a speculative implementation.
+- Markdown: every table has a header row that names its columns, drawn from context (`Issue P1-02 | Detail`, `Validation | Detail`). Never an empty `| | |` header, which GFM renders as a blank row on top. `make docs-lint` checks it.
 
-## 9. Relatório de conclusão
+## 9. Completion report
 
-Ao fim de cada tarefa, informe:
+At the end of each task, report:
 
-- Objetivo e resumo do que foi implementado.
-- Arquivos criados ou modificados.
-- Comandos executados.
-- Verificações que passaram e que falharam.
-- Critérios de aceite cumpridos e pendentes.
-- Limitações e riscos conhecidos.
-- Branch, hash do commit e link do PR.
-- Próxima issue sugerida.
+- Goal and summary of what was implemented.
+- Files created or changed.
+- Commands run.
+- Checks that passed and failed.
+- Acceptance criteria met and pending.
+- Known limitations and risks.
+- Branch, commit hash and PR link.
+- Suggested next issue.
 
-O Filipe toma as decisões finais e aprova as mudanças relevantes.
+Filipe makes the final decisions and approves significant changes.
 
-## 10. Checklist de fechamento de issue
+## 10. Issue closing checklist
 
-Antes do commit de fechamento, na branch da issue, confira cada item e atualize só o que a evidência verificada sustenta:
+Before the closing commit, on the issue branch, check each item and update only what the verified evidence supports:
 
-- `ROADMAP.md`: o status da issue, uma linha no Changelog e a data de Last updated.
-- `PROJECT_STATUS.md`: a tabela da fase, o Next work coerente com o aceite e a data de Last updated.
-- `docs/status-log.md`: uma entrada nova, com o que foi feito e o que as verificações mostraram.
-- `DECISIONS.md`: uma decisão só muda de estado, ou ganha a coluna Implementado, com evidência de uma issue verificada.
-- `README.md`: muda só no fechamento de fase, ou quando a issue altera a forma de usar o repositório.
+- `ROADMAP.md`: the issue status, a Changelog line, the Last updated date, and the seen half of its Risk and Size.
+- `PROJECT_STATUS.md`: the phase table, Next work consistent with the acceptance, and the Last updated date.
+- `docs/status-log.md`: a new entry with what was done and what the checks showed.
+- `DECISIONS.md`: a decision changes state, or gets a value in the Implemented column, only with evidence from a verified issue.
+- `README.md`: changes only when a phase closes, or when the issue changes how the repository is used.
 
-`PROJECT_STATUS.md` acompanha a **fase corrente** e é reescrito a cada fase. Não o use como arquivo de evidência. O inventário de issues fica em `ROADMAP.md`, as decisões em `DECISIONS.md` e o histórico em `docs/status-log.md`.
+`PROJECT_STATUS.md` tracks the **current phase** and is rewritten each phase. Do not use it as an evidence file. The issue inventory lives in `ROADMAP.md`, decisions in `DECISIONS.md` and history in `docs/status-log.md`.
 
-Registre o que foi implementado e o que as verificações mostraram. Não registre pausas, novas tentativas nem passos de recuperação que não mudam a forma de operar o resultado.
+Record what was implemented and what the checks showed. Do not record pauses, retries or recovery steps that do not change how to operate the result.
 
-Os prompts de planejar, implementar e fechar uma issue estão em `docs/agent-workflow.md`.
+The prompts to plan, implement and close an issue are in `docs/agent-workflow.md`.
 
-AGENTS.md é a fonte única; CLAUDE.md importa este arquivo.
+AGENTS.md is the single source; CLAUDE.md imports this file.

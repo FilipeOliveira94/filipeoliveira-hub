@@ -1,56 +1,56 @@
-# ADR-0001: Fotos originais em repositório privado de assets
+# ADR-0001: Original photos in a private assets repository
 
-| Campo | Valor |
+| Field | Value |
 | --- | --- |
-| Estado | `approved` |
-| Aberta em | 2026-11-17 |
-| Decidida em | 2026-11-17 |
-| Dono | Filipe |
-| ID no índice | D-021 |
-| Issues relacionadas | I-03, I-04, I-11 |
-| Substitui | — |
-| Substituída por | — |
+| State | `approved` |
+| Opened | 2026-11-17 |
+| Decided | 2026-11-17 |
+| Owner | Filipe |
+| Index ID | D-021 |
+| Related issues | I-03, I-04, I-11 |
+| Supersedes | — |
+| Superseded by | — |
 
-## Contexto / problema
+## Context / problem
 
-A home usa uma foto do Filipe (I-11). Este repositório é público, e um arquivo commitado continua no histórico mesmo depois de apagado. A foto foi recebida como anexo na thread do T3 e ainda não está em nenhum repositório.
+The home page uses a photo of Filipe (I-11). This repository is public, and a committed file stays in the history even after it is deleted. The photo was received as an attachment in the T3 thread and is not in any repository yet.
 
-## Decisão
+## Decision
 
-Este repositório continua público e não recebe fotos nem imagens de origem. Os originais ficam no repositório privado `FilipeOliveira94/filipeoliveira-hub-assets`, em tamanho web (cerca de 3000 px no lado maior), não em RAW; a foto da home fica em `photos/portrait.jpg`. O workflow do Actions faz o checkout desse repositório em `.assets/` com o secret `ASSETS_DEPLOY_KEY`, uma chave ed25519 cadastrada como deploy key somente leitura só no repositório de assets, com `persist-credentials: false`. O passo só roda quando o secret existe (`HAS_ASSETS_KEY`). Um script com `sharp` recorta os originais para `src/assets/generated/`, e o Astro gera AVIF/WebP. `.assets/` e `src/assets/generated/` ficam no `.gitignore`. Sem o secret (build local sem acesso, PR de fork), o build termina com um placeholder neutro. O CI falha se um PR adicionar arquivo de imagem a este repositório.
+This repository stays public and receives no photos or source images. The originals live in the private repository `FilipeOliveira94/filipeoliveira-hub-assets`, at web size (about 3000 px on the long side), not RAW; the home page photo is `photos/portrait.jpg`. The Actions workflow checks out that repository into `.assets/` with the `ASSETS_DEPLOY_KEY` secret, an ed25519 key registered as a read-only deploy key on the assets repository only, with `persist-credentials: false`. The step runs only when the secret exists (`HAS_ASSETS_KEY`). A script with `sharp` crops the originals into `src/assets/generated/`, and Astro generates AVIF/WebP. `.assets/` and `src/assets/generated/` are in `.gitignore`. Without the secret (a local build without access, a fork PR), the build finishes with a neutral placeholder. CI fails if a PR adds an image file to this repository.
 
-O repositório de assets é exclusivo deste site. Uma deploy key vale para um único repositório, então repositórios separados dão o menor privilégio e donos independentes. Repositórios privados não custam nada no plano gratuito do GitHub.
+The assets repository serves this site only. A deploy key is valid for a single repository, so separate repositories give the least privilege and independent owners. Private repositories cost nothing on GitHub's free plan.
 
-## Alternativas consideradas
+## Alternatives considered
 
-| Opção | Prós | Contras | Por que não |
+| Option | Pros | Cons | Why not |
 | --- | --- | --- | --- |
-| Repositório privado só deste site, buscado no build (escolhida) | Originais e histórico privados; este repositório segue público e gratuito | Um segundo repositório, uma deploy key e um passo no workflow | — |
-| Commitar a foto neste repositório | Build mais simples | O original e todas as versões ficam públicos no histórico | Rejeitada |
-| Git LFS | Fica no mesmo repositório | Cota gratuita de 1 GB de armazenamento e 1 GB de banda por mês; cada clone do CI consome banda; os arquivos continuam públicos num repositório público | Rejeitada |
-| Tornar este repositório privado | Um repositório só | GitHub Pages em repositório privado exige plano pago | Rejeitada |
-| Repositório de assets compartilhado com outros sites | Um repositório para todos | A deploy key daria acesso às fotos de todos os sites | Rejeitada |
+| Private repository for this site only, fetched at build time (chosen) | The originals and their history stay private; this repository stays public and free | A second repository, a deploy key and a workflow step | — |
+| Commit the photo to this repository | Simpler build | The original and every version are public in the history | Rejected |
+| Git LFS | Stays in the same repository | Free quota of 1 GB of storage and 1 GB of bandwidth per month; every CI clone uses bandwidth; the files are still public in a public repository | Rejected |
+| Make this repository private | A single repository | GitHub Pages on a private repository needs a paid plan | Rejected |
+| An assets repository shared with other sites | One repository for all of them | The deploy key would give access to every site's photos | Rejected |
 
-## Consequências e trade-offs
+## Consequences and trade-offs
 
-- A foto otimizada continua pública no site, como qualquer imagem de página. O que fica privado é o original e o histórico dele.
-- O deploy pelo Actions não grava o site gerado em branch, então a foto otimizada também não entra no histórico deste repositório.
-- PRs de fork não recebem o secret e constroem com o placeholder.
-- Trabalho criado: a I-03 busca os assets no workflow (também em PR); a I-04 bloqueia imagem no PR com `scripts/check-no-photos.mjs`; a I-11 gera a foto com `scripts/prepare-assets.mjs`.
-- Passos manuais do Filipe, antes da I-11:
-  1. Criar o repositório privado `FilipeOliveira94/filipeoliveira-hub-assets` e subir `photos/portrait.jpg`.
-  2. Gerar a chave fora de qualquer repositório: `ssh-keygen -t ed25519 -N "" -C filipeoliveira-hub-assets-deploy -f <pasta temporária>/assets_key`.
-  3. Cadastrar `assets_key.pub` como deploy key do repositório de assets, **sem** "Allow write access".
-  4. Gravar a chave privada como secret: `gh secret set ASSETS_DEPLOY_KEY -R FilipeOliveira94/filipeoliveira-hub < <pasta temporária>/assets_key`.
-  5. Conferir que a chave clona o repositório de assets e que um push é recusado.
-  6. Apagar `assets_key` e `assets_key.pub` do disco.
+- The optimized photo is still public on the site, like any page image. What stays private is the original and its history.
+- The Actions deploy does not write the generated site to a branch, so the optimized photo does not enter this repository's history either.
+- Fork PRs do not get the secret and build with the placeholder.
+- Work created: I-03 fetches the assets in the workflow (on PRs too); I-04 blocks images in PRs with `scripts/check-no-photos.mjs`; I-11 generates the photo with `scripts/prepare-assets.mjs`.
+- Filipe's manual steps, before I-11:
+  1. Create the private repository `FilipeOliveira94/filipeoliveira-hub-assets` and upload `photos/portrait.jpg`.
+  2. Generate the key outside any repository: `ssh-keygen -t ed25519 -N "" -C filipeoliveira-hub-assets-deploy -f <temporary folder>/assets_key`.
+  3. Register `assets_key.pub` as a deploy key of the assets repository, **without** "Allow write access".
+  4. Store the private key as a secret: `gh secret set ASSETS_DEPLOY_KEY -R FilipeOliveira94/filipeoliveira-hub < <temporary folder>/assets_key`.
+  5. Check that the key clones the assets repository and that a push is refused.
+  6. Delete `assets_key` and `assets_key.pub` from disk.
 
-## Evidência / validação
+## Evidence / validation
 
-Em 2026-11-17, neste checkout, `git ls-files` não lista imagem e `git log --all --diff-filter=A` por jpg, jpeg, png, webp, avif, heic, gif e tif não retorna nada: não há histórico a reescrever. Nada foi construído ainda; a evidência da implementação entra em `docs/status-log.md` na I-03, na I-04 e na I-11.
+On 2026-11-17, in this checkout, `git ls-files` listed no image, and `git log --all --diff-filter=A` for jpg, jpeg, png, webp, avif, heic, gif and tif returned nothing: there is no history to rewrite. Nothing has been built yet; the implementation evidence goes into `docs/status-log.md` in I-03, I-04 and I-11.
 
-O mesmo modelo já está validado no repositório `dra-victoria-laufer` (ADR-0010 de lá).
+The same model is already validated in the `dra-victoria-laufer` repository (its ADR-0010).
 
-## Revisitar quando
+## Revisit when
 
-A deploy key não puder ficar somente leitura e restrita ao repositório de assets, ou a visibilidade de algum dos dois repositórios mudar.
+The deploy key can no longer stay read-only and limited to the assets repository, or the visibility of either repository changes.

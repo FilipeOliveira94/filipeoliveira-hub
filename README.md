@@ -1,65 +1,66 @@
 # filipeoliveira-hub
 
-Portfólio do Filipe Oliveira, Engenheiro de Dados. O site reúne um case técnico com diagramas de arquitetura, uma galeria de projetos e o recorte de experiências, em português e inglês, para apoiar a busca por vagas de Engenharia de Dados de nível sênior em diante.
+Portfolio of Filipe Oliveira, Data Engineer. The site brings together a technical case study with architecture diagrams, a project gallery and an experience summary, in Portuguese and English, to support the search for Data Engineering roles at senior level and above.
 
-> A estrutura Astro ainda não foi gerada. Este repositório tem hoje só a documentação do projeto. O site ainda não está no ar.
+> The Astro structure has not been generated yet. Today this repository holds only the project documentation. The site is not live yet.
 
 ---
 
 ## Status
 
-| Campo | Agora |
+| Field | Now |
 | --- | --- |
-| Fase corrente | Fase 0 — Fundação. Não iniciada |
-| Próxima issue | I-01 — Criar repositório e estrutura Astro |
-| Ledger | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) · escopo em [`ROADMAP.md`](ROADMAP.md) |
+| Current phase | Phase 0 — Foundation. I-29 (docs in English) is verified; the site issues have not started |
+| Next issue | I-01 — Create the repository and the Astro structure |
+| Ledger | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) · scope in [`ROADMAP.md`](ROADMAP.md) |
 
 ---
 
-## Stack prevista
+## Planned stack
 
-| Item | Escolha |
+| Item | Choice |
 | --- | --- |
-| Gerador | Astro, com TypeScript e MDX |
-| Conteúdo | Content Collections com schema Zod |
-| Idiomas | Português na raiz e inglês em `/en/` |
-| Hospedagem | GitHub Pages, publicado por GitHub Actions |
-| URL prevista | `https://filipeoliveira94.github.io/filipeoliveira-hub/` |
+| Generator | Astro, with TypeScript and MDX |
+| Content | Content Collections with a Zod schema |
+| Languages | Portuguese at the root and English under `/en/` |
+| Hosting | GitHub Pages, published by GitHub Actions |
+| Planned URL | `https://filipeoliveira94.github.io/filipeoliveira-hub/` |
 
-O motivo de cada escolha está em [`DECISIONS.md`](DECISIONS.md).
+The reason for each choice is in [`DECISIONS.md`](DECISIONS.md).
 
 ---
 
-## Documentos
+## Documents
 
-- [`ROADMAP.md`](ROADMAP.md): fases, issues I-01 a I-28, dependências e critério de aceite.
-- [`DECISIONS.md`](DECISIONS.md): decisões fechadas e o que ficou dentro e fora do MVP.
-- [`PROJECT_STATUS.md`](PROJECT_STATUS.md): estado da fase corrente e próximo trabalho.
-- [`AGENTS.md`](AGENTS.md): regras para quem contribui, pessoa ou agente.
-- [`docs/status-log.md`](docs/status-log.md): histórico.
-- [`docs/agent-workflow.md`](docs/agent-workflow.md): prompts de planejar, implementar e fechar uma issue.
+- [`ROADMAP.md`](ROADMAP.md): phases, issues I-01 to I-29, dependencies and acceptance criteria.
+- [`DECISIONS.md`](DECISIONS.md): settled decisions and what is in and out of the MVP.
+- [`PROJECT_STATUS.md`](PROJECT_STATUS.md): state of the current phase and next work.
+- [`AGENTS.md`](AGENTS.md): rules for contributors, people or agents.
+- [`docs/status-log.md`](docs/status-log.md): history.
+- [`docs/agent-workflow.md`](docs/agent-workflow.md): prompts to plan, implement and close an issue.
 
 ---
 
 ## Makefile
 
-Os alvos abaixo passam a funcionar quando o projeto Astro existir (I-01). Antes disso, `install`, `dev`, `build` e `check` param com uma mensagem dizendo que falta o `package.json`.
+The targets below start working once the Astro project exists (I-01). Until then, `install`, `dev`, `build` and `check` stop with a message saying that `package.json` is missing.
 
 ```bash
-make help      # lista os alvos
-make install   # instala as dependências
-make dev       # servidor de desenvolvimento
-make build     # build estático em dist/
+make help      # lists the targets
+make install   # installs the dependencies
+make dev       # development server
+make build     # static build into dist/
 make check     # astro check
-make clean     # remove dist/ e .astro/
+make docs-lint # checks the Markdown tables
+make clean     # removes dist/ and .astro/
 ```
 
 ---
 
-## Como contribuir
+## Contributing
 
-Cada issue é feita em branch própria, com PR. O Claude no T3 abre o PR e só o Filipe faz o merge na `main`. As regras completas estão em [`AGENTS.md`](AGENTS.md).
+Each issue is done on its own branch, with a PR. Claude in T3 opens the PR, and only Filipe merges into `main`. The full rules are in [`AGENTS.md`](AGENTS.md).
 
-## Licença
+## License
 
 [MIT](LICENSE).
