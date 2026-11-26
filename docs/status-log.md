@@ -6,7 +6,7 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ### 2026-11-26 — Brand tokens and component sample (I-05)
 
-Branch `feat/i-05-brand-tokens`. The brand comes from the private assets repository at commit `358a354` (D-023), copied unchanged into the D-027 places and listed in `src/assets/brand/README.md`: `tokens.css`, the four logo SVGs, Urbanist 500 and 700 (woff2, with `OFL.txt`), and `favicon.ico`, `favicon.svg` and `apple-touch-icon.png` at the root of `public/`. No photo was copied.
+Branch `feat/i-05-brand-tokens`. The brand comes from the private assets repository at commit `358a354` (D-023), copied unchanged into the D-027 places and listed in `src/assets/brand/README.md`: `tokens.css`, the four logo SVGs, Urbanist 500 and 700 (woff2, with `OFL.txt`), and `favicon.ico`, `icon-192-rounded.png` and `apple-touch-icon-rounded.png` at the root of `public/`. Filipe preferred the rounded dark box icons to the transparent `favicon.svg`, so the pages link those. No photo was copied.
 
 - `src/styles/global.css` imports the tokens and adds the local `@font-face` rules, color roles (`--color-*` over `--fi-*`), a 1.25 type scale, a nine-step spacing scale, radii, visible focus (3px accent outline), reduced motion, and the base components (button, secondary button, tag, card). `--fi-dot` is decorative only: 3.78:1 on the light background.
 - `src/components/BaseHead.astro` holds the shared meta, the favicon links and the global styles; the placeholder pages use it, so they show the brand font and colors in both themes.
@@ -14,7 +14,7 @@ Branch `feat/i-05-brand-tokens`. The brand comes from the private assets reposit
 - `/brand/` and `/en/brand/` show the logo, colors with the contrast table, type and spacing scales and the components, `noindex` like every page.
 - `scripts/check-links.mjs` now parses `srcset` as the HTML spec does: Vite inlines the small Fi mark as a `data:` URL, whose commas the old split broke into a false broken link.
 
-Checked: `astro check` 0 errors, ESLint, 62 unit tests pass (2 axe tests skipped without `CHROME_PATH`), link check with `BASE_PATH=/` and `/filipeoliveira-hub`, PT/EN pairs, axe on 4 pages in light and dark, docs-lint and the image check pass. Lighthouse CI on the 4 pages: 100 in all four categories; best practices was 96 before, from the `favicon.ico` 404. Browser proof on the preview build (Chromium, 1440 and 390 px, light and dark, PT and EN): Urbanist 500 and 700 load from the site, no third-party request, no console error or failed request, no horizontal scroll, the logo switches to its dark file in dark, and Tab shows the 3px focus outline on each link and button. Seen rating: Lo risk, Md size (about 700 hand-written lines). Pending: Filipe's approval of the sample.
+Checked: `astro check` 0 errors, ESLint, 62 unit tests pass (2 axe tests skipped without `CHROME_PATH`), link check with `BASE_PATH=/` and `/filipeoliveira-hub`, PT/EN pairs, axe on 4 pages in light and dark, docs-lint and the image check pass. Lighthouse CI on the 4 pages: 100 in all four categories; best practices was 96 before, from the `favicon.ico` 404. Browser proof on the preview build (Chromium, 1440 and 390 px, light and dark, PT and EN): Urbanist 500 and 700 load from the site, no third-party request, no console error or failed request, no horizontal scroll, the logo switches to its dark file in dark, and Tab shows the 3px focus outline on each link and button. Seen rating: Lo risk, Md size (about 700 hand-written lines). Filipe approved the sample on 2026-11-26.
 
 ---
 
