@@ -16,7 +16,7 @@ The site is static, built with Astro and published on GitHub Pages from `FilipeO
 
 | Role | Responsibility |
 | --- | --- |
-| Filipe | Project owner. Picks the issue, decides scope and content, answers the issues' questions, approves plans, reviews the PR, merges it and deletes the branch. |
+| Filipe | Project owner. Picks the issue, decides scope and content, answers the issues' questions, approves plans, reviews the PR and merges it (GitHub deletes the merged branch automatically). |
 | Claude in T3 Code (Claude Opus 5.5) | Per issue: checks the rating, plans, implements on a new branch from an up-to-date `main`, runs the checks, commits, pushes the branch and opens the PR with a summary. Never merges. |
 
 There are no PO or Reviewer bots and no review subagents in this project (see "Agent workflow" below). An issue is delivered as an open PR with a summary; Filipe approves and merges it.
@@ -63,7 +63,7 @@ An entry point of the issue that was not run is not verified. Say which one and 
 
 - From phase 0 on, all work is **branch + PR per issue**. One branch per issue, one PR per issue.
 - Filipe's order to implement authorizes Claude in T3 to commit, push **only the issue branch**, open the PR and read the CI. Nobody but Filipe pushes to `main`.
-- Merge and branch deletion are Filipe's. No agent or bot merges, deletes a branch or pushes to `main`.
+- Merge is Filipe's; GitHub deletes the merged branch automatically. No agent or bot merges, deletes a branch or pushes to `main`.
 - Use Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `test:`, `ci:`, `refactor:`).
 - Do not use `--force` on a shared branch, do not rewrite `main`'s history and do not skip hooks without a recorded reason.
 - The `chore: estrutura inicial do projeto` commit was made straight on local `main`. It was a one-time exception authorized by Filipe. Do not repeat it.

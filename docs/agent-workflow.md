@@ -67,4 +67,4 @@ Review the current diff against the agreed plan and the acceptance criterion. Do
 Return a short completion report, the branch, the commit hash, the PR link, the CI result and the next task.
 ```
 
-After the PR, Filipe reviews it, merges it and deletes the branch. For a harder merge, he can open a T3 thread for Claude to review the PR. No agent merges.
+After the PR, Filipe reviews it and merges it; GitHub deletes the merged branch automatically. For a harder merge, he can open a T3 thread for Claude to review the PR. No agent merges.
