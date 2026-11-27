@@ -4,6 +4,22 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-26 — Base layout (I-06), I-05 verified
+
+Branch `feat/i-06-base-layout`. Plan approved by Filipe with his answers: navigation links only to pages that exist; footer with e-mail, LinkedIn and GitHub; the language switcher as a globe button that shows the current language and opens a menu with both; `/brand/` stays as the component sample.
+
+- `src/layouts/BaseLayout.astro` wraps every page: `lang` from the path, `BaseHead`, a skip link (hidden until focused) to `<main id="main">`, the header and the footer. The placeholder pages and `/brand/` use it.
+- `SiteHeader.astro`: the logo (light or dark file by system setting) linking to the home page of the current language, and a `<nav>` built from `NAV` in `src/lib/lang.ts`, which holds only Home for now, with `aria-current="page"`.
+- `LangSwitcher.astro`: a `<details>` button with a globe icon and `PT` or `EN`; its accessible name is "Idioma: Português" or "Language: English". The menu marks the current language and links the other one, with `lang` and `hreflang`, to the mirrored page. It works without JS; a 300-byte inline script closes it with Esc (focus back on the button) or a click outside.
+- `SiteFooter.astro`: the year, then e-mail, LinkedIn and GitHub (Filipe's answer in I-06).
+- `src/lib/lang.ts`: `langOf()`, `alternatePath()` (`/x` ↔ `/en/x`, so `/english/` is not taken for EN) and `sitePathOf()` with unit tests, plus the layout's interface strings, which I-07 moves into its dictionary.
+
+Checked: `astro check` 0 errors, ESLint, 66 unit tests pass (2 axe tests skipped without `CHROME_PATH`), link check with `BASE_PATH=/` and `/filipeoliveira-hub`, PT/EN pairs, axe on 4 pages in light and dark, docs-lint and the image check pass. Lighthouse CI: 100 in all four categories on the 4 pages. Browser proof (Chromium, `astro preview`, 34 statements passed): header and footer on every page in light and dark at 1440 and 390 px with no horizontal scroll and no console error; Tab order skip link → logo → Início → language button, each with the 3px outline; Enter on the skip link focuses `main`; Enter or Space opens the menu, Tab reaches the other language, Esc closes it and returns focus, a click outside closes it; the links reach `/en/brand/` and back; axe finds no violation with the menu open, in light and dark, at both widths. Seen rating: Lo risk, Md size.
+
+I-05 verified: Filipe approved the sample and asked for the rounded box favicons, and PR #11 merged. Implemented filled for D-023.
+
+---
+
 ### 2026-11-26 — Brand tokens and component sample (I-05)
 
 Branch `feat/i-05-brand-tokens`. The brand comes from the private assets repository at commit `358a354` (D-023), copied unchanged into the D-027 places and listed in `src/assets/brand/README.md`: `tokens.css`, the four logo SVGs, Urbanist 500 and 700 (woff2, with `OFL.txt`), and `favicon.ico`, `icon-192-rounded.png` and `apple-touch-icon-rounded.png` at the root of `public/`. Filipe preferred the rounded dark box icons to the transparent `favicon.svg`, so the pages link those. No photo was copied.
