@@ -6,7 +6,7 @@ The phases and issues I-01 to I-28 come from the PO's final plan (`filipeoliveir
 
 | Roadmap | Current |
 | --- | --- |
-| Last updated | 2026-11-26 |
+| Last updated | 2026-11-28 |
 
 **Expected/Seen Risk and Size:** each cell is `expected/seen`. Risk is `Lo`, `Med` or `Hi`; Size is `Sm`, `Md` or `Lg` (scale in `~/.agents/claude/workflow.md`, repo `FilipeOliveira94/agent-config`; Hi risk here is listed in `AGENTS.md` §3). An open issue has only the expected half (`Med/-`, `Md/-`); the seen half is filled when it closes. These columns replace the old Size column (P/M/G in days).
 
@@ -109,8 +109,8 @@ The DNS and the GitHub settings are Filipe's manual steps, in this order. Settin
 | ID | Title | Expected/Seen Risk | Expected/Seen Size | Depends on | Status | Acceptance |
 | --- | --- | --- | --- | --- | --- | --- |
 | I-05 | Brand tokens and component sample | Lo/Lo | Sm/Md | I-01 | Verified | Brings the approved brand from the assets repository (D-023): the `--fi-*` colors of `brand/tokens.css`, the Urbanist 500 and 700 files, the logo SVGs and the favicons, copied into the allowed directories of D-027. Adds the spacing and type scales and a component sample page. Light and dark follow `prefers-color-scheme`, with no switch. Every text and background pair has contrast ≥ 4.5:1 in both themes; fonts are served locally; Filipe approves the sample before I-06 closes |
-| I-06 | Base layout | Lo/Lo | Md/Md | I-05 | Delivered | Header with the logo, footer, navigation, language switcher and a skip-to-content link, using the tokens, in light and dark. Full keyboard navigation with visible focus and zero axe violations in both themes |
-| I-07 | PT/EN routing | Med/- | Md/- | I-01 | Not started | PT at the root, EN under `/en/`, a language switcher and interface strings in a dictionary. Given I am on a page that has a pair, when I use the switcher, then I reach the equivalent page; `hreflang` is reciprocal |
+| I-06 | Base layout | Lo/Lo | Md/Md | I-05 | Verified | Header with the logo, footer, navigation, language switcher and a skip-to-content link, using the tokens, in light and dark. Full keyboard navigation with visible focus and zero axe violations in both themes |
+| I-07 | PT/EN routing | Med/Med | Md/Sm | I-01 | Delivered | PT at the root, EN under `/en/`, a language switcher and interface strings in a dictionary. Given I am on a page that has a pair, when I use the switcher, then I reach the equivalent page; `hreflang` is reciprocal |
 | I-08 | Collections and schemas | Med/- | Md/- | I-01 | Not started | `cases`, `projects`, `experience` and `skills` (including education, certifications and languages) with Zod. Invalid frontmatter, a case study without a PT/EN pair or a metric without `source` breaks the build |
 | I-09 | Dynamic years counter in data | Lo/- | Sm/- | I-01 | Not started | `yearsSince` function from 2019-09-01, used on the home page. Unit tests cover 2026-08-31 → 6, 2026-09-01 → 7 and 2026-11-15 → 7; a search of the repo does not find the number written by hand in content |
 | I-10 | Experience summary | Hi/- | Md/- | I-07, I-08 | Not started | `experience.yaml` with the six experiences from the CV, dates in month and year, in PT and EN. The six entries appear with the periods and job titles from the CV; no sentence outside the source; Filipe reviews the English at the release |
@@ -227,6 +227,7 @@ The DNS and the GitHub settings are Filipe's manual steps, in this order. Settin
 
 | Date | Change |
 | --- | --- |
+| 2026-11-28 | I-07 delivered, seen Med/Sm (about 250 lines; I-06 had already built the path mirror and the switcher): interface strings in `src/i18n/ui.ts` with PT/EN key parity; every page lists pt-BR, en and x-default `hreflang` alternates as absolute URLs; `check-pairs` fails when a page's alternates do not point to its pair. A build without `SITE_URL` uses `http://localhost:4321` as Astro's `site`, since Lighthouse fails relative `hreflang`. I-06 verified: PR #12 merged |
 | 2026-11-26 | I-06 delivered, seen Lo/Md: `BaseLayout` with a skip link, a header with the logo, navigation (only pages that exist, so Home for now) and a globe language switcher that opens a menu with both languages and links to the mirrored page, and a footer with e-mail, LinkedIn and GitHub (Filipe's answer). Zero axe violations in light and dark, with the menu closed and open. I-05 verified: Filipe approved the sample and PR #11 merged |
 | 2026-11-26 | I-05 delivered, seen Lo/Md (about 700 hand-written lines, most of them the sample page and the base CSS): brand tokens, local Urbanist 500 and 700, logo SVGs and three favicons from the assets repository (D-023) in the D-027 places; color roles, type and spacing scales and base components in `src/styles/global.css`; a contrast test for every text pair in both themes; the PT/EN sample at `/brand/`. Lighthouse best practices 96 → 100. Filipe approved the sample; the pages use the rounded dark box icons at his request |
 | 2026-11-26 | I-23 verified, seen Hi/Sm: `https://filipeoliveira-hub.com.br` serves the site with a Let's Encrypt certificate; `http`, `www` and the `github.io` URL redirect to it; the deploy builds with the domain as `SITE_URL` and `BASE_PATH=/`. New `make domain` check. Domain steps corrected: AAAA values, order, and no `public/CNAME` under the Actions source. I-04 verified (run 45849859303 on `main`). Phase 0 verified |
