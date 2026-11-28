@@ -1,0 +1,59 @@
+---
+// Site footer (I-06): name, year and the contact links Filipe gave in I-06.
+import { CONTACT, UI, type Lang } from '../lib/lang';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = UI[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="inner">
+    <p>© {year} Filipe Oliveira</p>
+    <nav aria-label={t.contact}>
+      <ul>
+        <li><a href={`mailto:${CONTACT.email}`}>{t.email}</a></li>
+        <li><a href={CONTACT.linkedin} rel="me">LinkedIn</a></li>
+        <li><a href={CONTACT.github} rel="me">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: var(--border-width) solid var(--color-surface-strong);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: var(--space-5) var(--space-4);
+  }
+  p {
+    margin: 0;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    display: inline-block;
+    padding: var(--space-2) 0;
+  }
+</style>

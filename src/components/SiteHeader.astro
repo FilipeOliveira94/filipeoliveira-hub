@@ -1,0 +1,92 @@
+---
+// Site header (I-06): the logo linking home, the navigation and the language
+// switcher. Only pages that exist get a navigation link.
+import LangSwitcher from './LangSwitcher.astro';
+import { withBase } from '../lib/paths';
+import { HOME, NAV, UI, type Lang } from '../lib/lang';
+import logoLight from '../assets/brand/logo/fi-logo-light.svg?url';
+import logoDark from '../assets/brand/logo/fi-logo-dark.svg?url';
+
+interface Props {
+  lang: Lang;
+  sitePath: string;
+}
+
+const { lang, sitePath } = Astro.props;
+const t = UI[lang];
+const trim = (p: string) => p.replace(/\/+$/, '') || '/';
+---
+
+<header class="site-header">
+  <div class="inner">
+    <a class="logo" href={withBase(HOME[lang])} aria-label={t.logoLink}>
+      <picture>
+        <source srcset={logoDark} media="(prefers-color-scheme: dark)" />
+        <img src={logoLight} alt="" width="153" height="40" />
+      </picture>
+    </a>
+    <nav aria-label={t.nav}>
+      <ul>
+        {
+          NAV.map((item) => (
+            <li>
+              <a
+                href={withBase(item.path[lang])}
+                aria-current={trim(item.path[lang]) === trim(sitePath) ? 'page' : undefined}
+              >
+                {t[item.key]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <LangSwitcher lang={lang} sitePath={sitePath} />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: var(--border-width) solid var(--color-surface-strong);
+  }
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-4);
+  }
+  .logo {
+    display: inline-flex;
+    margin-right: auto;
+  }
+  .logo img {
+    display: block;
+    height: 40px;
+    width: auto;
+  }
+  nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav a {
+    display: inline-block;
+    padding: var(--space-2) 0;
+    color: var(--color-text);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+  }
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 0.14em;
+    text-underline-offset: 0.3em;
+  }
+</style>

@@ -25,8 +25,8 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 ## Next work
 
-1. **I-06** — Base layout (Lo, Md), on the I-05 tokens and logo; plan approved.
-2. **I-07, I-08, I-09** — PT/EN routing, collections and the years counter; they depend only on I-01.
+1. **I-07** — PT/EN routing: the dictionary, reciprocal `hreflang`, and the I-06 interface strings and `alternatePath()` moved into it.
+2. **I-08, I-09** — collections and the years counter; they depend only on I-01.
 3. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phase 1 is built.
 
 ---
@@ -35,8 +35,8 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 | ID | Title | Status | Evidence |
 | --- | --- | --- | --- |
-| I-05 | Brand tokens and component sample | Delivered | `docs/status-log.md` 2026-11-26; Filipe approved the sample at `/brand/` |
-| I-06 | Base layout | Not started | — |
+| I-05 | Brand tokens and component sample | Verified | `docs/status-log.md` 2026-11-26; Filipe approved the sample at `/brand/`; PR #11 merged |
+| I-06 | Base layout | Delivered | `docs/status-log.md` 2026-11-26 (base layout) |
 | I-07 | PT/EN routing | Not started | — |
 | I-08 | Collections and schemas | Not started | — |
 | I-09 | Dynamic years counter in data | Not started | — |
