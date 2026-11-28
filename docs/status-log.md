@@ -4,6 +4,20 @@ Chronological history of the project, newest entry first. The operational ledger
 
 ---
 
+### 2026-11-28 — PT/EN routing (I-07), I-06 verified
+
+Branch `feat/i-07-pt-en-routing`. Plan approved by Filipe as proposed. I-06 had already built the `/x` ↔ `/en/x` mirror, `lang` per page and the switcher; I-07 adds the dictionary and `hreflang`.
+
+- `src/i18n/ui.ts`: the interface strings, one dictionary per language, with the EN one typed against the PT one; `t(lang)` returns a language's strings. `ui.test.mjs` checks key parity and that no string is empty. The header, footer, layout and switcher read from it. The contact links moved to `src/lib/site.ts`.
+- `src/lib/lang.ts`: `pathIn(lang, sitePath)` and `alternates(sitePath)`, which gives pt-BR, en and x-default (PT) for either page of a pair, with unit tests.
+- `BaseHead.astro` writes the three `<link rel="alternate" hreflang>` tags as absolute URLs on Astro's `site`. A build without `SITE_URL` (local and the CI check builds) now uses `http://localhost:4321` as `site`: Lighthouse's SEO audit failed the relative `hreflang` hrefs ("Relative href value", SEO 0.86). The published build keeps `SITE_URL` from `actions/configure-pages`.
+- `scripts/check-pairs.mjs` also reads each page's alternates, strips the origin and `BASE_PATH`, and fails when pt-BR, en or x-default is missing or points to the wrong page. Both pages of a pair are checked, so the links are reciprocal. Four tests cover a pass, missing and wrong links, and the base path.
+- Checks: `make verify` passes (ESLint, `astro check`, 72 unit tests, docs-lint, image check, links at `/` and `/filipeoliveira-hub`, pairs, axe light and dark on 4 pages, Lighthouse assertions). The pair check also passes on a build with `SITE_URL=https://filipeoliveira-hub.com.br BASE_PATH=/filipeoliveira-hub`.
+- Browser proof (commit 9ba3483, `astro preview`, T3 preview, evidence in `~/evidence/filipeoliveira-hub/I-07/`): on `/` the switcher reaches `/en/` with `lang="en"` and the EN skip link; on `/en/brand/` it reaches `/brand/` with `lang="pt-BR"`; both pages of each pair list the same three alternates; `/brand/` has no sideways scroll at 390 px; no console errors or failed requests.
+- I-06 verified: PR #12 merged.
+
+---
+
 ### 2026-11-26 — Base layout (I-06), I-05 verified
 
 Branch `feat/i-06-base-layout`. Plan approved by Filipe with his answers: navigation links only to pages that exist; footer with e-mail, LinkedIn and GitHub; the language switcher as a globe button that shows the current language and opens a menu with both; `/brand/` stays as the component sample.

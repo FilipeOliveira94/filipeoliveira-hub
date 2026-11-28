@@ -5,7 +5,7 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 | Project | Current |
 | --- | --- |
 | Repository | [FilipeOliveira94/filipeoliveira-hub](https://github.com/FilipeOliveira94/filipeoliveira-hub) |
-| Last updated | 2026-11-26 (America/Sao_Paulo). Phase 0 verified: I-23 puts the site on `https://filipeoliveira-hub.com.br`; I-04 verified |
+| Last updated | 2026-11-28 (America/Sao_Paulo). I-07 delivered: interface dictionary and reciprocal `hreflang`; I-06 verified |
 | Current phase | Phase 1 — Identity and home |
 | Phase status | In progress |
 
@@ -25,8 +25,8 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 
 ## Next work
 
-1. **I-07** — PT/EN routing: the dictionary, reciprocal `hreflang`, and the I-06 interface strings and `alternatePath()` moved into it.
-2. **I-08, I-09** — collections and the years counter; they depend only on I-01.
+1. **I-08, I-09** — collections and the years counter; they depend only on I-01.
+2. **I-10** — the experience summary, once I-08 is in (I-07 is delivered).
 3. **I-32 questions** — the short professional case studies start with questions to Filipe; they can be answered while phase 1 is built.
 
 ---
@@ -36,8 +36,8 @@ Operational ledger of the **current phase**. The issue backlog and the acceptanc
 | ID | Title | Status | Evidence |
 | --- | --- | --- | --- |
 | I-05 | Brand tokens and component sample | Verified | `docs/status-log.md` 2026-11-26; Filipe approved the sample at `/brand/`; PR #11 merged |
-| I-06 | Base layout | Delivered | `docs/status-log.md` 2026-11-26 (base layout) |
-| I-07 | PT/EN routing | Not started | — |
+| I-06 | Base layout | Verified | `docs/status-log.md` 2026-11-26 (base layout); PR #12 merged |
+| I-07 | PT/EN routing | Delivered | `docs/status-log.md` 2026-11-28 (PT/EN routing) |
 | I-08 | Collections and schemas | Not started | — |
 | I-09 | Dynamic years counter in data | Not started | — |
 | I-10 | Experience summary | Not started | — |
@@ -58,6 +58,12 @@ Acceptance text of each issue: `ROADMAP.md` → Phase 1. Phase 0 evidence: `docs
 
 | Validation | Detail |
 | --- | --- |
+| Date | 2026-11-28 |
+| Environment | WSL2, Node 22.23.4, Playwright Chromium |
+| Checks | `make verify` passes: ESLint, `astro check` (0 errors), 72 unit tests, docs-lint, the image check, links in both base path modes, PT/EN pairs with `hreflang`, axe in light and dark on 4 pages, and the Lighthouse assertions |
+| Result | Every page lists pt-BR, en and x-default alternates pointing to its pair; the switcher goes from `/` to `/en/` and from `/en/brand/` to `/brand/` (browser proof in the I-07 entry of `docs/status-log.md`) |
+
+--- | --- |
 | Date | 2026-11-26 |
 | Environment | WSL2, Node 22.23.4; GitHub Actions run 45849859303 on `main` (re-run after the domain was set) |
 | Checks | Run 45849859303: `pages-config`, `build` and `deploy` succeed; the published build used `SITE_URL=https://filipeoliveira-hub.com.br` and `BASE_PATH=/`, and its link check passed. `make domain` passes. Locally: ESLint, 40 unit tests (2 axe tests skipped without Chrome), docs-lint and the image check pass |

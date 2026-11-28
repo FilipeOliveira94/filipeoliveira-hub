@@ -1,13 +1,15 @@
 ---
 // Site footer (I-06): name, year and the contact links Filipe gave in I-06.
-import { CONTACT, UI, type Lang } from '../lib/lang';
+import { type Lang } from '../lib/lang';
+import { CONTACT } from '../lib/site';
+import { t as dictionary } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
-const t = UI[lang];
+const t = dictionary(lang);
 const year = new Date().getFullYear();
 ---
 

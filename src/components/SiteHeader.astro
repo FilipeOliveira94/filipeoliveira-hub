@@ -3,7 +3,8 @@
 // switcher. Only pages that exist get a navigation link.
 import LangSwitcher from './LangSwitcher.astro';
 import { withBase } from '../lib/paths';
-import { HOME, NAV, UI, type Lang } from '../lib/lang';
+import { HOME, NAV, type Lang } from '../lib/lang';
+import { t as dictionary } from '../i18n/ui';
 import logoLight from '../assets/brand/logo/fi-logo-light.svg?url';
 import logoDark from '../assets/brand/logo/fi-logo-dark.svg?url';
 
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const { lang, sitePath } = Astro.props;
-const t = UI[lang];
+const t = dictionary(lang);
 const trim = (p: string) => p.replace(/\/+$/, '') || '/';
 ---
 
