@@ -4,7 +4,8 @@
 import BaseHead from '../components/BaseHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import { UI, langOf, sitePathOf } from '../lib/lang';
+import { langOf, sitePathOf } from '../lib/lang';
+import { t } from '../i18n/ui';
 
 interface Props {
   title: string;
@@ -19,10 +20,10 @@ const lang = langOf(sitePath);
 <!doctype html>
 <html lang={lang}>
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} sitePath={sitePath} />
   </head>
   <body>
-    <a class="skip-link" href="#main">{UI[lang].skip}</a>
+    <a class="skip-link" href="#main">{t(lang).skip}</a>
     <SiteHeader lang={lang} sitePath={sitePath} />
     <main id="main" tabindex="-1">
       <slot />

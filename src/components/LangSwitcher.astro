@@ -4,7 +4,8 @@
 // the same page in that language (D-003). <details> makes it work without JS;
 // the script only adds Esc and click-outside to close it.
 import { withBase } from '../lib/paths';
-import { UI, alternatePath, type Lang } from '../lib/lang';
+import { pathIn, type Lang } from '../lib/lang';
+import { t } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -14,8 +15,8 @@ interface Props {
 const { lang, sitePath } = Astro.props;
 const items = (['pt-BR', 'en'] as const).map((code) => ({
   code,
-  name: UI[code].name,
-  href: withBase(code === lang ? sitePath : alternatePath(sitePath)),
+  name: t(code).name,
+  href: withBase(pathIn(code, sitePath)),
   current: code === lang,
 }));
 ---
@@ -26,8 +27,8 @@ const items = (['pt-BR', 'en'] as const).map((code) => ({
       <circle cx="12" cy="12" r="9"></circle>
       <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"></path>
     </svg>
-    <span class="visually-hidden">{UI[lang].language}: {UI[lang].name}</span>
-    <span aria-hidden="true">{UI[lang].short}</span>
+    <span class="visually-hidden">{t(lang).language}: {t(lang).name}</span>
+    <span aria-hidden="true">{t(lang).short}</span>
   </summary>
   <ul>
     {

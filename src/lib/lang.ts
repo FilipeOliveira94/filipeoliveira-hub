@@ -1,5 +1,5 @@
 // Languages and the PT/EN path mirror (D-003): PT at the root, EN under /en/
-// with the same path. I-07 extends this with the dictionary and hreflang.
+// with the same path. Interface strings live in src/i18n/ui.ts (I-07).
 
 export type Lang = 'pt-BR' | 'en';
 
@@ -17,40 +17,32 @@ export function alternatePath(sitePath: string): string {
   return path === '/' ? '/en/' : `/en${path}`;
 }
 
+/** The site path of a page in the given language. */
+export function pathIn(lang: Lang, sitePath: string): string {
+  const path = sitePath.startsWith('/') ? sitePath : `/${sitePath}`;
+  return langOf(path) === lang ? path : alternatePath(path);
+}
+
+/**
+ * The hreflang alternates of a page (I-07): its PT and EN versions, and PT as
+ * x-default. Every page lists both, itself included, so the links are
+ * reciprocal; scripts/check-pairs.mjs checks that in dist/.
+ */
+export function alternates(sitePath: string): { hreflang: Lang | 'x-default'; path: string }[] {
+  const pt = pathIn('pt-BR', sitePath);
+  return [
+    { hreflang: 'pt-BR', path: pt },
+    { hreflang: 'en', path: pathIn('en', sitePath) },
+    { hreflang: 'x-default', path: pt },
+  ];
+}
+
 /** Strips the base path from a URL pathname, keeping a leading slash. */
 export function sitePathOf(pathname: string, base: string): string {
   const prefix = base.replace(/\/+$/, '');
   const rest = prefix && pathname.startsWith(prefix) ? pathname.slice(prefix.length) : pathname;
   return rest.startsWith('/') ? rest : `/${rest}`;
 }
-
-/** Interface strings of the layout. I-07 moves them into its dictionary. */
-export const UI = {
-  'pt-BR': {
-    skip: 'Pular para o conteúdo',
-    home: 'Início',
-    nav: 'Principal',
-    logoAlt: 'Filipe Oliveira, Engenheiro de Dados & Software',
-    logoLink: 'Filipe Oliveira, página inicial',
-    language: 'Idioma',
-    short: 'PT',
-    name: 'Português',
-    contact: 'Contato',
-    email: 'E-mail',
-  },
-  en: {
-    skip: 'Skip to content',
-    home: 'Home',
-    nav: 'Main',
-    logoAlt: 'Filipe Oliveira, Data & Software Engineer',
-    logoLink: 'Filipe Oliveira, home page',
-    language: 'Language',
-    short: 'EN',
-    name: 'English',
-    contact: 'Contact',
-    email: 'E-mail',
-  },
-} as const;
 
 export const HOME: Record<Lang, string> = { 'pt-BR': '/', en: '/en/' };
 
@@ -59,10 +51,3 @@ export const HOME: Record<Lang, string> = { 'pt-BR': '/', en: '/en/' };
  * join when I-13 and I-15 add their pages.
  */
 export const NAV: { key: 'home'; path: Record<Lang, string> }[] = [{ key: 'home', path: HOME }];
-
-/** Footer contact links (Filipe's answer in I-06). */
-export const CONTACT = {
-  email: 'filipeoliveira94@hotmail.com',
-  linkedin: 'https://www.linkedin.com/in/filipe-oliveira94/',
-  github: 'https://github.com/FilipeOliveira94',
-} as const;

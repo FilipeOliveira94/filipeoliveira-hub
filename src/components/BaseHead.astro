@@ -1,15 +1,20 @@
 ---
 // The <head> contents every page shares (I-05): meta, favicons and the global
 // styles with the brand tokens. noindex stays until the release (I-18).
+// The hreflang alternates (I-07) are absolute URLs on Astro's site, which is
+// SITE_URL in the published build (astro.config.mjs).
 import { withBase } from '../lib/paths';
+import { alternates } from '../lib/lang';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
+  sitePath: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, sitePath } = Astro.props;
+const href = (path: string) => new URL(withBase(path), Astro.site).href;
 ---
 
 <meta charset="utf-8" />
@@ -17,6 +22,7 @@ const { title, description } = Astro.props;
 <meta name="robots" content="noindex, nofollow" />
 <meta name="description" content={description} />
 <title>{title}</title>
+{alternates(sitePath).map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={href(alt.path)} />)}
 <!-- Rounded dark box icons (Filipe's choice over the transparent favicon.svg).
      favicon.ico stays in public/ for clients that request it without a link. -->
 <link rel="icon" href={withBase('/icon-192-rounded.png')} type="image/png" sizes="192x192" />
